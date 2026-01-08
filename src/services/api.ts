@@ -4,13 +4,12 @@ import { getStoredApiKey } from '../components/Settings';
 const ERROR_NO_API_KEY = "API key missing. Click ⚙️ to configure your Groq API key.";
 const ERROR_API_FAILED = "Error: Unable to generate sentence. Please try again.";
 
-const SENTENCE_TYPES = [
-  "une action quotidienne",
-  "une observation amusante",
-  "une situation du quotidien",
-  "une préférence personnelle",
-  "un petit événement",
-  "une description simple"
+const HUMOR_STYLES = [
+  "une situation cocasse mais réaliste",
+  "une observation ironique sur le quotidien",
+  "un petit problème du quotidien exagéré",
+  "une comparaison inattendue mais logique",
+  "une situation embarrassante mais crédible"
 ];
 
 const formatWordDetails = (words: Word[]): string => {
@@ -18,45 +17,55 @@ const formatWordDetails = (words: Word[]): string => {
     if (w.type === 'noun') {
       return `"${w.word}" (nom ${w.gender === 'm' ? 'masculin' : 'féminin'})`;
     } else if (w.type === 'verb') {
-      return `"${w.word}" (verbe à l'infinitif - DOIT être conjugué)`;
+      return `"${w.word}" (verbe - à conjuguer)`;
     } else if (w.type === 'adjective') {
-      return `"${w.word}" (adjectif - accorder en genre/nombre)`;
+      return `"${w.word}" (adjectif - à accorder)`;
     }
     return `"${w.word}" (adverbe)`;
   }).join('\n- ');
 };
 
-const buildPrompt = (wordDetails: string, sentenceType: string): string => {
-  return `RÔLE: Tu es un professeur de français natif qui crée des phrases PARFAITEMENT grammaticales.
+const buildPrompt = (wordDetails: string, humorStyle: string): string => {
+  return `OBJECTIF: Créer une phrase DRÔLE, LOGIQUE et GRAMMATICALEMENT PARFAITE pour un débutant en français.
 
-MOTS À UTILISER (choisis-en 2 ou plus):
+MOTS DISPONIBLES:
 - ${wordDetails}
 
-CRÉE une phrase sur: ${sentenceType}
+STYLE D'HUMOUR: ${humorStyle}
 
-RÈGLES GRAMMATICALES OBLIGATOIRES:
-1. STRUCTURE: Sujet + Verbe conjugué + Complément
-   ✓ "Le roi se casse le nez" (correct)
-   ✗ "Le roi casser son nez" (INTERDIT - verbe non conjugué)
-   
-2. CONJUGAISON: Les verbes DOIVENT être conjugués au présent, passé composé ou futur
-   ✓ "Elle mange une pomme" / "Il a mangé" / "Nous mangerons"
-   ✗ "Elle manger" (INTERDIT)
+ÉTAPE 1 - SÉLECTION DES MOTS:
+Parmi les mots ci-dessus, identifie ceux qui peuvent former une phrase COHÉRENTE.
+⚠️ N'utilise PAS les mots qui ne s'associent pas logiquement.
+⚠️ Mieux vaut utiliser 2-3 mots qui vont bien ensemble que forcer 5 mots sans sens.
 
-3. ACCORDS: 
-   - Adjectifs accordés avec le nom (genre + nombre)
-   - Participes passés accordés si nécessaire
+ÉTAPE 2 - VÉRIFICATION SÉMANTIQUE:
+La phrase doit décrire une situation POSSIBLE (même si exagérée ou comique).
+✓ "Mon voisin a repeint sa voiture en rose." (possible, drôle)
+✓ "Le chat a encore volé les chaussettes." (possible, amusant)
+✗ "L'appartement fatigue mon bras." (impossible, absurde)
+✗ "La table mange une idée." (impossible, absurde)
 
-4. ARTICLES: Toujours utiliser le/la/les/un/une/des devant les noms
+ÉTAPE 3 - GRAMMAIRE PARFAITE:
+- Verbes CONJUGUÉS (présent, passé composé, futur, imparfait)
+  ✓ "Le chat mange" / "Il a mangé" / "Elle mangera"
+  ✗ "Le chat manger" (INTERDIT)
+- Adjectifs ACCORDÉS en genre et nombre
+  ✓ "une voiture rouge" / "des voitures rouges"
+- Articles corrects (le/la/les/un/une/des)
+- Apostrophes: l'homme, j'aime, c'est, d'une, qu'il, n'est, s'il
 
-5. SENS: La phrase doit décrire une situation RÉALISTE et LOGIQUE
+ÉTAPE 4 - SIMPLICITÉ (niveau A2/B1):
+- Maximum 20 mots
+- Vocabulaire simple et courant
+- Structure claire: Sujet + Verbe + Complément
+- Évite les constructions complexes
 
-EXEMPLES DE PHRASES CORRECTES:
-- "Le chat dort sur le canapé."
-- "Ma voisine a acheté une nouvelle voiture rouge."
-- "Les enfants jouent dans le jardin."
+EXEMPLES DE BONNES PHRASES:
+- "Mon patron a encore oublié mon prénom."
+- "Le chien regarde la télé plus que mon mari."
+- "Ma grand-mère court plus vite que moi."
 
-RÉPONDS avec UNE SEULE phrase (max 20 mots), sans guillemets, sans explication.`;
+RÉPONDS avec UNE SEULE phrase, sans guillemets, sans explication.`;
 };
 
 export const generateSentence = async (words: Word[]): Promise<string> => {
@@ -67,8 +76,8 @@ export const generateSentence = async (words: Word[]): Promise<string> => {
   }
 
   const wordDetails = formatWordDetails(words);
-  const sentenceType = SENTENCE_TYPES[Math.floor(Math.random() * SENTENCE_TYPES.length)];
-  const prompt = buildPrompt(wordDetails, sentenceType);
+  const humorStyle = HUMOR_STYLES[Math.floor(Math.random() * HUMOR_STYLES.length)];
+  const prompt = buildPrompt(wordDetails, humorStyle);
 
   const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
@@ -81,26 +90,28 @@ export const generateSentence = async (words: Word[]): Promise<string> => {
       messages: [
         {
           role: 'system',
-          content: `Tu es un professeur de français natif. Tu crées UNIQUEMENT des phrases grammaticalement PARFAITES.
+          content: `Tu es un professeur de français qui crée des phrases drôles ET grammaticalement parfaites pour des débutants (niveau A2/B1).
 
-RÈGLE ABSOLUE: Chaque phrase DOIT avoir:
-- Un SUJET (nom ou pronom)
-- Un VERBE CONJUGUÉ (jamais à l'infinitif seul)
-- Une structure grammaticale correcte
+PRIORITÉS (dans l'ordre):
+1. SENS LOGIQUE - La phrase décrit une situation RÉELLE ou PLAUSIBLE
+2. GRAMMAIRE PARFAITE - Verbes conjugués, accords corrects, apostrophes
+3. SIMPLICITÉ - Phrases courtes (max 20 mots), vocabulaire simple
+4. HUMOUR - Situation cocasse, observation ironique, exagération crédible
+
+RÈGLE D'OR: Si les mots ne peuvent pas former une phrase logique ensemble, utilise SEULEMENT ceux qui fonctionnent. Ne force JAMAIS des mots incompatibles.
 
 INTERDIT:
-- Verbes à l'infinitif comme sujet ou sans auxiliaire
-- Phrases sans verbe conjugué
-- Structures grammaticales incorrectes
-
-Tu utilises les apostrophes correctement: l'homme, j'aime, c'est, d'une, qu'il, n'est, s'il.`
+- Phrases absurdes (objets qui font des actions impossibles)
+- Associations illogiques (ex: "la maison mange", "le bonheur court")
+- Verbes non conjugués
+- Phrases trop longues ou complexes`
         },
         {
           role: 'user',
           content: prompt
         }
       ],
-      temperature: 0.5,
+      temperature: 0.6,
       max_tokens: 100,
     }),
   });
