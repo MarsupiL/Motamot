@@ -15,7 +15,7 @@ export default defineConfig({
         description: 'Application pour apprendre le vocabulaire français',
         theme_color: '#2d4a3e',
         background_color: '#2d4a3e',
-        display: 'standalone',
+        display: 'fullscreen',
         orientation: 'portrait',
         scope: '/Motamot/',
         start_url: '/Motamot/',
