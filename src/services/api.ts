@@ -33,19 +33,56 @@ MOTS DISPONIBLES:
 
 STYLE D'HUMOUR: ${humorStyle}
 
-ÉTAPE 1 - SÉLECTION DES MOTS:
+══════════════════════════════════════════════════════════════════════
+MÉTHODE EN 2 PASSES (OBLIGATOIRE)
+══════════════════════════════════════════════════════════════════════
+
+▶ PASSE 1 - VISUALISE UNE SCÈNE RÉELLE:
+Avant d'écrire, imagine une situation CONCRÈTE de la vie quotidienne.
+Imagine que tu dois DESSINER ou FILMER cette scène.
+
+Questions à te poser:
+• "Où se passe cette scène?" (cuisine, rue, bureau, parc...)
+• "Qui fait quoi?" (une personne, un animal, un objet qui tombe...)
+• "Est-ce que je pourrais VOIR ça dans la vraie vie?"
+
+▶ PASSE 2 - VÉRIFIE LE BON SENS:
+Relis ta phrase et demande-toi:
+• "Un enfant de 8 ans comprendrait-il cette situation?"
+• "Pourrais-je prendre une PHOTO de cette scène?"
+• "Cette action est-elle PHYSIQUEMENT possible?"
+
+Si tu réponds NON → RECOMMENCE avec moins de mots.
+
+══════════════════════════════════════════════════════════════════════
+ÉTAPE 1 - SÉLECTION DES MOTS
+══════════════════════════════════════════════════════════════════════
 Parmi les mots ci-dessus, identifie ceux qui peuvent former une phrase COHÉRENTE.
 ⚠️ N'utilise PAS les mots qui ne s'associent pas logiquement.
 ⚠️ Mieux vaut utiliser 2-3 mots qui vont bien ensemble que forcer 5 mots sans sens.
+⚠️ Si un mot ne rentre pas dans une scène réaliste, IGNORE-LE.
 
-ÉTAPE 2 - VÉRIFICATION SÉMANTIQUE:
+══════════════════════════════════════════════════════════════════════
+ÉTAPE 2 - VÉRIFICATION SÉMANTIQUE
+══════════════════════════════════════════════════════════════════════
 La phrase doit décrire une situation POSSIBLE (même si exagérée ou comique).
-✓ "Mon voisin a repeint sa voiture en rose." (possible, drôle)
-✓ "Le chat a encore volé les chaussettes." (possible, amusant)
-✗ "L'appartement fatigue mon bras." (impossible, absurde)
-✗ "La table mange une idée." (impossible, absurde)
 
-ÉTAPE 3 - GRAMMAIRE PARFAITE:
+✓ BONNES phrases (drôles ET réalistes):
+- "Mon voisin a repeint sa voiture en rose." (on peut le voir)
+- "Le chat a encore volé les chaussettes." (les chats font ça!)
+- "La pluie a mouillé tous mes vêtements sur le balcon." (cause → effet logique)
+- "Mon fils a caché les légumes sous la table." (situation réelle)
+
+✗ MAUVAISES phrases (absurdes, INTERDITES):
+- "La pluie fait une erreur" → la pluie n'a pas de volonté
+- "Le rideau pense à demain" → un objet ne pense pas
+- "L'erreur court dans le jardin" → une abstraction ne court pas
+- "La table mange une idée" → impossible physiquement
+- "L'appartement fatigue mon bras" → aucun sens
+
+══════════════════════════════════════════════════════════════════════
+ÉTAPE 3 - GRAMMAIRE PARFAITE
+══════════════════════════════════════════════════════════════════════
 - Verbes CONJUGUÉS (présent, passé composé, futur, imparfait)
   ✓ "Le chat mange" / "Il a mangé" / "Elle mangera"
   ✗ "Le chat manger" (INTERDIT)
@@ -54,16 +91,22 @@ La phrase doit décrire une situation POSSIBLE (même si exagérée ou comique).
 - Articles corrects (le/la/les/un/une/des)
 - Apostrophes: l'homme, j'aime, c'est, d'une, qu'il, n'est, s'il
 
-ÉTAPE 4 - SIMPLICITÉ (niveau A2/B1):
-- Maximum 20 mots
+══════════════════════════════════════════════════════════════════════
+ÉTAPE 4 - SIMPLICITÉ (niveau A2/B1)
+══════════════════════════════════════════════════════════════════════
+- Maximum 25 mots
 - Vocabulaire simple et courant
 - Structure claire: Sujet + Verbe + Complément
 - Évite les constructions complexes
 
-EXEMPLES DE BONNES PHRASES:
+══════════════════════════════════════════════════════════════════════
+EXEMPLES DE BONNES PHRASES (drôles ET logiques)
+══════════════════════════════════════════════════════════════════════
 - "Mon patron a encore oublié mon prénom."
 - "Le chien regarde la télé plus que mon mari."
 - "Ma grand-mère court plus vite que moi."
+- "Mon chat a décidé que mon clavier était son lit."
+- "J'ai retrouvé mes lunettes... sur ma tête."
 
 RÉPONDS avec UNE SEULE phrase, sans guillemets, sans explication.`;
 };
@@ -90,32 +133,37 @@ export const generateSentence = async (words: Word[]): Promise<string> => {
       messages: [
         {
           role: 'system',
-          content: `Tu es un professeur de français NATIF. Tu écris UNIQUEMENT en français correct des phrases drôles ET grammaticalement parfaites pour des débutants (niveau A2/B1).
+          content: `Tu es un professeur de français NATIF et humoriste. Tu écris des phrases DRÔLES, LOGIQUES et grammaticalement parfaites pour des débutants (niveau A2/B1).
+
+MÉTHODE OBLIGATOIRE:
+1. VISUALISE d'abord une scène RÉELLE de la vie quotidienne
+2. Vérifie que tu pourrais DESSINER ou PHOTOGRAPHIER cette scène
+3. Écris une phrase qui décrit cette scène de façon amusante
 
 RÈGLES ABSOLUES:
 1. FRANÇAIS UNIQUEMENT - Pas de mots espagnols, anglais ou autres langues
-2. SENS LOGIQUE - Chaque phrase doit avoir un sens clair et réaliste
+2. SENS LOGIQUE - La phrase doit décrire une situation POSSIBLE dans le monde réel
 3. GRAMMAIRE PARFAITE - Verbes conjugués, accords en genre/nombre
-4. SIMPLICITÉ - Maximum 15 mots, vocabulaire courant
+4. HUMOUR - La phrase doit faire sourire tout en restant réaliste
+5. SIMPLICITÉ - Maximum 25 mots, vocabulaire courant
 
-AVANT de répondre, vérifie:
-- Tous les mots sont-ils français? (pas "defender", "house", etc.)
-- La phrase a-t-elle un sens logique?
-- Les verbes sont-ils conjugués?
-- Les accords sont-ils corrects?
+TEST DE RÉALITÉ (obligatoire avant de répondre):
+- "Puis-je imaginer cette scène dans la vraie vie?" → Si NON, recommence
+- "Un enfant comprendrait-il cette situation?" → Si NON, simplifie
+- "Le sujet peut-il logiquement faire cette action?" → Si NON, change
 
-INTERDIT:
-- Mots d'autres langues
-- Phrases absurdes ou illogiques
-- Verbes à l'infinitif non conjugués
-- Associations impossibles (ex: "défendre son ventre")`
+INTERDIT (phrases absurdes):
+- "La pluie fait une erreur" → la météo n'a pas de volonté
+- "Le rideau pense" → les objets ne pensent pas
+- "L'erreur court" → les abstractions ne bougent pas
+- Toute phrase qu'on ne pourrait pas PHOTOGRAPHIER`
         },
         {
           role: 'user',
           content: prompt
         }
       ],
-      temperature: 0.4,
+      temperature: 0.3,
       max_tokens: 100,
     }),
   });

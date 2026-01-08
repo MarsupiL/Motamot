@@ -1,12 +1,14 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import type { Word } from './types';
-import { getRandomWord, formatWordWithArticle } from './data/frenchWords';
+import { getRandomWord, formatWordWithArticle, getNounsWithImages } from './data/frenchWords';
 import { generateSentence } from './services/api';
 import { Settings, getStoredApiKey } from './components/Settings';
+import { getImageUrl, preloadImages } from './services/supabase';
 import './index.css';
 
 const CLICKS_BEFORE_SENTENCE = 10;
 const ERROR_API_FAILED = "Erreur: Impossible de générer la phrase. Veuillez réessayer.";
+const PRELOAD_COUNT = 3; // Number of images to preload in advance
 
 function App() {
   const [currentWord, setCurrentWord] = useState<Word>(() => getRandomWord());
@@ -16,6 +18,35 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const preloadedImagesRef = useRef<Set<string>>(new Set());
+
+  // Preload images for nouns with images
+  useEffect(() => {
+    const nounsWithImages = getNounsWithImages();
+    const imagesToPreload: string[] = [];
+    
+    // Randomly select PRELOAD_COUNT images to preload
+    const shuffled = [...nounsWithImages].sort(() => Math.random() - 0.5);
+    for (let i = 0; i < Math.min(PRELOAD_COUNT, shuffled.length); i++) {
+      const noun = shuffled[i];
+      if (noun.image && !preloadedImagesRef.current.has(noun.image)) {
+        imagesToPreload.push(getImageUrl(noun.image));
+        preloadedImagesRef.current.add(noun.image);
+      }
+    }
+    
+    if (imagesToPreload.length > 0) {
+      preloadImages(imagesToPreload);
+    }
+  }, [currentWord]); // Preload more images when word changes
+
+  // Reset image state when word changes
+  useEffect(() => {
+    setImageLoaded(false);
+    setImageError(false);
+  }, [currentWord]);
 
   const handleClick = useCallback(async () => {
     if (isLoading || showSettings) return;
@@ -105,21 +136,72 @@ function App() {
             <div className="w-12 h-12 border-[3px] border-chalk-subtle border-t-chalk rounded-full animate-spin" />
           </div>
         ) : (
-          <span
-            className={`
-              text-center text-chalk animate-fade-in max-w-[90vw] break-words !leading-[2.5] font-cursive
-              ${isErrorOrSentence
-                ? error
-                  ? 'text-xl md:text-2xl lg:text-3xl text-red-300 px-[10%] max-w-[80vw] font-sans'
-                  : 'text-2xl md:text-4xl lg:text-5xl px-[5%] max-w-[85vw]'
-                : 'text-5xl md:text-7xl lg:text-8xl tracking-wide'
-              }
-              hover:text-white transition-colors duration-300
-              active:scale-[0.98] transition-transform
-            `}
-          >
-            {displayText}
-          </span>
+          <div className="flex flex-col items-center gap-4 md:gap-6">
+            <span
+              className={`
+                text-center text-chalk animate-fade-in max-w-[90vw] break-words !leading-[2.5] font-cursive
+                ${isErrorOrSentence
+                  ? error
+                    ? 'text-xl md:text-2xl lg:text-3xl text-red-300 px-[10%] max-w-[80vw] font-sans'
+                    : 'text-2xl md:text-4xl lg:text-5xl px-[5%] max-w-[85vw]'
+                  : 'text-4xl md:text-6xl lg:text-7xl tracking-wide'
+                }
+                hover:text-white transition-colors duration-300
+                active:scale-[0.98] transition-transform
+              `}
+            >
+              {displayText}
+            </span>
+            
+            {/* Image display for words with illustrations - in a painting frame */}
+            {!isErrorOrSentence && currentWord.image && (
+              <div className="animate-fade-in">
+                {/* Ornate painting frame */}
+                <div className="relative p-3 md:p-4 lg:p-5 bg-gradient-to-br from-amber-800 via-amber-700 to-amber-900 rounded-sm shadow-[0_8px_30px_rgba(0,0,0,0.5),inset_0_2px_4px_rgba(255,255,255,0.2),inset_0_-2px_4px_rgba(0,0,0,0.3)]">
+                  {/* Inner gold trim */}
+                  <div className="absolute inset-2 md:inset-3 border-2 border-amber-500/50 rounded-sm pointer-events-none" />
+                  {/* Outer decorative edge */}
+                  <div className="absolute inset-0 border-4 md:border-6 border-amber-950 rounded-sm pointer-events-none" />
+                  {/* Corner decorations */}
+                  <div className="absolute top-1 left-1 w-3 h-3 md:w-4 md:h-4 border-t-2 border-l-2 border-amber-400/60 rounded-tl-sm" />
+                  <div className="absolute top-1 right-1 w-3 h-3 md:w-4 md:h-4 border-t-2 border-r-2 border-amber-400/60 rounded-tr-sm" />
+                  <div className="absolute bottom-1 left-1 w-3 h-3 md:w-4 md:h-4 border-b-2 border-l-2 border-amber-400/60 rounded-bl-sm" />
+                  <div className="absolute bottom-1 right-1 w-3 h-3 md:w-4 md:h-4 border-b-2 border-r-2 border-amber-400/60 rounded-br-sm" />
+                  
+                  {/* Inner mat/passepartout */}
+                  <div className="p-2 md:p-3 bg-gradient-to-br from-stone-200 via-stone-100 to-stone-200 shadow-inner">
+                    {/* Image container */}
+                    <div className="relative w-28 h-28 md:w-40 md:h-40 lg:w-48 lg:h-48 bg-white">
+                      {!imageLoaded && !imageError && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-stone-100">
+                          <div className="w-8 h-8 border-2 border-amber-300 border-t-amber-600 rounded-full animate-spin" />
+                        </div>
+                      )}
+                      <img
+                        src={getImageUrl(currentWord.image)}
+                        alt={currentWord.word}
+                        className={`
+                          w-full h-full object-contain
+                          transition-opacity duration-300
+                          ${imageLoaded ? 'opacity-100' : 'opacity-0'}
+                        `}
+                        onLoad={() => setImageLoaded(true)}
+                        onError={() => {
+                          setImageError(true);
+                          setImageLoaded(false);
+                        }}
+                      />
+                      {imageError && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-stone-100 text-stone-400 text-xs md:text-sm">
+                          Image non disponible
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         )}
       </div>
 

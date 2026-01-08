@@ -5,12 +5,14 @@ export type WordType = 'noun' | 'verb' | 'adjective' | 'adverb';
 export interface NounData {
   word: string;
   gender: Gender;
+  image?: string; // Image filename in Supabase storage
 }
 
 export interface Word {
   word: string;
   type: WordType;
   gender?: Gender;
+  image?: string; // Image filename in Supabase storage
 }
 
 export interface GroqMessage {

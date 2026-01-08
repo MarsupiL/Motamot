@@ -1,8 +1,60 @@
 import type { NounData, Word } from '../types';
 
 export const nouns: NounData[] = [
-  { word: "homme", gender: "m" }, { word: "temps", gender: "m" }, { word: "jour", gender: "m" },
-  { word: "monde", gender: "m" }, { word: "enfant", gender: "m" }, { word: "pays", gender: "m" },
+  // First 50 nouns with images (concrete, easy to illustrate)
+  { word: "homme", gender: "m", image: "homme.png" },
+  { word: "enfant", gender: "m", image: "enfant.png" },
+  { word: "père", gender: "m", image: "pere.png" },
+  { word: "ami", gender: "m", image: "ami.png" },
+  { word: "chat", gender: "m", image: "chat.png" },
+  { word: "chien", gender: "m", image: "chien.png" },
+  { word: "oiseau", gender: "m", image: "oiseau.png" },
+  { word: "poisson", gender: "m", image: "poisson.png" },
+  { word: "cheval", gender: "m", image: "cheval.png" },
+  { word: "arbre", gender: "m", image: "arbre.png" },
+  { word: "jardin", gender: "m", image: "jardin.png" },
+  { word: "soleil", gender: "m", image: "soleil.png" },
+  { word: "ciel", gender: "m", image: "ciel.png" },
+  { word: "pain", gender: "m", image: "pain.png" },
+  { word: "café", gender: "m", image: "cafe.png" },
+  { word: "livre", gender: "m", image: "livre.png" },
+  { word: "bureau", gender: "m", image: "bureau.png" },
+  { word: "lit", gender: "m", image: "lit.png" },
+  { word: "train", gender: "m", image: "train.png" },
+  { word: "avion", gender: "m", image: "avion.png" },
+  { word: "bateau", gender: "m", image: "bateau.png" },
+  { word: "vélo", gender: "m", image: "velo.png" },
+  { word: "téléphone", gender: "m", image: "telephone.png" },
+  { word: "ordinateur", gender: "m", image: "ordinateur.png" },
+  { word: "chapeau", gender: "m", image: "chapeau.png" },
+  { word: "gâteau", gender: "m", image: "gateau.png" },
+  { word: "fromage", gender: "m", image: "fromage.png" },
+  { word: "œuf", gender: "m", image: "oeuf.png" },
+  { word: "fruit", gender: "m", image: "fruit.png" },
+  { word: "légume", gender: "m", image: "legume.png" },
+  { word: "femme", gender: "f", image: "femme.png" },
+  { word: "fille", gender: "f", image: "fille.png" },
+  { word: "mère", gender: "f", image: "mere.png" },
+  { word: "maison", gender: "f", image: "maison.png" },
+  { word: "voiture", gender: "f", image: "voiture.png" },
+  { word: "table", gender: "f", image: "table.png" },
+  { word: "chaise", gender: "f", image: "chaise.png" },
+  { word: "porte", gender: "f", image: "porte.png" },
+  { word: "fenêtre", gender: "f", image: "fenetre.png" },
+  { word: "fleur", gender: "f", image: "fleur.png" },
+  { word: "montagne", gender: "f", image: "montagne.png" },
+  { word: "mer", gender: "f", image: "mer.png" },
+  { word: "plage", gender: "f", image: "plage.png" },
+  { word: "lune", gender: "f", image: "lune.png" },
+  { word: "étoile", gender: "f", image: "etoile.png" },
+  { word: "pomme", gender: "f", image: "pomme.png" },
+  { word: "orange", gender: "f", image: "orange.png" },
+  { word: "banane", gender: "f", image: "banane.png" },
+  { word: "pizza", gender: "f", image: "pizza.png" },
+  { word: "guitare", gender: "f", image: "guitare.png" },
+  // Remaining nouns without images
+  { word: "temps", gender: "m" }, { word: "jour", gender: "m" },
+  { word: "monde", gender: "m" }, { word: "pays", gender: "m" },
   { word: "moment", gender: "m" }, { word: "travail", gender: "m" }, { word: "groupe", gender: "m" },
   { word: "problème", gender: "m" }, { word: "fait", gender: "m" }, { word: "droit", gender: "m" },
   { word: "lieu", gender: "m" }, { word: "cas", gender: "m" }, { word: "point", gender: "m" },
@@ -14,10 +66,9 @@ export const nouns: NounData[] = [
   { word: "président", gender: "m" }, { word: "type", gender: "m" }, { word: "conseil", gender: "m" },
   { word: "marché", gender: "m" }, { word: "intérêt", gender: "m" }, { word: "mouvement", gender: "m" },
   { word: "résultat", gender: "m" }, { word: "début", gender: "m" }, { word: "besoin", gender: "m" },
-  { word: "accord", gender: "m" }, { word: "film", gender: "m" }, { word: "livre", gender: "m" },
+  { word: "accord", gender: "m" }, { word: "film", gender: "m" },
   { word: "ordre", gender: "m" }, { word: "terme", gender: "m" }, { word: "plan", gender: "m" },
   { word: "sujet", gender: "m" }, { word: "rôle", gender: "m" }, { word: "mois", gender: "m" },
-  { word: "père", gender: "m" }, { word: "ami", gender: "m" }, { word: "bureau", gender: "m" },
   { word: "chef", gender: "m" }, { word: "membre", gender: "m" }, { word: "regard", gender: "m" },
   { word: "siècle", gender: "m" }, { word: "sol", gender: "m" }, { word: "corps", gender: "m" },
   { word: "milieu", gender: "m" }, { word: "genre", gender: "m" }, { word: "tour", gender: "m" },
@@ -279,12 +330,17 @@ export const adverbs: string[] = [
 
 export const getRandomWord = (): Word => {
   const allWords: Word[] = [
-    ...nouns.map(n => ({ word: n.word, type: 'noun' as const, gender: n.gender })),
+    ...nouns.map(n => ({ word: n.word, type: 'noun' as const, gender: n.gender, image: n.image })),
     ...verbs.map(v => ({ word: v, type: 'verb' as const })),
     ...adjectives.map(a => ({ word: a, type: 'adjective' as const })),
     ...adverbs.map(a => ({ word: a, type: 'adverb' as const }))
   ];
   return allWords[Math.floor(Math.random() * allWords.length)];
+};
+
+// Get nouns with images (for preloading)
+export const getNounsWithImages = (): NounData[] => {
+  return nouns.filter(n => n.image);
 };
 
 export const formatWordWithArticle = (wordObj: Word): string => {
