@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import type { Word } from './types';
 import { getRandomWord, formatWordWithArticle } from './data/frenchWords';
 import { generateSentence } from './services/api';
+import { Settings, getStoredApiKey } from './components/Settings';
 import './index.css';
 
 const CLICKS_BEFORE_SENTENCE = 10;
@@ -14,9 +15,10 @@ function App() {
   const [sentence, setSentence] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   const handleClick = useCallback(async () => {
-    if (isLoading) return;
+    if (isLoading || showSettings) return;
 
     if (sentence || error) {
       setSentence(null);
@@ -31,6 +33,12 @@ function App() {
     const newDisplayedWords = [...displayedWords, currentWord];
 
     if (newClickCount >= CLICKS_BEFORE_SENTENCE) {
+      // Check if API key is configured
+      if (!getStoredApiKey()) {
+        setError("Clé API manquante. Cliquez sur ⚙️ pour configurer votre clé API Groq.");
+        return;
+      }
+
       setIsLoading(true);
       setDisplayedWords(newDisplayedWords);
       
@@ -50,7 +58,12 @@ function App() {
       setDisplayedWords(newDisplayedWords);
       setCurrentWord(getRandomWord());
     }
-  }, [clickCount, currentWord, displayedWords, sentence, error, isLoading]);
+  }, [clickCount, currentWord, displayedWords, sentence, error, isLoading, showSettings]);
+
+  const handleSettingsClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowSettings(true);
+  };
 
   const displayText = error 
     ? error
@@ -59,6 +72,7 @@ function App() {
       : formatWordWithArticle(currentWord);
 
   const isErrorOrSentence = error || sentence;
+  const hasApiKey = !!getStoredApiKey();
 
   return (
     <div
@@ -70,6 +84,17 @@ function App() {
       
       {/* Wooden frame effect */}
       <div className="absolute inset-2 md:inset-4 border-4 md:border-8 border-blackboard-border rounded-sm shadow-inner pointer-events-none" />
+
+      {/* Settings button */}
+      <button
+        onClick={handleSettingsClick}
+        className={`absolute top-6 right-6 md:top-8 md:right-8 text-2xl z-20 transition-all duration-300 hover:scale-110 ${
+          hasApiKey ? 'text-chalk-dim hover:text-chalk' : 'text-yellow-400 animate-pulse hover:text-yellow-300'
+        }`}
+        title={hasApiKey ? 'Paramètres' : 'Configurer la clé API'}
+      >
+        ⚙️
+      </button>
 
       <div className="flex justify-center items-center flex-1 w-full px-8 z-10">
         {isLoading ? (
@@ -85,7 +110,7 @@ function App() {
               text-center text-chalk animate-fade-in max-w-[90vw] break-words !leading-[2.5] font-cursive
               ${isErrorOrSentence
                 ? error
-                  ? 'text-xl md:text-2xl lg:text-3xl text-red-300 px-[10%] max-w-[80vw]'
+                  ? 'text-xl md:text-2xl lg:text-3xl text-red-300 px-[10%] max-w-[80vw] font-sans'
                   : 'text-2xl md:text-4xl lg:text-5xl px-[5%] max-w-[85vw]'
                 : 'text-5xl md:text-7xl lg:text-8xl tracking-wide'
               }
@@ -123,6 +148,11 @@ function App() {
           : `Cliquez sur le mot (${clickCount}/${CLICKS_BEFORE_SENTENCE})`
         }
       </div>
+
+      {/* Settings Modal */}
+      {showSettings && (
+        <Settings onClose={() => setShowSettings(false)} />
+      )}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import type { Word, GroqResponse } from '../types';
+import { getStoredApiKey } from '../components/Settings';
 
-const ERROR_NO_API_KEY = "Erreur: Clé API manquante. Veuillez configurer VITE_GROQ_API_KEY dans le fichier .env";
+const ERROR_NO_API_KEY = "Clé API manquante. Cliquez sur ⚙️ pour configurer votre clé API Groq.";
 const ERROR_API_FAILED = "Erreur: Impossible de générer la phrase. Veuillez réessayer.";
 
 const STRUCTURE_HINTS = [
@@ -71,7 +72,7 @@ RÉPONDS UNIQUEMENT avec la phrase, sans guillemets, sans explication, sans ponc
 };
 
 export const generateSentence = async (words: Word[]): Promise<string> => {
-  const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+  const apiKey = getStoredApiKey();
   
   if (!apiKey) {
     throw new Error(ERROR_NO_API_KEY);
