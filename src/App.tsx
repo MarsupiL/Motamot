@@ -61,29 +61,35 @@ function App() {
   const isErrorOrSentence = error || sentence;
 
   return (
-    <div 
-      className="w-screen h-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] cursor-pointer select-none relative font-sans"
+    <div
+      className="w-screen h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blackboard-dark via-blackboard to-blackboard-light cursor-pointer select-none relative font-sans"
       onClick={handleClick}
     >
-      <div className="flex justify-center items-center flex-1 w-full px-8">
+      {/* Blackboard texture overlay */}
+      <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMDAwIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiMxMTEiPjwvcmVjdD4KPC9zdmc+')]" />
+      
+      {/* Wooden frame effect */}
+      <div className="absolute inset-2 md:inset-4 border-4 md:border-8 border-blackboard-border rounded-sm shadow-inner pointer-events-none" />
+
+      <div className="flex justify-center items-center flex-1 w-full px-8 z-10">
         {isLoading ? (
           <div className="flex flex-col items-center gap-6">
-            <span className="text-base md:text-lg text-white/70 font-light">
+            <span className="text-xl md:text-2xl text-chalk-dim">
               Génération de la phrase...
             </span>
-            <div className="w-12 h-12 border-[3px] border-white/10 border-t-white/80 rounded-full animate-spin" />
+            <div className="w-12 h-12 border-[3px] border-chalk-subtle border-t-chalk rounded-full animate-spin" />
           </div>
         ) : (
-          <span 
+          <span
             className={`
-              text-center text-white animate-fade-in leading-tight max-w-[90vw] break-words
-              ${isErrorOrSentence 
-                ? error 
-                  ? 'text-base md:text-xl lg:text-2xl font-normal text-red-400 px-[10%] max-w-[80vw] leading-relaxed'
-                  : 'text-lg md:text-3xl lg:text-5xl font-normal px-[5%] max-w-[85vw] leading-snug'
-                : 'text-4xl md:text-7xl lg:text-9xl font-light tracking-wide drop-shadow-[0_4px_30px_rgba(255,255,255,0.1)]'
+              text-center text-chalk animate-fade-in max-w-[90vw] break-words !leading-[2.5] font-cursive
+              ${isErrorOrSentence
+                ? error
+                  ? 'text-xl md:text-2xl lg:text-3xl text-red-300 px-[10%] max-w-[80vw]'
+                  : 'text-2xl md:text-4xl lg:text-5xl px-[5%] max-w-[85vw]'
+                : 'text-5xl md:text-7xl lg:text-8xl tracking-wide'
               }
-              hover:drop-shadow-[0_4px_40px_rgba(255,255,255,0.2)]
+              hover:text-white transition-colors duration-300
               active:scale-[0.98] transition-transform
             `}
           >
@@ -92,17 +98,17 @@ function App() {
         )}
       </div>
 
-      <div className="absolute bottom-20 left-1/2 -translate-x-1/2">
+      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10">
         {!isErrorOrSentence && !isLoading && (
           <div className="flex gap-3">
             {Array.from({ length: CLICKS_BEFORE_SENTENCE }).map((_, i) => (
-              <span 
-                key={i} 
+              <span
+                key={i}
                 className={`
                   w-3 h-3 rounded-full transition-all duration-300
-                  ${i < clickCount 
-                    ? 'bg-white/90 shadow-[0_0_10px_rgba(255,255,255,0.5)]' 
-                    : 'bg-white/20'
+                  ${i < clickCount
+                    ? 'bg-chalk shadow-[0_0_8px_rgba(245,245,240,0.5)]'
+                    : 'bg-chalk-subtle'
                   }
                 `}
               />
@@ -111,9 +117,9 @@ function App() {
         )}
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs md:text-sm text-white/40 font-light tracking-wider">
-        {isErrorOrSentence 
-          ? 'Cliquez pour continuer' 
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-sm md:text-base text-chalk-faint z-10">
+        {isErrorOrSentence
+          ? 'Cliquez pour continuer'
           : `Cliquez sur le mot (${clickCount}/${CLICKS_BEFORE_SENTENCE})`
         }
       </div>

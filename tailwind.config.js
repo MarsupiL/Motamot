@@ -7,11 +7,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          dark: '#1a1a2e',
-          DEFAULT: '#16213e',
-          light: '#0f3460',
+        blackboard: {
+          dark: '#0d1f0d',
+          DEFAULT: '#1a2f1a',
+          light: '#243524',
+          border: '#3d4f3d',
         },
+        chalk: {
+          DEFAULT: '#f5f5f0',
+          dim: 'rgba(245, 245, 240, 0.7)',
+          faint: 'rgba(245, 245, 240, 0.4)',
+          subtle: 'rgba(245, 245, 240, 0.2)',
+        },
+      },
+      fontFamily: {
+        cursive: ['"Playwrite FR Trad"', 'cursive'],
       },
       animation: {
         'fade-in': 'fadeIn 0.4s ease-out',
