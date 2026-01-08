@@ -1,0 +1,51 @@
+<div class="edit-product__top">
+  <h1>Product: {{product?.name}}</h1>
+  <button (click)="onRemove()" shButton>Remove</button>
+</div>
+<div class="edit-product__content">
+  <sh-pane>
+    <form #form="ngForm" (ngSubmit)="onSubmit()">
+      <label>
+        <span>Name</span>
+        <input [(ngModel)]="product.name" name="name" required type="text" />
+      </label>
+      <label>
+        <span>Description</span>
+        <textarea
+          [(ngModel)]="product.description"
+          name="description"
+          required
+        ></textarea>
+      </label>
+      <label>
+        <span>Price</span>
+        <input
+          [(ngModel)]="product.price"
+          name="price"
+          required
+          type="number"
+        />
+      </label>
+      <label>
+        <span>Advice</span>
+        <textarea [(ngModel)]="product.advice" name="advice"></textarea>
+      </label>
+      <label>
+        <span>Category</span>
+        <select [(ngModel)]="product.categoryId" name="category">
+          <option selected value>-- select an option --</option>
+          <option
+            *ngFor="let category of categories$|async"
+            [ngValue]="category.id"
+          >
+            {{category?.name}}
+          </option>
+        </select>
+      </label>
+      <div class="edit-product__actions">
+        <a routerLink="../" shButton>Cancel</a>
+        <button [disabled]="form.invalid" shButton>Save</button>
+      </div>
+    </form>
+  </sh-pane>
+</div>

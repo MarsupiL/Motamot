@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@aparajita/capacitor-biometric-auth": "1.0.7",
+    "@capacitor/android": "^2.4.7",
+    "@capacitor/cli": "^2.4.7",
+    "@capacitor/core": "^2.4.7"
+  },
+  "devDependencies": {
+    "jetifier": "2.0.0"
+  }
+}

@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=Mailcatcher (fake smtp server)
+
+[Service]
+User=vagrant
+ExecStart=/usr/local/bin/mailcatcher --foreground --ip=0.0.0.0
+Restart=on-abort

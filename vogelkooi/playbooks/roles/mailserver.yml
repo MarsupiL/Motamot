@@ -1,0 +1,26 @@
+---
+- name: "Install fake mailserver dependencies"
+  become: "yes"
+  hosts: all
+  tasks:
+    - apt:
+        name: "{{ item }}"
+        state: latest
+        update_cache: no
+      with_items:
+        - "build-essential"
+        - "g++"
+        - "ruby-dev"
+        - "libsqlite3-dev"
+
+    - gem:
+        name: mailcatcher
+        state: latest
+        user_install: no
+
+    - copy:
+        src: ../files/mailcatcher.service
+        dest: /etc/systemd/system/mailcatcher.service
+        mode: u=rwx,g=rx,o=rx
+
+    - service: name=mailcatcher state=started

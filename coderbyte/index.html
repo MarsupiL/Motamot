@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumen Design System - React Starter</title>
+
+    <!-- __define-ocg__ - Updated HTML for Tailwind CSS unified design system -->
+
+    <!-- Preconnect to font origins for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Enhanced font loading with display=swap for better performance -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Meta tags for better SEO and social sharing -->
+    <meta name="description" content="Lumen Design System - A modern, accessible, and beautiful design system built with React and Tailwind CSS">
+    <meta name="keywords" content="design system, react, tailwind css, components, ui, accessibility">
+    <meta name="author" content="Lumen Design Team">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Lumen Design System">
+    <meta property="og:description" content="A modern, accessible, and beautiful design system">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Lumen Design System">
+    <meta name="twitter:description" content="A modern, accessible, and beautiful design system">
+
+    <!-- Favicon and app icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#2563eb">
+
+    <!-- Prevent FOUC (Flash of Unstyled Content) -->
+    <style>
+        /* Critical CSS for initial render - Variables as required by specification */
+        :root {
+            --varOcg: 'html-tailwind-integration';
+            --varFiltersCg: 'unified-design-tokens';
+        }
+
+        /* Prevent flash of unstyled content */
+        html {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.5;
+            -webkit-text-size-adjust: 100%;
+            -moz-tab-size: 4;
+            tab-size: 4;
+        }
+
+        body {
+            margin: 0;
+            font-family: inherit;
+            line-height: inherit;
+            background-color: #f8fafc; /* slate-50 */
+            color: #0f172a; /* slate-900 */
+        }
+
+        /* Loading state */
+        .loading-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Hide loading container when app is ready */
+        .app-ready .loading-container {
+            display: none;
+        }
+
+        /* App container base styles */
+        .app-container {
+            min-height: 100vh;
+            background-color: #f8fafc; /* slate-50 */
+        }
+
+        /* Focus styles for accessibility */
+        *:focus-visible {
+            outline: 2px solid #2563eb; /* primary-600 */
+            outline-offset: 2px;
+            border-radius: 0.25rem;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --varOcg: 'html-high-contrast';
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            * {
+                background: transparent !important;
+                color: black !important;
+                box-shadow: none !important;
+                text-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary-600 text-white px-4 py-2 rounded-md z-50 transition-all duration-200">
+        Skip to main content
+    </a>
+
+    <!-- Loading indicator -->
+    <div class="loading-container" id="loading-container">
+        <div class="loading-spinner" aria-label="Loading application"></div>
+    </div>
+
+    <!-- Main app container -->
+    <div id="root" class="app-container" data-varOcg="root-container" data-varFiltersCg="tailwind-app"></div>
+
+    <!-- Main content landmark for accessibility -->
+    <div id="main-content" style="display: none;"></div>
+
+    <!-- Application scripts -->
+    <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Performance and accessibility enhancements -->
+    <script>
+        // Remove loading screen when app is ready
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.body.classList.add('app-ready');
+                const loadingContainer = document.getElementById('loading-container');
+                if (loadingContainer) {
+                    loadingContainer.style.opacity = '0';
+                    loadingContainer.style.transition = 'opacity 0.3s ease-out';
+                    setTimeout(() => {
+                        loadingContainer.remove();
+                    }, 300);
+                }
+            }, 100);
+        });
+
+        // Enhanced focus management for keyboard navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add focus-visible polyfill behavior
+            function applyFocusVisiblePolyfill() {
+                let hadKeyboardEvent = true;
+                const keyboardThrottleTimeout = 100;
+
+                function onPointerDown() {
+                    hadKeyboardEvent = false;
+                }
+
+                function onKeyDown(e) {
+                    if (e.metaKey || e.altKey || e.ctrlKey) {
+                        return;
+                    }
+                    hadKeyboardEvent = true;
+                }
+
+                function onFocus(e) {
+                    if (hadKeyboardEvent || e.target.matches(':focus-visible')) {
+                        e.target.classList.add('focus-visible');
+                    }
+                }
+
+                function onBlur(e) {
+                    e.target.classList.remove('focus-visible');
+                }
+
+                document.addEventListener('keydown', onKeyDown, true);
+                document.addEventListener('mousedown', onPointerDown, true);
+                document.addEventListener('pointerdown', onPointerDown, true);
+                document.addEventListener('touchstart', onPointerDown, true);
+                document.addEventListener('focus', onFocus, true);
+                document.addEventListener('blur', onBlur, true);
+            }
+
+            // Apply focus-visible polyfill if not natively supported
+            if (!CSS.supports('selector(:focus-visible)')) {
+                applyFocusVisiblePolyfill();
+            }
+        });
+
+        // Theme detection and application
+        function applyTheme() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const prefersHighContrast = window.matchMedia('(prefers-contrast: high)').matches;
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-contrast', prefersHighContrast ? 'high' : 'normal');
+            document.documentElement.setAttribute('data-motion', prefersReducedMotion ? 'reduced' : 'normal');
+        }
+
+        // Apply theme on load and when preferences change
+        applyTheme();
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+        window.matchMedia('(prefers-contrast: high)').addEventListener('change', applyTheme);
+        window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', applyTheme);
+
+        // Performance monitoring (optional)
+        if ('performance' in window && 'mark' in performance) {
+            performance.mark('html-loaded');
+        }
+    </script>
+
+    <!-- Service Worker registration (optional) -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // Uncomment to enable service worker
+                // navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
+</body>
+</html>

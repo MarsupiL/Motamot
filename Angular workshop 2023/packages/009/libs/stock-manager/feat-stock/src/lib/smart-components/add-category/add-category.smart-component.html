@@ -1,0 +1,30 @@
+<sh-dialog (closeDialog)="close()">
+  <ng-container sh-dialog-header>
+    <h1>Add category</h1>
+  </ng-container>
+  <ng-container sh-dialog-body>
+    <div class="add-category">
+      <sh-pane>
+        <form (ngSubmit)="onSubmit()" #form="ngForm">
+          <label>
+            <span>Name</span>
+            <input [(ngModel)]="category.name" name="name" required/>
+          </label>
+          <label>
+            <span>Description</span>
+            <textarea
+              [(ngModel)]="category.description"
+              name="description"
+              required
+            ></textarea>
+          </label>
+
+          <div class="add-category__actions">
+            <a shButton routerLink="../">Cancel</a>
+            <button shButton [disabled]="form.invalid">Save</button>
+          </div>
+        </form>
+      </sh-pane>
+    </div>
+  </ng-container>
+</sh-dialog>

@@ -1,0 +1,582 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;\f2\fnil\fcharset77 ZapfDingbatsITC;
+\f3\fnil\fcharset0 LucidaGrande;\f4\fnil\fcharset0 AppleColorEmoji;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh16380\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs36 \cf0 Angular:\
+
+\f1\b0 - Daily\
+nx serve --watch=false\
+nx run chrome-extension:build --configuration development --watch\
+nx run chrome-extension:test\
+nx run design-system:serve\
+\
+- Test\
+nx run ui-components:test --watch\
+\
+- NX Generators\
+ng g @nrwl/angular:component components/compose-view/composeToolbar --project=chrome-extension --dry-run\
+ng g @nrwl/angular:ngrx settings --module=libs/settings/data-access/src/lib/settings.module.ts --directory +state/settings --defaults --dry-run\
+nx g @nrwl/angular:lib ContentProjection --directory=shared\
+nx g remove booking-some-library\
+\
+- NX Generators for Data-Access\
+nx g @nrwl/angular:lib DataAccess --directory=<domain>\
+ng g @nrwl/angular:ngrx <domain> --module=libs/<domain>/data-access/src/lib/data-access.module.ts --directory --skip-format false --defaults\
+ng g @nrwl/angular:service <domain> --project=<domain>-data-access
+\f0\b \
+\
+Useful
+\f1\b0  
+\f0\b tools:
+\f1\b0 \
+Charles 
+\f2 \uc0\u10004 \u65038 
+\f1 \
+Textexpander: Clipboard\
+1password\
+BundleHunt.com -> beamer, typeitforme\
+Toad to look at database\
+iTerm2 
+\f2 \uc0\u10004 \u65038 
+\f1 \
+API client: Paw 
+\f2 \uc0\u10004 \u65038 
+\f1 \
+Tony: intoxicated proxy\
+Viscosity: VPN 
+\f2 \uc0\u10004 \u65038 
+\f1 \
+Source tree: Git management 
+\f2 \uc0\u10004 \u65038 \
+
+\f1 Fira Code: Ligature font plugin 
+\f2 \uc0\u10004 \u65038 
+\f1 \
+\
+
+\f0\b Readings:
+\f1\b0 \
+Jasmine to write tests\
+\
+
+\f0\b iTerm tricks:
+\f1\b0 \
+ctrl+R to go to historical commands\
+ctrl+A to get to the beginning of a command line\
+$_ refers to the last part of the previous command\
+\
+
+\f0\b WebStorm tricks:
+\f1\b0 \
+Ctrl+
+\f3 \uc0\u8629 
+\f1  over missing dependency to add import line\
+Ctrl+T to refactor\
+Cmd+E in web storm to see recently opened files\
+Cmd+Shift+F to find words within all files\
+Click Shift 2 times to search everything\
+\
+
+\f0\b Best practices:
+\f1\b0 \
+add Spec to the name of test files\
+\
+
+\f0\b Backend:
+\f1\b0 \
+to get backend:\
+$ sh get-backend.sh\
+to delete the database\
+$ ./zivver-backend/bin/zivver-backend db drop-all --confirm-delete-everything -Dconfig.file=MaT.conf -Dlogging.level=WARN\
+to migrate the database:\
+$ ./zivver-backend/bin/zivver-backend db migrate -Dconfig.file=MaT.conf -Dlogging.level=WARN\
+to run the backend server:\
+$ ./zivver-backend/bin/zivver-backend server -Dconfig.file=MaT.conf -Dlogging.level=DEBUG (or INFO or WARN)\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \ul \ulc0 New scripts 1:\ulnone \
+- drop the database and remove references:\
+$ sh drop-db.sh\
+$ rm -rf uploads\
+- update the database and run server:\
+$ sh update.sh (can add backend branch name as argument)\
+$ sh migrate.sh dry-run (check if a database migration is needed)\
+$ sh migrate.sh (when needed from dry-run)\
+$ npm update zivver-api\
+$ npm install --registry https://nexus.zivver.org/content/groups/npm/ (to bypass error)\
+$ sh server.sh\
+\
+\ul New scripts 2:\ulnone \
+\pard\pardeftab720\partightenfactor0
+\cf0 - update backend (master):\
+$ npm run backend:update\
+\
+- update backend (other branch):\
+\pard\tx10712\pardeftab720\partightenfactor0
+\cf0 $ npm run backend:update --branch=PROD-217-delete-personal\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+- migrate database (dry-run):\
+$ npm run backend:db-migrate --dry-run\
+\
+- drop database:\
+$ npm run backend:db-drop\
+\
+- migrate database:\
+$ npm run backend -- db migrate\
+\
+- run backend server (api):\
+$ npm run backend:server    or   npm run server\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+when overwriting /bin, /conf and /lib files, make the bin files executables:\
+$ chmod a+x tmp/zivver-backend/bin/zivver-backend\
+\
+Create database dump:\
+$ npm run db:backup\
+\
+Restore database dump:\
+$ npm run db:restore -- tmp/zivver_....sqlc\
+\
+Install backend from deb file locally:\
+$ dpkg -i tmp/zivver-backend.deb\
+\
+then do DB migration with:\
+$ zivver-backend db migrate\
+\
+\ul New scripts 3:\ulnone \
+$ node scripts/backend-update.js --branch PROD-319-delete-contact      or\
+$ node scripts/backend-update.js --build 1.8.33-42-master-SNAPSHOT or \
+$ node scripts/backend-update.js --from-build-server\
+\
+in case the backend misses the executable:\
+$ chmod 755 tmp/zivver-backend/bin/zivver-backend\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 Vagrant:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0 \cf0 $ vagrant up (start the vagrant environment)\
+$ vagrant ssh (connect to the virtual machine via ssh)\
+password: vagrant\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 Docker:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0 \cf0 - launch: 
+\f0\b \
+
+\f1\b0 $ docker-compose up -d\
+$ docker-compose start api\
+$ docker-compose logs -f --tail=100 api\
+\
+- to see the processes:\
+$ docker-compose ps\
+\
+- drop db:\
+$ npm run backend -- db drop-all --confirm-delete-everything (then restart and remigrate docker db)\
+$ npm run backend -- db migrate\
+\
+- to kill processes:\
+$ docker-compose kill (also kills the DB!)\
+$ docker-compose kill api db \
+\
+- to remove api container:\
+$ docker-compose rm api\
+\
+- to remove files:\
+$ docker-compose rm -vf\
+\
+- to create a new docker backend container:\
+$ docker-compose build backend\
+\
+- to migrate the database:\
+$ docker-compose run backend db migrate\
+\
+- to drop the database:\
+$ docker-compose run backend db drop-all --confirm-delete-everything\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 API:
+\f1\b0 \
+to run the web app file server (express)\
+$ npm run server (both backend and api)\
+or\
+$ node ./scripts/server.js\
+$ npm show zivver-api (to see the latest api versions, replace with \'93zivver-api\'94: \'93latest-\'85\'94 in package.json and run npm install)\
+\
+to checkout a new API version:\
+$ npm run generate:ts\
+$ npm link\
+and then in zivver-webapp:\
+$ npm link @zivver/api \
+$ npm run api:interfaces\
+\
+
+\f0\b APP:
+\f1\b0 \
+to check that the backend is working:\
+http://localhost:18080/version or {\field{\*\fldinst{HYPERLINK "http://localhost:18080/api/version"}}{\fldrslt http://localhost:18080/api/version}}\
+\
+to login or signup:\
+http://localhost:3000\
+\
+to use smtp mailcatcher (mailcatcher.me):\
+$ mailcatcher\
+http://localhost:1080\
+\
+to see messages:\
+http://localhost:3000/messages/index\
+\
+to login to the web-app:\
+https://app.zivver.com/login\
+\
+
+\f0\b MOBILE:
+\f1\b0 \
+either create a link from the webapp project:\
+$ npm link\
+then install link in the mobile project:\
+$ npm link @zivver/webapp \
+\
+or hardcopy the directory with\
+$ npm i @zivver/webapp\
+\
+\
+
+\f0\b EMAILS:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0 \cf0 change settings.json to port 1025 used by mail catcher\
+\
+run sass, html and email compiles:\
+$ grunt\
+\
+emails can be seen in {\field{\*\fldinst{HYPERLINK "http://localhost:8000/"}}{\fldrslt http://localhost:8000}}\
+\
+connect to the server with:\
+$ grunt connect\
+\
+test all mock emails with:\
+$ grunt test-emails\
+\
+render templates\
+$ npx grunt && sbt render/run\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 SUPPORT PANEL:
+\f1\b0 \
+$ node node_modules/.bin/ng serve\
+\
+
+\f0\b Testing:
+\f1\b0 \
+to run the karma tests in single run:\
+$ npm run test\
+\
+fdescribe() to focus, xdescribe() to ignore, describe() otherwise\
+\
+
+\f0\b New version: 
+\f1\b0 \
+always do it on master\
+make sure that the ZIVVER api is not a snapshot in package.json\
+$ npm version   , from /zivver-webapp displays versions\
+$ npm install    (everytime I switch branches actually)\
+$ npm version patch    , to create a new patch, or\
+$ npm version minor   , to create a new minor version\
+\
+
+\f0\b Git:
+\f1\b0 \
+To configure git account:\
+$ git config user.name 'Mathias Bonnet' && git config user.email mathias.bonnet@zivver.com\
+To see local and remote branches:\
+$ git branch -a -v\
+$ git branch -merged   or   git branch -no-merged\
+To clean remote branches:\
+$ git remote prune origin\
+\
+
+\f0\b Chrome inspector:
+\f1\b0 \
+use $0 in console to refer to selected element\
+\
+
+\f0\b Others:
+\f1\b0 \
+$ npm run generateHtml\
+$ npm run translation sync\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "http://localhost:18081/secrets"}}{\fldrslt \cf0 http://localhost:18081/secrets}}: to get secret to fill in instead of validation key\
+$ ping 8.8.8.8 (test connection)	\
+$ ncdu (view disk usage)\
+\
+Create a new organization account: \
+- from script (removed)\
+$ node scripts/create-organization.js --email=alwin@zivver.com --organization=ZIVVER --password=***\
+\
+- from support panel:\
+run the support panel project\
+go to http://localhost:4200\
+\
+- from curl request (token from localhost:18081/secrets?email=mat@smurf.com")\
+curl -X "POST" "http://localhost:3000/api/signup/create" \\\
+     -H "Accept-Language: nl" \\\
+     -H "Accept: application/json" \\\
+     -H "Content-Type: application/json; charset=utf-8" \\\
+     -d $'\{\
+  "password": "zivvSmur16!",\
+  "acceptLegalDocumentSet": "e5e138a1-fac6-4945-be18-3222e450d36f",\
+  "fullName": "Smurf&Co",\
+  "accountType": "business",\
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqc29uQ2xhc3MiOiJFbWFpbFJlZ2lzdHJhdGlvblRva2VuIiwiZW1haWxBZGRyZXNzIjoibWF0QHNtdXJmLmNvbSIsImV4cCI6IjIwMTgtMDQtMDFUMDk6NTE6MjEuMDQ5WiJ9.TC1yCEDsx51IM_xFqIB9G4tIwz3TnRmkpNAH8Ag4GQ4" \
+\}'\
+\
+\
+Ctrl+z to put process in background and $fg to bring it back to the foreground\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 Encryption
+\f1\b0 :\
+ZIVVER generates random public and private keys.\
+ZIVVER has the public and private keys of all users. But the private key is encrypted (AES symmetrical encryption) with a passkey, which is generated from the user password.\
+Data from A is encrypted with the public key of B. B can then read it with his private key.\
+The passkey is then asymmetrically encrypted with the public key of the receiver B. Then the passkey is thrown away and only the encrypted passkey is stored on the server.\
+All recipients passkeys are encrypted.\
+The organization public key is also used in the encryption of the private keys of all organization users so they can access everything. But all accesses are logged. Also useful to retrieve the users private keys in case they forget their password.\
+Guest users get sent the generate passkey which is stored in a token.\
+Complication: outlook can only send one token per email, even to several guest users (improvement with several emails foreseen).\
+The access token contains is generated from a new encryption of the private key decrypted from the sent passkey.\
+The shared token is used for unregistered users.\
+The second factor is a separate logic that does not involve encryption.\
+\
+
+\f0\b AWS:
+\f1\b0 \
+$ aws-vault exec Developer -- aws s3 cp ~/Zivver/version-check-test.json s3://prod-zivver-downloads/mobile/version-check-test.json\
+shows in https://downloads.zivver.com/mobile/version-check-test.json\
+\
+
+\f0\b Typescript:
+\f1\b0 \
+$ typings install dt~cordova --global\
+\
+
+\f0\b BrowserStack:
+\f1\b0 \
+mephforlEkEmnic\
+\
+
+\f0\b Useful commands:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0 \cf0 Search for `bla` in git history\
+$ git log -Sbla --branches=master\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 Push notifications:
+\f1\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \ul Notification on COM:\ulnone \
+curl -X POST -H "Authorization: key=AAAAk-duA9Q:APA91bF-QzjOrEDuUoTMWJ-99zur8qI9IuP-mlIgOM4fo7xUMsd0slMGOZXCnKM0eHJ3c9JBFXrXTySk-W3_RjBF4S7CfHQVtwYyhl0gaan8KSgvtSM-0brWy_1anT3Ly_beAkIXjCan" -H "Content-Type: application/json" -d '\{ "notification": \{ "title": "New ZIVVER message", "body": "You have 1 new message",  "icon": "zivver-logo.png",  "click_action": "https://app.zivver.com/conversations/inbox" \}, "to": "cmlBo7BJ1ec:APA91bEcXbyC5ZPvsynTQXKOwzV5D5sh0xMSx1--hVFBKTqjE5Rq6sV7RzMas1EBiRONSSiwYjyXQALZSvFzI2WdARHbgkycxAHXnp6asrNlmG_MQGLM0l6Wx_pq29pXgTOdFbvrxut0"\}' "https://fcm.googleapis.com/fcm/send"\
+\
+\ul Notification on ORG:\ulnone \
+curl -X POST -H "Authorization: key=AAAAiBS5ECo:APA91bFq7FJl27sF93mJlv6rkVPo3Q_kUZERD4X0LIb7n_-PuLBQiFAV_TQD_FD1RJHbMWScY8QarClRL8Mxxo2Tn9EfPTme96A48McwjZang2PuJAZKVG0H0hZBqHsVV01WQ8X7LGye" -H "Content-Type: application/json" -d '\{ "data": \{ "title": "New ZIVVER message", "message": "You have 1 new message",  "image": "https://img.zivver.com/HULnZMiWv_h4HBQLwy4_utVkT3o=/64x64/test-zivver-assets/avatars/3d/0f/3d0f6d3b-8a3b-4958-a40f-b3cf6fad9aba", "image-type": "circle", "soundname": "default", "conversationUuid": "8441a743-4632-4395-90e2-9718f0a8e300", "click_action": "https://app.zivver.com/conversations/inbox" \}, "to": "dOiO_qnPpuU:APA91bHt8BMsP0WpUtv_PF2sI6rYDHTea3E9n0u6GH3vm045YE_ZlB4Ux6_p2JK5qirtobfMF7WgtM3W2HllPwzOBpilGGatSbT-qdh5BOWBv7-MTHFTh6AwLNpHf7f00Wu6hIKoSCWp"\}' "https://fcm.googleapis.com/fcm/send"\
+\
+\ul Android:\ulnone \
+curl -X POST -H "Authorization: key=AAAAiBS5ECo:APA91bFq7FJl27sF93mJlv6rkVPo3Q_kUZERD4X0LIb7n_-PuLBQiFAV_TQD_FD1RJHbMWScY8QarClRL8Mxxo2Tn9EfPTme96A48McwjZang2PuJAZKVG0H0hZBqHsVV01WQ8X7LGye" -H "Content-Type: application/json" -d '\{"to":"fE7YMTlVCNY:APA91bHgNeTryILwxBvSBfiuzB5E4nZKIuPKE11W0IUqJ0jttdsZYhaIxjazi80WEMrK2657CECezdGAUhdmsdm8R1RvKOWJOiWdy-h38W-YO8cE3AmNtuL35jKbFFjAztnM24ACtmYq","data":\{"content_available":"1", "title":"Hola","body":"Testing","conversationUuid":"569a52ea-fcd6-4066-ab06-5a895eeac327","accountUuid":"c2a2c4a2-9285-4a0e-b8f7-5b3acb042f31","shareUuid":"edf77c87-0680-4825-bc53-27af558bfc30","image": "https://img.zivver.com/HULnZMiWv_h4HBQLwy4_utVkT3o=/64x64/test-zivver-assets/avatars/3d/0f/3d0f6d3b-8a3b-4958-a40f-b3cf6fad9aba", "image-type": "circle"\}\}' "https://fcm.googleapis.com/fcm/send"\
+\
+curl -X POST -H "Authorization: key=AAAAiBS5ECo:APA91bFq7FJl27sF93mJlv6rkVPo3Q_kUZERD4X0LIb7n_-PuLBQiFAV_TQD_FD1RJHbMWScY8QarClRL8Mxxo2Tn9EfPTme96A48McwjZang2PuJAZKVG0H0hZBqHsVV01WQ8X7LGye" -H "Content-Type: application/json" -d '\{"to":"dRRZ-b-E0IY:APA91bGBSPssaLU_kiLMioTzue81c-Z9bfLezdMV8HUV0orB4n31U-sAdM1ADS-nU_uPiHhumMPeGDjdyA0gDIFC-3gp1hK7pTlRDXyQnj7BRspOUa6c-4zasqsugXzI1l38pPcIk_47","data":\{"title":"Hola","body":"Testing","notId": 10,"conversationUuid":"569a52ea-fcd6-4066-ab06-5a895eeac327","accountUuid":"c2a2c4a2-9285-4a0e-b8f7-5b3acb042f31","shareUuid":"30dbb25c-d82b-409f-86c1-df5e27483480", "image":"https://img.zivver.com/iar11jeWz5T_3E_4f-P7tvsIrLc=/prod-zivver-assets/static/guest.png", "image-type":"circle", "sound":"default"\},"time_to_live":3600,"content_available":true\}' "https://fcm.googleapis.com/fcm/send"\
+\
+curl -X POST \\\
+-H "Authorization: key=AAAAiBS5ECo:APA91bFq7FJl27sF93mJlv6rkVPo3Q_kUZERD4X0LIb7n_-PuLBQiFAV_TQD_FD1RJHbMWScY8QarClRL8Mxxo2Tn9EfPTme96A48McwjZang2PuJAZKVG0H0hZBqHsVV01WQ8X7LGye" \\\
+-H "Content-Type: application/json" \\\
+-d '\{"to":"cfSod9PItDA:APA91bFVogY35TTygNSdweZrcqhBOJEMMMFV8r9YKztixcOs3B1WaZHB0MpnGbhjhnU_Fv-J3-Fu6QnG3gWm-sWCnqNDjyEPL2WZCcHU_wW0_d8h-Uy6gAZaxKj7U4rV6ZPBhwJVf14c", "data":\{"title":"My title", "body":"My message", "sound":"default", "badge": "0", "conversationUuid":"569a52ea-fcd6-4066-ab06-5a895eeac327","accountUuid":"c2a2c4a2-9285-4a0e-b8f7-5b3acb042f31","shareUuid":"edf77c87-0680-4825-bc53-27af558bfc30", "image":"https://img.zivver.com/iar11jeWz5T_3E_4f-P7tvsIrLc=/prod-zivver-assets/static/guest.png", "image-type":"circle"\}\}' "https://fcm.googleapis.com/fcm/send"\
+\
+\ul iOS:\ulnone \
+curl -X POST \\\
+-H "Authorization: key=AAAAiBS5ECo:APA91bFq7FJl27sF93mJlv6rkVPo3Q_kUZERD4X0LIb7n_-PuLBQiFAV_TQD_FD1RJHbMWScY8QarClRL8Mxxo2Tn9EfPTme96A48McwjZang2PuJAZKVG0H0hZBqHsVV01WQ8X7LGye" \\\
+-H "Content-Type: application/json" \\\
+-d '\{"to":"cmlBo7BJ1ec:APA91bEcXbyC5ZPvsynTQXKOwzV5D5sh0xMSx1--hVFBKTqjE5Rq6sV7RzMas1EBiRONSSiwYjyXQALZSvFzI2WdARHbgkycxAHXnp6asrNlmG_MQGLM0l6Wx_pq29pXgTOdFbvrxut0","data":\{"conversationUuid":"569a52ea-fcd6-4066-ab06-5a895eeac327","accountUuid":"c2a2c4a2-9285-4a0e-b8f7-5b3acb042f31","shareUuid":"30dbb25c-d82b-409f-86c1-df5e27483480", "image":"https://img.zivver.com/iar11jeWz5T_3E_4f-P7tvsIrLc=/prod-zivver-assets/static/guest.png", "image-type":"circle"\},"notification":\{"title":"Hola","body":"Testing","sound":"default"\},"time_to_live":3600,"content_available":true\}' "https://fcm.googleapis.com/fcm/send"\
+\
+curl -X POST \\\
+-H "Authorization: key=AAAAiBS5ECo:APA91bFq7FJl27sF93mJlv6rkVPo3Q_kUZERD4X0LIb7n_-PuLBQiFAV_TQD_FD1RJHbMWScY8QarClRL8Mxxo2Tn9EfPTme96A48McwjZang2PuJAZKVG0H0hZBqHsVV01WQ8X7LGye" \\\
+-H "Content-Type: application/json" \\\
+-d '\{"to":"cmlBo7BJ1ec:APA91bEFcS3gJCsB24iU0BTSReq7w6KbpXnWKYta4K72Gw8qOxkkq1YiNv_NfSThQ-No2mvjugrylt85GtDB6jDCH142pnllsIlaHKRpw2u2JRGPAPqnrfRE5JwRd3x5_5hhW89_mNTR","data":\{"title":"Hola","body":"Testing","notId": 10,"conversationUuid":"569a52ea-fcd6-4066-ab06-5a895eeac327","accountUuid":"c2a2c4a2-9285-4a0e-b8f7-5b3acb042f31","shareUuid":"30dbb25c-d82b-409f-86c1-df5e27483480", "image":"https://img.zivver.com/iar11jeWz5T_3E_4f-P7tvsIrLc=/prod-zivver-assets/static/guest.png", "image-type":"circle", "sound":"default"\},"priority": "high","time_to_live":3600,"content_available":true\}' "https://fcm.googleapis.com/fcm/send"\
+\
+curl -X POST \\\
+-H "Authorization: key=AAAACa-SWJM:APA91bG6g-86dFPQ4L3m78SQ1fVFSggECEeT2pJlr5yQXpj7xrWxtu4DRDTYPu-Buom7wxUt_jah-cuey_1qPW8pLXM6H77RwdxXGXYn6l2EI-Dz1TyEgqBxHX2kSLiXYVGYaIfC9472" \\\
+-H "Content-Type: application/json" \\\
+-d '\{"to": "ff4I6hVIRamc:APA91bHneZbWln2BtnnTiUnA4WpXqfdwgR7t6KQ5f35F_waoQfxMIR1T0niZC6_YP9hHrUDtMfV8AjqlJKXUYO1YcFnenoEilosPukV8iHDDWuce35SYCsTEWeJvD9L0A5uXmSpb5D_DbNEul4o61q7t7VDOtZnUlA","data": \{"title": "Test","body": "Yay!","sound": "default","time_to_live": 3600, "conversationUuid": "66ed49e3-a3e1-4b5a-b24a-273ba2946fbe","accountUuid": "1af10d66-0a27-495d-8c6a-b8a537c8c139","shareUuid": "62cd5564-2a40-44f0-ac9e-09a1892c5eb6","messageId": 6,"image": "https:\\/\\/img.zivver.com\\/iar11jeWz5T_3E_4f-P7tvsIrLc=\\/prod-zivver-assets\\/static\\/guest.png","imageType": "circle"\}\}' "https://fcm.googleapis.com/fcm/send"\
+\
+\
+\
+curl -X POST -H "Authorization: key=AAAAiBS5ECo:APA91bFq7FJl27sF93mJlv6rkVPo3Q_kUZERD4X0LIb7n_-PuLBQiFAV_TQD_FD1RJHbMWScY8QarClRL8Mxxo2Tn9EfPTme96A48McwjZang2PuJAZKVG0H0hZBqHsVV01WQ8X7LGye" -H "Content-Type: application/json" -d '\{ "notification": \{ "title": "New ZIVVER message", "body": "You have 1 new message",  "icon": "zivver-logo.png",  "click_action": "https://app.zivver.com/conversations/inbox" \}, "to": "ddZUEI_F-Nw:APA91bGe1yI_yQsYA1MNc-LiumLMwXpWzDezpJGoA0Rkg3ftWu3VUON6By6ue1JJWsMHBfh1zOrmAyc84yxcf8Bwub2uYYsDffHb7X-lJCwMUm3aAICFrrrDfX8Hv-BOBseIxKt1CDJ6"\}' "https://fcm.googleapis.com/fcm/send"\
+\
+curl -X POST -H "Authorization: key=AAAAiBS5ECo:APA91bFq7FJl27sF93mJlv6rkVPo3Q_kUZERD4X0LIb7n_-PuLBQiFAV_TQD_FD1RJHbMWScY8QarClRL8Mxxo2Tn9EfPTme96A48McwjZang2PuJAZKVG0H0hZBqHsVV01WQ8X7LGye" -H "Content-Type: application/json" -d '\{ "message": \{"token":"eta5amWquQY:APA91bEZ8Gl8i_xFMrzr126yoNGFvL19jhmd64G4Z1DWzQEgHhf2oasR7LbdE-hzW7GIYZgIhJtHUM18-rpzOiStX6XF3f06mun77Cnx4wEkyS3b1mxOZmx9TGNwuNoBJn8IUUoBSH_D","notification": \{"title":"Match update", "body":"Arsenal goal in added time, score is now 3-0"\},"android":\{"ttl":"86400s","notification": \{"click_action":"OPEN_ACTIVITY_1"\}\},"apns": \{"headers": \{"apns-priority": "5"\},"payload": \{"aps": \{"category": "NEW_MESSAGE_CATEGORY"\}\}\}\}\} ' "https://fcm.googleapis.com/fcm/send"\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 received on Android:
+\f1\b0 \
+\{"data": \
+  \{"title":"Pablo",\
+   "message":"yayyy push 
+\f4 \uc0\u55356 \u57225 
+\f1 ",\
+   "additionalData":\
+     \{"shareUuid":"1cf9079e-e7fe-436c-a570-0f1a99e2220a",\
+      "messageId":"2",\
+      "conversationUuid":"a705c7ab-4abf-4a90-8ca3-b0d8aa0e502e",\
+      "icon":"http://localhost:3001/api/static/avatars/07/6b/076bb6dc-1d69-4060-90fa-f8264bcc2430",\
+      "color":"#f45342",\
+      "accountUuid":"9572a277-5c04-4e37-8928-2bc173206260",\
+      "coldstart":false,\
+      "foreground":true\}\
+   \}\
+\}\
+\
+
+\f0\b received on iOS:
+\f1\b0 \
+\{"data":\
+  \{"title":"Pablo",\
+   "message":"yayyy push 
+\f4 \uc0\u55356 \u57225 
+\f1 ",\
+   "additionalData":\
+     \{"messageId":"12",\
+      "accountUuid":"9572a277-5c04-4e37-8928-2bc173206260",\
+      "shareUuid":"1cf9079e-e7fe-436c-a570-0f1a99e2220a",\
+      "coldstart":false,\
+      "gcm.message_id":"1527845589647192",\
+      "foreground":true,\
+      "conversationUuid":"a705c7ab-4abf-4a90-8ca3-b0d8aa0e502e"\}\
+   \}\
+\}\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \ul Android foreground:\
+\ulnone \{"data":\{"title":"Match","message":"score 3-0","additionalData":\{"key1":"2538","key2":"bla","coldstart":false,"android_data":"yeahyeah","foreground":true\}\}\}\
+\
+\ul Android background:\
+\ulnone \
+\ul iOS foreground:\
+\pard\tx543\pardeftab543\pardirnatural\partightenfactor0
+\cf0 \ulnone \{"data":\{"message":"score 3-0","title":"Match","count":3,"additionalData":\{"ios_data":"blabla","key2":"bla","category":"NEW_MESSAGE_CATEGORY","coldstart":false,"foreground":true,"key1":"2538","gcm.message_id":"1525872045496330"\}\}\}\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \ul iOS background:\
+\ulnone \{"data":\{"message":"score 3-0","title":"Match","count":3,"additionalData":\{"ios_data":"blabla","key2":"bla","category":"NEW_MESSAGE_CATEGORY","coldstart":false,"foreground":false,"key1":"2538","gcm.message_id":"1525872106816077"\}\}\}\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 CodeceptJS:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0 \cf0 \ul ReadMe: \ulnone \
+Use ```instruments -s devices``` to get the list of installed iOS devices and their udid\
+Follow {\field{\*\fldinst{HYPERLINK "https://github.com/appium/appium-xcuitest-driver"}}{\fldrslt https://github.com/appium/appium-xcuitest-driver}} and {\field{\*\fldinst{HYPERLINK "https://github.com/appium/appium-xcuitest-driver/blob/master/docs/real-device-config.md"}}{\fldrslt https://github.com/appium/appium-xcuitest-driver/blob/master/docs/real-device-config.md}} to install the proper dependencies to run the Appium XCuiTest driver\
+Run appium and then run ./node_modules/.bin/codeceptjs run --steps --debug --verbose login\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0 \cf0 \ul Config iOS simulator:\ulnone \
+\{\
+    "tests": "./tests/*_test.js",\
+    "timeout": 10000,\
+    "output": "./output",\
+    "helpers": \{\
+	"Appium": \{\
+      		"app": "/Users/MaT/Zivver/zivver-mobile/platforms/ios/build/device/ZIVVER.org.ipa",\
+		"platform": "iOS",\
+      		"desiredCapabilities": \{\
+          		"deviceName": "iPhone Simulator",\
+          		"udid": "5E85D3CD-396E-4F4A-8AB6-DB8930FC3D73",\
+          		"language": "en",\
+          		"xcodeOrgId": "XX9FS46E5A",\
+          		"xcodeSigningId": "iPhone Developer",\
+          		"automationName": "XCUITest",\
+          		"realDeviceLogger": "idevicesyslog",\
+          		"keychainPath": "/Users/MaT/Library/Keychains/xcodebuild.keychain",\
+          		"keychainPassword": "password",\
+          		"noReset": false,\
+          		"fullReset": true\
+      		\}\
+    	\}\
+    \},\
+    "include": \{\},\
+    "bootstrap": false,\
+    "mocha": \{\},\
+    "name": "zivver-mobile-tests"\
+\}\
+\
+\ul Config iOS device:\ulnone \
+"Appium": \{\
+            "app": "/Users/MaT/Zivver/zivver-mobile/platforms/ios/build/device/ZIVVER.org.ipa",\
+            "desiredCapabilities": \{\
+                "platformName": "iOS",\
+                "deviceName": "iPhone6MaT",\
+                "udid": "26160f99d5b8d3efbf332954ab70f01bbba11dd9",\
+                "appActivity": "MainActivity",\
+                "xcodeOrgId": "XX9FS46E5A",\
+                "xcodeSigningId": "iPhone Developer",\
+                "automationName": "XCUITest",\
+                "keychainPath": "/Users/MaT/Library/Keychains/xcodebuild.keychain-db",\
+                "keychainPassword": "password",\
+                "noReset": true\
+            \}\
+        \}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0 \cf0 \ul Config Android:
+\f0\b \ulnone \
+
+\f1\b0 "Appium": \{\
+            "app": "/Users/MaT/Zivver/zivver-mobile/platforms/android/build/outputs/apk/android-armv7-release.apk",\
+            "platform": "Android",\
+            "desiredCapabilities": \{\
+                "appActivity": "MainActivity"\
+            \},\
+            "device": "emulator"\
+        \}\
+\ul \
+Helper:\ulnone \
+Feature('Logging in');\
+Scenario('test logging in', function* (I) \{\
+	I.wait(6); // wait 6 secs\
+	let contexts = yield I.grabAllContexts();\
+	console.log('contexts: ', contexts);\
+	I.switchToWeb();\
+	// I.switchToWeb('WEBVIEW_io.selendroid.testapp');\
+	// I.fillField('#username', 'mathias.bonnet@zivver.com');\
+	// I.fillField('#password', 'test!');\
+	I.fillField('input[name="username"]','mathias.bonnet@zivver.com');\
+	I.fillField('input[name="password"]','test!');\
+	I.click('button');\
+	I.wait(2); // wait 2 secs\
+\});\
+\
+\
+\
+\
+\
+}

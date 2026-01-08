@@ -1,0 +1,13 @@
+<sh-topbar
+  (logout)="logout()"
+  [authenticationResult]="authenticationResult$|async"
+></sh-topbar>
+<div class="shell__content">
+  <sh-sidebar
+    [authenticationResult]="authenticationResult$|async"
+    class="shell__content-left"
+  ></sh-sidebar>
+  <div class="shell__content-right">
+    <router-outlet></router-outlet>
+  </div>
+</div>

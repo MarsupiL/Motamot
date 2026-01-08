@@ -1,0 +1,349 @@
+/* 
+ * __define-ocg__ - Global SCSS file updated for Tailwind CSS integration
+ * 
+ * This file has been updated to work alongside Tailwind CSS while maintaining
+ * essential global styles and custom properties for the Lumen Design System.
+ * 
+ * Migration approach:
+ * - Removed redundant utility classes (now handled by Tailwind)
+ * - Kept essential global styles and resets
+ * - Added Tailwind integration and custom properties
+ * - Maintained SCSS variables for complex calculations
+ */
+
+@use 'variables' as vars;
+
+/* Import Tailwind CSS */
+@import 'tailwind.css';
+
+/* Global resets and base styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  
+  /* Custom properties for dynamic theming */
+  --color-primary: theme('colors.blue.600');
+  --color-primary-hover: theme('colors.blue.700');
+  --color-secondary: theme('colors.slate.600');
+  --color-secondary-hover: theme('colors.slate.700');
+  --color-success: theme('colors.green.600');
+  --color-danger: theme('colors.red.600');
+  --color-warning: theme('colors.yellow.500');
+  --color-info: theme('colors.sky.600');
+  
+  /* Typography custom properties */
+  --font-family-sans: theme('fontFamily.sans');
+  --font-family-mono: theme('fontFamily.mono');
+  
+  /* Spacing custom properties */
+  --spacing-xs: theme('spacing.1');
+  --spacing-sm: theme('spacing.2');
+  --spacing-md: theme('spacing.4');
+  --spacing-lg: theme('spacing.6');
+  --spacing-xl: theme('spacing.8');
+  
+  /* Border radius custom properties */
+  --radius-sm: theme('borderRadius.sm');
+  --radius-md: theme('borderRadius.md');
+  --radius-lg: theme('borderRadius.lg');
+  --radius-xl: theme('borderRadius.xl');
+  
+  /* Shadow custom properties */
+  --shadow-sm: theme('boxShadow.sm');
+  --shadow-md: theme('boxShadow.md');
+  --shadow-lg: theme('boxShadow.lg');
+  --shadow-xl: theme('boxShadow.xl');
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  
+  /* Apply Tailwind classes through @apply */
+  @apply text-slate-900 bg-slate-50 leading-relaxed;
+}
+
+/* Enhanced focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Improved link styles */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+  
+  &:hover {
+    color: var(--color-primary-hover);
+  }
+  
+  &:focus-visible {
+    outline-color: var(--color-primary);
+  }
+}
+
+/* Button reset and base styles */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  
+  &:focus-visible {
+    outline-color: var(--color-primary);
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+/* Form element improvements */
+input,
+textarea,
+select {
+  font-family: inherit;
+  
+  &:focus-visible {
+    outline-color: var(--color-primary);
+  }
+}
+
+/* Image optimization */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Table improvements */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* Code styling */
+code,
+pre {
+  font-family: var(--font-family-mono);
+}
+
+code {
+  @apply bg-slate-100 text-slate-800 px-1 py-0.5 rounded text-sm;
+}
+
+pre {
+  @apply bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto;
+  
+  code {
+    @apply bg-transparent text-inherit p-0;
+  }
+}
+
+/* Blockquote styling */
+blockquote {
+  @apply border-l-4 border-slate-300 pl-4 italic text-slate-600;
+}
+
+/* Horizontal rule styling */
+hr {
+  @apply border-0 border-t border-slate-200 my-8;
+}
+
+/* Selection styling */
+::selection {
+  background-color: rgba(59, 130, 246, 0.2);
+  color: inherit;
+}
+
+/* Scrollbar styling for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full;
+  
+  &:hover {
+    @apply bg-slate-400;
+  }
+}
+
+/* Print styles */
+@media print {
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+  
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+  
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+  
+  thead {
+    display: table-header-group;
+  }
+  
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  
+  img {
+    max-width: 100% !important;
+  }
+  
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-primary: #0000ff;
+    --color-danger: #ff0000;
+    --color-success: #008000;
+  }
+  
+  button,
+  input,
+  select,
+  textarea {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Dark mode support (when enabled) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: theme('colors.blue.400');
+    --color-primary-hover: theme('colors.blue.300');
+    --color-secondary: theme('colors.slate.400');
+    --color-secondary-hover: theme('colors.slate.300');
+  }
+  
+  /* Note: Full dark mode implementation would require 
+     additional Tailwind configuration and component updates */
+}
+
+/* Custom utility classes that extend Tailwind */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* Legacy browser support */
+@supports not (aspect-ratio: 1) {
+  .aspect-video {
+    position: relative;
+    
+    &::before {
+      content: '';
+      display: block;
+      padding-top: 56.25%; /* 16:9 aspect ratio */
+    }
+    
+    > * {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+/* Container query support (when available) */
+@supports (container-type: inline-size) {
+  .container-query {
+    container-type: inline-size;
+  }
+}
+
+/* Enhanced focus management for keyboard navigation */
+.js-focus-visible :focus:not(.focus-visible) {
+  outline: none;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  @apply absolute -top-10 left-4 bg-blue-600 text-white px-4 py-2 rounded-md z-50 transition-all duration-200;
+  
+  &:focus {
+    @apply top-4;
+  }
+}
+
+/* Screen reader only content */
+.sr-only {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* Not screen reader only (for toggling) */
+.not-sr-only {
+  @apply static w-auto h-auto p-0 m-0 overflow-visible whitespace-normal border;
+  clip: auto;
+}

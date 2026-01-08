@@ -1,0 +1,6 @@
+---
+- include: roles/common.yml
+- include: roles/dbserver.yml
+- include: roles/mailserver.yml
+# - include: roles/backend.yml
+# - include: roles/proxy.yml

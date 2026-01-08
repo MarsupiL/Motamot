@@ -1,0 +1,10 @@
+<div class="category-overview__top">
+  <h1>Category overview</h1>
+  <a routerLink="add" shButton>Add</a>
+</div>
+<div class="category--overview__content">
+  <sh-category-list
+    [categories]="categoriesWithProductCount$|async"
+  ></sh-category-list>
+</div>
+<router-outlet></router-outlet>

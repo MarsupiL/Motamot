@@ -1,0 +1,30 @@
+---
+- name: "apt related stuff"
+  hosts: all
+  become: yes
+  tasks:
+    - name: Make sure we have common packages (git, curl, etc.)
+      apt: >
+        state=present
+        update_cache=no
+        name={{item}}
+      with_items:
+        - apt-transport-https
+        - bash-completion
+        - ca-certificates
+        - curl
+        #- dbus
+        - dnsutils
+        - git
+        - gnupg
+        - htop
+        # - ldnsutils
+        - less
+        - ntp
+        - postgresql-client
+        # - python-httplib2
+        - rsync
+        - unattended-upgrades
+        - unzip
+        - vim
+        - wget

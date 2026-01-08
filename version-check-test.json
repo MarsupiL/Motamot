@@ -1,0 +1,24 @@
+{
+    "android" :
+    [
+        {
+            "version" : "<=2.7.0",
+            "message" : 
+            {
+                "en" : "This version of the app is outdated, please update the mobile app to the latest version from the Google Play Store",
+                "nl" : "Deze app versie is verouderd, installeer a.u.b de nieuwste versie uit de Google Play Store"
+            }
+        }
+    ],
+    "ios" :
+    [
+        {
+            "version" : "<=2.7.0",
+            "message" : 
+            {
+                "en" : "This version of the app is outdated, please update the mobile app to the latest version from the Apple App Store",
+                "nl" : "Deze app versie is verouderd, installeer a.u.b de nieuwste versie uit de Apple App Store"
+            }
+        }
+    ]
+}

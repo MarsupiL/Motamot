@@ -1,0 +1,29 @@
+<sh-breadcrumb [breadcrumbItems]="breadcrumbItems"></sh-breadcrumb>
+<h1>My shopping cart</h1>
+<form>
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Amount</th>
+        <th>Price/item</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Apple iPhone 14 256GB Midnight + Apple USB-C Charger 20W</td>
+        <td>
+          <label><input type="number" value="2" /></label>
+        </td>
+        <td>1690 &euro;</td>
+      </tr>
+      <tr>
+        <td><strong>Total</strong></td>
+        <td>2</td>
+        <td>3380 &euro;</td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+
+<a routerLink="order" shButton>Order now</a>

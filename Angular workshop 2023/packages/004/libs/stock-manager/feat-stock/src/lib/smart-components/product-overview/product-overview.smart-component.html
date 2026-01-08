@@ -1,0 +1,11 @@
+<div class="product-overview__top">
+  <h1>Product overview</h1>
+  <a routerLink="add" shButton>Add</a>
+</div>
+<div class="product-overview__content">
+  <sh-product
+    *ngFor="let product of products$|async"
+    [product]="product"
+    class="product-overview__content-item"
+  ></sh-product>
+</div>

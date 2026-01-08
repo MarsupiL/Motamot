@@ -1,0 +1,25 @@
+<form #form="ngForm">
+  <table>
+    <thead>
+      <tr>
+        <th>Product name</th>
+        <th>In stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of productsCopy">
+        <td>{{product?.name}}</td>
+        <td>
+          <label>
+            <input
+              (change)="stockChange.emit(product)"
+              [(ngModel)]="product.quantity"
+              [name]="'quantity_'+ product.id"
+              type="number"
+            />
+          </label>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>

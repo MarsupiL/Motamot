@@ -1,0 +1,4 @@
+<ng-container *ngIf="authenticationResult">
+  <span>Welcome {{authenticationResult?.firstName}}</span>
+  <button (click)="logout.emit()" shButton>Sign out</button>
+</ng-container>

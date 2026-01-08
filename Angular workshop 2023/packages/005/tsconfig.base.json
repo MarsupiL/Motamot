@@ -1,0 +1,57 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@shoppie/frontend/data-access-auth": [
+        "libs/frontend/data-access-auth/src/index.ts"
+      ],
+      "@shoppie/frontend/data-access-product": [
+        "libs/frontend/data-access-product/src/index.ts"
+      ],
+      "@shoppie/frontend/type-auth": ["libs/frontend/type-auth/src/index.ts"],
+      "@shoppie/frontend/type-product": [
+        "libs/frontend/type-product/src/index.ts"
+      ],
+      "@shoppie/frontend/ui-design-system": [
+        "libs/frontend/ui-design-system/src/index.ts"
+      ],
+      "@shoppie/shop/data-access-payment": [
+        "libs/shop/data-access-payment/src/index.ts"
+      ],
+      "@shoppie/shop/feat-auth": ["libs/shop/feat-auth/src/index.ts"],
+      "@shoppie/shop/feat-payment": ["libs/shop/feat-payment/src/index.ts"],
+      "@shoppie/shop/feat-product": ["libs/shop/feat-product/src/index.ts"],
+      "@shoppie/shop/feat-shell": ["libs/shop/feat-shell/src/index.ts"],
+      "@shoppie/shop/type-payment": ["libs/shop/type-payment/src/index.ts"],
+      "@shoppie/stock-manager/data-access-stock": [
+        "libs/stock-manager/data-access-stock/src/index.ts"
+      ],
+      "@shoppie/stock-manager/feat-auth": [
+        "libs/stock-manager/feat-auth/src/index.ts"
+      ],
+      "@shoppie/stock-manager/feat-shell": [
+        "libs/stock-manager/feat-shell/src/index.ts"
+      ],
+      "@shoppie/stock-manager/feat-stock": [
+        "libs/stock-manager/feat-stock/src/index.ts"
+      ],
+      "@shoppie/tools": ["libs/tools/src/index.ts"],
+      "@shoppie/shop/feat-product/mock-data": ["libs/shop/feat-product/src/mock-api/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

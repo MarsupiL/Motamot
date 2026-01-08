@@ -1,0 +1,184 @@
+/* 
+ * __define-ocg__ - Layout CSS Module file migrated to Tailwind CSS
+ * 
+ * This CSS Module file previously defined layout utility classes for the design system.
+ * All layout functionality has been migrated to Tailwind CSS utility classes and 
+ * responsive design patterns.
+ * 
+ * Migration completed as part of the Lumen Design System unification project.
+ * 
+ * Original layout classes and their Tailwind equivalents:
+ * 
+ * Container Classes:
+ * .container -> container (or max-w-7xl mx-auto px-4)
+ * .containerFluid -> w-full px-4
+ * 
+ * Grid System:
+ * .row -> flex flex-wrap -mx-4
+ * .col -> flex-1 px-4
+ * .col1 -> w-1/12 px-4
+ * .col2 -> w-2/12 px-4 (or w-1/6)
+ * .col3 -> w-3/12 px-4 (or w-1/4)
+ * .col4 -> w-4/12 px-4 (or w-1/3)
+ * .col6 -> w-6/12 px-4 (or w-1/2)
+ * .col12 -> w-full px-4
+ * 
+ * Display Classes:
+ * .dFlex -> flex
+ * .dBlock -> block
+ * .dInline -> inline
+ * .dInlineBlock -> inline-block
+ * .dNone -> hidden
+ * .dGrid -> grid
+ * 
+ * Flexbox Classes:
+ * .justifyContentStart -> justify-start
+ * .justifyContentCenter -> justify-center
+ * .justifyContentEnd -> justify-end
+ * .justifyContentBetween -> justify-between
+ * .justifyContentAround -> justify-around
+ * .justifyContentEvenly -> justify-evenly
+ * .alignItemsStart -> items-start
+ * .alignItemsCenter -> items-center
+ * .alignItemsEnd -> items-end
+ * .alignItemsStretch -> items-stretch
+ * .alignItemsBaseline -> items-baseline
+ * .flexColumn -> flex-col
+ * .flexRow -> flex-row
+ * .flexWrap -> flex-wrap
+ * .flexNowrap -> flex-nowrap
+ * 
+ * Position Classes:
+ * .positionStatic -> static
+ * .positionRelative -> relative
+ * .positionAbsolute -> absolute
+ * .positionFixed -> fixed
+ * .positionSticky -> sticky
+ * 
+ * Positioning Values:
+ * .top0 -> top-0
+ * .top1 -> top-1
+ * .top2 -> top-2
+ * .bottom0 -> bottom-0
+ * .left0 -> left-0
+ * .right0 -> right-0
+ * 
+ * Z-Index Classes:
+ * .zIndex0 -> z-0
+ * .zIndex10 -> z-10
+ * .zIndex20 -> z-20
+ * .zIndex30 -> z-30
+ * .zIndex40 -> z-40
+ * .zIndex50 -> z-50
+ * 
+ * Overflow Classes:
+ * .overflowHidden -> overflow-hidden
+ * .overflowVisible -> overflow-visible
+ * .overflowScroll -> overflow-scroll
+ * .overflowAuto -> overflow-auto
+ * .overflowXHidden -> overflow-x-hidden
+ * .overflowYHidden -> overflow-y-hidden
+ * .overflowXScroll -> overflow-x-scroll
+ * .overflowYScroll -> overflow-y-scroll
+ * 
+ * Size Classes:
+ * .w25 -> w-1/4
+ * .w50 -> w-1/2
+ * .w75 -> w-3/4
+ * .w100 -> w-full
+ * .h25 -> h-1/4
+ * .h50 -> h-1/2
+ * .h75 -> h-3/4
+ * .h100 -> h-full
+ * .maxW100 -> max-w-full
+ * .maxH100 -> max-h-full
+ * .minW0 -> min-w-0
+ * .minH0 -> min-h-0
+ * .viewportHeight -> h-screen
+ * .viewportWidth -> w-screen
+ * 
+ * Aspect Ratio Classes:
+ * .aspectRatio16x9 -> aspect-video
+ * .aspectRatio4x3 -> aspect-[4/3]
+ * .aspectRatio1x1 -> aspect-square
+ * 
+ * Responsive Classes:
+ * .hideOnMobile -> hidden md:block
+ * .showOnMobile -> block md:hidden
+ * .hideOnDesktop -> block md:hidden
+ * .showOnDesktop -> hidden md:block
+ * 
+ * Benefits of Tailwind migration:
+ * - Consistent spacing scale with rem-based units
+ * - Built-in responsive design with mobile-first approach
+ * - Better performance through utility purging
+ * - More granular control with additional size options
+ * - Automatic browser prefix handling
+ * - Better developer experience with predictable class names
+ * - Enhanced grid system with CSS Grid support
+ * 
+ * Modern layout patterns now available:
+ * - CSS Grid: grid grid-cols-12 gap-4
+ * - Flexbox: flex flex-col md:flex-row gap-4
+ * - Container queries: @container support (when configured)
+ * - Subgrid: subgrid support (when available)
+ * 
+ * Usage examples:
+ * 
+ * Old CSS Module approach:
+ * import styles from './layout.module.css';
+ * <div className={styles.container}>
+ *   <div className={styles.row}>
+ *     <div className={styles.col6}>Half width</div>
+ *     <div className={styles.col6}>Half width</div>
+ *   </div>
+ * </div>
+ * 
+ * New Tailwind approach:
+ * <div className="container mx-auto px-4">
+ *   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+ *     <div>Half width</div>
+ *     <div>Half width</div>
+ *   </div>
+ * </div>
+ * 
+ * Or with flexbox:
+ * <div className="max-w-7xl mx-auto px-4">
+ *   <div className="flex flex-col md:flex-row gap-4">
+ *     <div className="flex-1">Half width</div>
+ *     <div className="flex-1">Half width</div>
+ *   </div>
+ * </div>
+ * 
+ * Responsive design improvements:
+ * - Mobile-first approach: base styles apply to mobile, larger screens override
+ * - More breakpoints: sm, md, lg, xl, 2xl
+ * - Container queries support for component-based responsive design
+ * - Better performance with conditional loading of responsive styles
+ */
+
+/* This file is deprecated - layout utilities migrated to Tailwind CSS */
+
+/* 
+ * Responsive breakpoints reference (Tailwind defaults):
+ * 
+ * sm: 640px and up (tablet portrait)
+ * md: 768px and up (tablet landscape)  
+ * lg: 1024px and up (desktop)
+ * xl: 1280px and up (large desktop)
+ * 2xl: 1536px and up (extra large desktop)
+ * 
+ * Usage: sm:text-center md:text-left lg:text-right
+ * 
+ * Container max-widths:
+ * sm: 640px
+ * md: 768px
+ * lg: 1024px
+ * xl: 1280px
+ * 2xl: 1536px
+ * 
+ * Custom container classes available in tailwind.css:
+ * .container -> responsive container with padding
+ * .container-sm -> max-w-3xl with padding
+ * .container-xs -> max-w-xl with padding
+ */

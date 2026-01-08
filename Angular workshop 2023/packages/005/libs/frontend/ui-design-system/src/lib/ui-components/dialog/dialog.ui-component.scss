@@ -1,0 +1,15 @@
+@import 'variables';
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  border-radius: $shoppie--gridunit*2;
+  padding: $shoppie--gridunit*2;
+  background: #fff;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,17 @@
+<form>
+  `
+  <label>
+    <span>Login</span>
+    <input [(ngModel)]="loginForm.login" name="name" required type="text" />
+  </label>
+  <label>
+    <span>Password</span>
+    <input
+      [(ngModel)]="loginForm.password"
+      name="password"
+      required
+      type="password"
+    />
+  </label>
+  <button shButton>Login</button>
+</form>

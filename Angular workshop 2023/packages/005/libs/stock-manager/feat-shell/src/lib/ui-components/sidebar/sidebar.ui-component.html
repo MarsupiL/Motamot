@@ -1,0 +1,25 @@
+<ul *ngIf="authenticationResult" class="sidebar__nav">
+  <li>
+    <a routerLink="products" routerLinkActive="sidebar__nav-item--active"
+      >Products</a
+    >
+  </li>
+  <li>
+    <a routerLink="categories" routerLinkActive="sidebar__nav-item--active"
+      >Categories</a
+    >
+  </li>
+  <li>
+    <a routerLink="stock" routerLinkActive="sidebar__nav-item--active">Stock</a>
+  </li>
+</ul>
+
+<div class="sidebar__bottom">
+  <img alt="Best Practices" src="assets/bestpractices.png" />
+  This application is part of the
+  <a
+    href="https://www.simplified.courses/on-site-angular-training/angular-best-practices-course"
+    >Angular Best Practices TRAINING</a
+  >
+  <a href="https://simplified.courses">https://simplified.courses</a>
+</div>

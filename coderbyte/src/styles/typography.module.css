@@ -1,0 +1,168 @@
+/* 
+ * __define-ocg__ - Typography CSS Module file migrated to Tailwind CSS
+ * 
+ * This CSS Module file previously defined typography utility classes for the design system.
+ * All typography functionality has been migrated to Tailwind CSS utility classes and 
+ * semantic typography components defined in tailwind.css.
+ * 
+ * Migration completed as part of the Lumen Design System unification project.
+ * 
+ * Original typography classes and their Tailwind equivalents:
+ * 
+ * Heading Classes:
+ * .heading1 -> text-4xl font-bold leading-tight (or .heading-1 component class)
+ * .heading2 -> text-3xl font-semibold leading-tight (or .heading-2 component class)
+ * .heading3 -> text-2xl font-semibold leading-snug (or .heading-3 component class)
+ * .heading4 -> text-xl font-medium leading-snug (or .heading-4 component class)
+ * .heading5 -> text-lg font-medium leading-normal (or .heading-5 component class)
+ * .heading6 -> text-base font-medium leading-normal (or .heading-6 component class)
+ * 
+ * Body Text Classes:
+ * .bodyText -> text-base leading-relaxed (or .body-base component class)
+ * .smallText -> text-sm leading-normal (or .body-small component class)
+ * .caption -> text-xs text-slate-500 leading-normal (or .caption component class)
+ * .lead -> text-lg font-light leading-relaxed
+ * 
+ * Display Classes:
+ * .display1 -> text-6xl font-light leading-tight
+ * .display2 -> text-5xl font-light leading-tight
+ * .display3 -> text-4xl font-light leading-tight
+ * .display4 -> text-3xl font-light leading-tight
+ * 
+ * Font Weight Classes:
+ * .fontLight -> font-light (300)
+ * .fontRegular -> font-normal (400)
+ * .fontMedium -> font-medium (500)
+ * .fontSemibold -> font-semibold (600)
+ * .fontBold -> font-bold (700)
+ * 
+ * Font Family Classes:
+ * .fontMono -> font-mono
+ * .fontSans -> font-sans
+ * 
+ * Text Transform Classes:
+ * .textUppercase -> uppercase
+ * .textLowercase -> lowercase
+ * .textCapitalize -> capitalize
+ * 
+ * Text Alignment Classes:
+ * .textCenter -> text-center
+ * .textLeft -> text-left
+ * .textRight -> text-right
+ * .textJustify -> text-justify
+ * 
+ * Text Behavior Classes:
+ * .textNoWrap -> whitespace-nowrap
+ * .textTruncate -> truncate
+ * 
+ * Line Height Classes:
+ * .lineHeightTight -> leading-tight
+ * .lineHeightNormal -> leading-normal
+ * .lineHeightRelaxed -> leading-relaxed
+ * .lineHeightLoose -> leading-loose
+ * 
+ * Benefits of Tailwind migration:
+ * - Consistent typography scale based on modular scale
+ * - Better responsive typography with responsive variants
+ * - Improved accessibility with proper contrast ratios
+ * - Enhanced readability with optimized line heights
+ * - Better performance through utility purging
+ * - More granular control over typography properties
+ * - Built-in support for system fonts and web fonts
+ * - Automatic font loading optimization
+ * 
+ * Typography improvements in Tailwind:
+ * - Fluid typography support with clamp() functions
+ * - Better font rendering with font-display: swap
+ * - Improved font metrics for better vertical rhythm
+ * - Enhanced support for variable fonts
+ * - Better handling of font fallbacks
+ * 
+ * Responsive typography examples:
+ * - text-sm md:text-base lg:text-lg (responsive font sizes)
+ * - leading-tight md:leading-normal (responsive line heights)
+ * - font-normal md:font-medium (responsive font weights)
+ * 
+ * Usage examples:
+ * 
+ * Old CSS Module approach:
+ * import styles from './typography.module.css';
+ * <h1 className={styles.heading1}>Main Title</h1>
+ * <p className={styles.bodyText}>Body paragraph</p>
+ * <span className={styles.caption}>Caption text</span>
+ * 
+ * New Tailwind approach with utilities:
+ * <h1 className="text-4xl font-bold leading-tight text-slate-900">Main Title</h1>
+ * <p className="text-base leading-relaxed text-slate-700">Body paragraph</p>
+ * <span className="text-xs text-slate-500">Caption text</span>
+ * 
+ * New Tailwind approach with component classes:
+ * <h1 className="heading-1">Main Title</h1>
+ * <p className="body-base">Body paragraph</p>
+ * <span className="caption">Caption text</span>
+ * 
+ * Advanced typography features:
+ * - Font feature settings: font-variant-numeric: tabular-nums
+ * - OpenType features: font-feature-settings: "liga" 1
+ * - Variable font support: font-variation-settings
+ * - Text decoration: underline decoration-blue-500 decoration-2
+ * - Text shadows: text-shadow (custom utility in tailwind.css)
+ * 
+ * Accessibility improvements:
+ * - Better contrast ratios with semantic color tokens
+ * - Improved readability with optimized line heights
+ * - Better support for user preferences (prefers-reduced-motion)
+ * - Enhanced focus states for interactive text elements
+ * - Better support for screen readers with semantic markup
+ * 
+ * Typography scale reference:
+ * text-xs: 0.75rem (12px)
+ * text-sm: 0.875rem (14px)
+ * text-base: 1rem (16px)
+ * text-lg: 1.125rem (18px)
+ * text-xl: 1.25rem (20px)
+ * text-2xl: 1.5rem (24px)
+ * text-3xl: 1.875rem (30px)
+ * text-4xl: 2.25rem (36px)
+ * text-5xl: 3rem (48px)
+ * text-6xl: 3.75rem (60px)
+ * text-7xl: 4.5rem (72px)
+ * text-8xl: 6rem (96px)
+ * text-9xl: 8rem (128px)
+ * 
+ * Line height scale:
+ * leading-none: 1
+ * leading-tight: 1.25
+ * leading-snug: 1.375
+ * leading-normal: 1.5
+ * leading-relaxed: 1.625
+ * leading-loose: 2
+ * 
+ * Font weight scale:
+ * font-thin: 100
+ * font-extralight: 200
+ * font-light: 300
+ * font-normal: 400
+ * font-medium: 500
+ * font-semibold: 600
+ * font-bold: 700
+ * font-extrabold: 800
+ * font-black: 900
+ */
+
+/* This file is deprecated - typography utilities migrated to Tailwind CSS */
+
+/* 
+ * Font family configuration (defined in tailwind.config.js):
+ * 
+ * font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif
+ * font-mono: 'Fira Code', 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', monospace
+ * 
+ * Custom component classes available in tailwind.css:
+ * .heading-1 through .heading-6 -> Semantic heading styles
+ * .body-large, .body-base, .body-small -> Body text variants
+ * .caption -> Small caption text
+ * 
+ * These component classes provide consistent styling while allowing
+ * for easy customization and maintenance across the design system.
+ */

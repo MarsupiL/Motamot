@@ -1,0 +1,9 @@
+<div class="stock_top">
+  <h1>Stock editor</h1>
+</div>
+<div class="stock__content">
+  <sh-editable-stock-list
+    (stockChange)="onStockChange($event)"
+    [products]="products$|async"
+  ></sh-editable-stock-list>
+</div>

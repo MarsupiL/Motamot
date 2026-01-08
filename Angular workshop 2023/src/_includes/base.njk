@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css" rel="stylesheet">
+  <title>{{ title }}</title>
+  <style>
+    html, body {
+      font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      height: 100%;
+    }
+    h1, h2, p, a, li {
+        font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    p, ul, li, blockquote {
+        font-size: 18px;
+        line-height: 24px;
+    }
+    .logo{
+        width:200px;
+    }
+    a{
+        color: #267373;
+    }
+    main {
+        display:flex;
+        flex-direction: column;
+        max-width: 1280px;
+        margin: auto;
+    }
+    img {
+        width: 100%;
+    }
+    code {
+        background: #f1f1f1;
+        color: #000;
+        padding-left:8px;
+        padding-right:8px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+  <img class="logo" src="../simplified-logo.png">
+  {{ content | safe }}
+  </main>
+</body>
+</html>

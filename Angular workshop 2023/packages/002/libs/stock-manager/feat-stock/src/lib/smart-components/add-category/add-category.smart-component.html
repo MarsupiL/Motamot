@@ -1,0 +1,25 @@
+<div class="add-category">
+  <h1>Add category</h1>
+
+  <sh-pane>
+    <form #form="ngForm" (ngSubmit)="onSubmit()">
+      <label>
+        <span>Name</span>
+        <input [(ngModel)]="category.name" name="name" required />
+      </label>
+      <label>
+        <span>Description</span>
+        <textarea
+          [(ngModel)]="category.description"
+          name="description"
+          required
+        ></textarea>
+      </label>
+
+      <div class="add-category__actions">
+        <a routerLink="../" shButton>Cancel</a>
+        <button [disabled]="form.invalid" shButton>Save</button>
+      </div>
+    </form>
+  </sh-pane>
+</div>

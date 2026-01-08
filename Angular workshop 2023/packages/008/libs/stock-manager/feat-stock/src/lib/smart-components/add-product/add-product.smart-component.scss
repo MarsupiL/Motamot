@@ -1,0 +1,12 @@
+@import 'variables';
+
+.add-product {
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      margin-left: $shoppie__gridunit;
+    }
+  }
+}

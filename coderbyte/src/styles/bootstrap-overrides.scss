@@ -1,0 +1,66 @@
+/* 
+ * __define-ocg__ - Bootstrap overrides file migrated to Tailwind CSS
+ * 
+ * This file previously contained Bootstrap variable overrides and custom styles.
+ * All functionality has been migrated to Tailwind CSS utility classes and 
+ * custom components defined in tailwind.css.
+ * 
+ * Migration completed as part of the Lumen Design System unification project.
+ * 
+ * Original Bootstrap overrides included:
+ * - Color palette customization (primary, secondary, success, danger, warning, info)
+ * - Typography settings (Inter font family, Fira Code monospace)
+ * - Component styling (buttons, cards, navbar, forms, modals, alerts)
+ * - Border radius and shadow customizations
+ * - Responsive design considerations
+ * 
+ * Tailwind CSS equivalents:
+ * - Colors: Now using Tailwind's semantic color system (blue, slate, green, red, yellow, sky)
+ * - Typography: Configured in tailwind.css with consistent scale
+ * - Components: Defined as @layer components in tailwind.css
+ * - Spacing: Using Tailwind's spacing scale for consistency
+ * - Responsive: Built-in Tailwind responsive utilities
+ * 
+ * Benefits of migration:
+ * - Consistent design tokens across the entire system
+ * - Better performance with utility-first approach
+ * - Improved maintainability and scalability
+ * - Enhanced developer experience with predictable class names
+ * - Better tree-shaking and smaller bundle sizes
+ * - Unified styling methodology across all components
+ */
+
+/* This file is deprecated - styles migrated to Tailwind CSS */
+
+// Legacy variables preserved for reference only
+// These are no longer used but kept for documentation purposes
+
+// Original Bootstrap color overrides:
+// $primary: #007bff; -> Now: bg-blue-600, text-blue-600
+// $secondary: #6c757d; -> Now: bg-slate-600, text-slate-600  
+// $success: #28a745; -> Now: bg-green-600, text-green-600
+// $danger: #dc3545; -> Now: bg-red-600, text-red-600
+// $warning: #ffc107; -> Now: bg-yellow-500, text-yellow-500
+// $info: #17a2b8; -> Now: bg-sky-600, text-sky-600
+
+// Original typography overrides:
+// $font-family-sans-serif: 'Inter', ... -> Now: font-sans (configured in tailwind.config)
+// $font-family-monospace: 'Fira Code', ... -> Now: font-mono (configured in tailwind.config)
+
+// Original component overrides migrated to:
+// .btn -> .btn component classes in tailwind.css
+// .card -> .card component classes in tailwind.css  
+// .form-control -> .form-input component classes in tailwind.css
+// .alert -> .alert-* component classes in tailwind.css
+
+/* 
+ * To use the new Tailwind equivalents:
+ * 
+ * Old Bootstrap: <button class="btn btn-primary">
+ * New Tailwind: <button class="btn btn-primary"> (using component classes)
+ * Or utility-first: <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+ * 
+ * Old Bootstrap: <div class="card">
+ * New Tailwind: <div class="card"> (using component classes)
+ * Or utility-first: <div class="bg-white rounded-xl shadow-sm border border-slate-200">
+ */

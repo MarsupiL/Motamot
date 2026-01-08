@@ -1,0 +1,59 @@
+---
+- name: "Install postgresql and related packages"
+  become: yes
+  hosts: all
+  tasks:
+    - apt:
+        name: "{{ item }}"
+        state: latest
+        update_cache: no
+      with_items:
+        - "postgresql-9.4"
+        - "libpq-dev"
+        - "python-psycopg2" # needed for ansible
+
+    - name: Adjust PostgreSQL configuration to allow connections from everywhere (I)
+      lineinfile:
+        dest: "/etc/postgresql/9.4/main/postgresql.conf"
+        regexp: "^listen_addresses "
+        insertafter: "^#listen_addresses "
+        line: "listen_addresses = '*'"
+
+    - name: Adjust PostgreSQL configuration to allow connections from everywhere (II)
+      shell: "echo {{ item }} >> pg_hba.conf"
+      args:
+        chdir: "/etc/postgresql/9.4/main/"
+        warn: false # don't warn, we now why we use this shell command, to do everything at once.
+      with_items:
+        - "\n"
+        - "\n"
+        - "'host    all             all             0.0.0.0/0               md5'"
+
+    - name: Ensure the PostgreSQL service is running
+      service:
+        name: postgresql
+        state: restarted
+        enabled: yes
+
+- name: "Create database and users"
+  become: yes
+  become_user: postgres
+  hosts: all
+  vars:
+    dbname: zivver
+    dbuser: zivver
+    dbpassword: "mei1Ooda"
+  tasks:
+    - postgresql_db:
+        name: "{{ dbname }}"
+        encoding: "UTF-8"
+        lc_collate: "en_US.UTF-8"
+        lc_ctype: "en_US.UTF-8"
+
+    - postgresql_user:
+        state: present
+        db: "{{ dbname }}"
+        name: "{{ dbuser }}"
+        password: "{{ dbpassword }}"
+        priv: ALL
+        role_attr_flags: SUPERUSER

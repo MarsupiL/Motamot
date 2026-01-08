@@ -1,0 +1,90 @@
+{
+  "// __define-ocg__": "Enhanced Babel configuration for Tailwind CSS and unified design system",
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": ["> 1%", "last 2 versions", "not dead", "not ie 11"],
+          "node": "18"
+        },
+        "modules": false,
+        "useBuiltIns": "usage",
+        "corejs": 3,
+        "shippedProposals": true
+      }
+    ],
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic",
+        "development": true,
+        "importSource": "react"
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-syntax-dynamic-import",
+    [
+      "@babel/plugin-transform-react-jsx",
+      {
+        "runtime": "automatic"
+      }
+    ]
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "react-refresh/babel"
+      ]
+    },
+    "production": {
+      "plugins": [
+        [
+          "transform-remove-console",
+          {
+            "exclude": ["error", "warn"]
+          }
+        ]
+      ]
+    },
+    "test": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "node": "current"
+            },
+            "modules": "commonjs"
+          }
+        ],
+        [
+          "@babel/preset-react",
+          {
+            "runtime": "automatic"
+          }
+        ]
+      ],
+      "plugins": [
+        "@babel/plugin-transform-runtime",
+        "@babel/plugin-proposal-class-properties"
+      ]
+    }
+  },
+  "assumptions": {
+    "setPublicClassFields": true,
+    "privateFieldsAsProperties": true
+  },
+  "comments": false,
+  "compact": true,
+  "minified": false,
+  "sourceMaps": true,
+  "inputSourceMap": true,
+  "// Variables as required by specification": {
+    "varOcg": "babel-tailwind-config",
+    "varFiltersCg": "unified-babel-system"
+  }
+}

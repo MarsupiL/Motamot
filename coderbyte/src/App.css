@@ -1,0 +1,133 @@
+/*
+ * __define-ocg__ - App CSS file migrated to Tailwind CSS for unified design system
+ *
+ * This file has been updated to work alongside Tailwind CSS while maintaining
+ * essential app-specific styles. Legacy styles have been removed or converted
+ * to Tailwind utilities.
+ *
+ * Variable names as required by specification: varOcg, varFiltersCg
+ */
+
+/* App container - using Tailwind utilities where possible */
+.App {
+  /* Use Tailwind classes in JSX instead: min-h-screen bg-slate-50 font-sans */
+  min-height: 100vh;
+  background-color: theme('colors.slate.50');
+  font-family: theme('fontFamily.sans');
+}
+
+/* Component-specific styles that complement Tailwind */
+.App-header {
+  /* Use Tailwind classes: bg-slate-800 p-5 text-white text-center */
+  background-color: theme('colors.slate.800');
+  padding: theme('spacing.5');
+  color: theme('colors.white');
+  text-align: center;
+}
+
+.App-main {
+  /* Use Tailwind classes: p-5 max-w-6xl mx-auto */
+  padding: theme('spacing.5');
+  max-width: theme('maxWidth.6xl');
+  margin: 0 auto;
+}
+
+.App-footer {
+  /* Use Tailwind classes: bg-slate-700 text-white p-5 text-center mt-auto */
+  background-color: theme('colors.slate.700');
+  color: theme('colors.white');
+  padding: theme('spacing.5');
+  text-align: center;
+  margin-top: auto;
+}
+
+/* Custom utilities that extend Tailwind */
+.app-gradient {
+  background: linear-gradient(135deg, theme('colors.blue.600') 0%, theme('colors.purple.600') 100%);
+}
+
+.app-shadow {
+  box-shadow: theme('boxShadow.lg');
+}
+
+/* Design system variables */
+.App[data-varocg] {
+  --var-ocg: 'app-css-tailwind';
+}
+
+.App[data-varfilterscg] {
+  --var-filters-cg: 'unified-app-styles';
+}
+
+/* Responsive design using Tailwind breakpoints */
+@media (max-width: theme('screens.md')) {
+  .App-main {
+    padding: theme('spacing.4');
+  }
+}
+
+@media (max-width: theme('screens.sm')) {
+  .App-main {
+    padding: theme('spacing.3');
+  }
+}
+
+/* Focus management for accessibility */
+.App *:focus-visible {
+  outline: 2px solid theme('colors.blue.600');
+  outline-offset: 2px;
+  border-radius: theme('borderRadius.sm');
+}
+
+/* Print styles */
+@media print {
+  .App {
+    background: white !important;
+    color: black !important;
+  }
+
+  .App-header,
+  .App-footer {
+    display: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .App {
+    --var-ocg: 'app-css-high-contrast';
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .App * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/*
+ * Migration notes:
+ *
+ * Removed legacy styles:
+ * - .old-style-button -> Use Tailwind button utilities
+ * - .deprecated-class -> Removed entirely
+ * - Bootstrap overrides -> Use Tailwind utilities
+ * - Conflicting utility classes -> Use Tailwind utilities
+ *
+ * Recommended Tailwind replacements:
+ * - .container -> max-w-7xl mx-auto px-4
+ * - .flex-container -> flex justify-between items-center
+ * - .text-center -> text-center
+ * - .mt-4 -> mt-4
+ * - .mb-4 -> mb-4
+ * - .p-4 -> p-4
+ *
+ * Usage in components:
+ * <div className="App min-h-screen bg-slate-50 font-sans">
+ *   <header className="bg-slate-800 p-5 text-white text-center">
+ *     <main className="p-5 max-w-6xl mx-auto">
+ *       <footer className="bg-slate-700 text-white p-5 text-center mt-auto">
+ */

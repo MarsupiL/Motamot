@@ -1,0 +1,32 @@
+<div class="product-overview__content">
+  <sh-sidebar
+    [categories]="(categories$|async)!"
+    class="product-overview__content-left"
+  ></sh-sidebar>
+  <div class="product-overview__content-right">
+    <sh-breadcrumb [breadcrumbItems]="breadcrumbItems"></sh-breadcrumb>
+    <div class="product-overview__content-right-top">
+      <h1>Product overview</h1>
+      <form>
+        <label>
+          <input placeholder="Type to filter..." type="text" data-cy="input__search" (input)="setQuery($event)" [value]="query$|async" />
+        </label>
+      </form>
+    </div>
+    <div class="product-overview__content-right-items">
+      <sh-product
+        data-cy="product__item"
+        *ngFor="let product of products$|async"
+        [product]="product"
+        class="product-overview__content-right-item"
+      ></sh-product>
+    </div>
+    <sh-pager
+      [itemsPerPage]="(itemsPerPage$|async)|| 0"
+      [total]="(total$|async)|| 0"
+      [pageIndex]="(pageIndex$|async)||0"
+      (pageIndexChange)="pageIndexChange($event)"
+    >
+    </sh-pager>
+  </div>
+</div>

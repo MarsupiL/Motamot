@@ -1,0 +1,16 @@
+<table>
+  <thead>
+    <tr>
+      <th>Category name</th>
+      <th>Products</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categories">
+      <td>{{category.name}}</td>
+      <td>{{category.numberOfItems}}</td>
+      <td><a [routerLink]="[category?.id]" shButton>Edit</a></td>
+    </tr>
+  </tbody>
+</table>

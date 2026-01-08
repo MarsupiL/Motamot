@@ -1,0 +1,29 @@
+<div class="login">
+  <h1>You are unauthorized</h1>
+  <sh-pane>
+    <form #form="ngForm" (ngSubmit)="onSubmit()">
+      <label>
+        <span>Name</span>
+        <input
+          [(ngModel)]="loginForm.login"
+          name="login"
+          required
+          type="text"
+        />
+      </label>
+      <label>
+        <span>Description</span>
+        <input
+          [(ngModel)]="loginForm.password"
+          name="password"
+          required
+          type="password"
+        />
+      </label>
+
+      <div class="login__actions">
+        <button [disabled]="form.invalid" shButton>Login</button>
+      </div>
+    </form>
+  </sh-pane>
+</div>

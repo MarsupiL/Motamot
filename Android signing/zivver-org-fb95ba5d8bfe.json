@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "zivver-org",
+  "private_key_id": "fb95ba5d8bfee467f32232fed0e8b1fc2b0e8c67",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDRV1f/iOyU3Ghq\nclMq5pUasyZcqZcJD6CDItB4ia42NHpgWXK1chfhQySzQX00dNs0D7AJxF61tGdc\nwPGdxJwYotm5CDPqxmRLlcahceXSU+9iLc7NInWTobiK29Rs4GA5nlcuO/C6cYKH\n7pRRZoKh9MAuaNbYo2M0N6/Lltm3hZHSO7T4clRgSSLFvgV2qhcQj3qL+TdrgfN0\nMPe4qTVmnptouNfUPpZlX2c2iDpfoZcG7VxMTp5rABbos6nGodf9dMfw+OMoneca\nA30qLUr3UJvhJbPsCEkVWzlpn8wW9A7mSuG8xf1BPw2rW+C7H36dgU3lHsGnjhTi\nYzUayhY9AgMBAAECggEAE9RyQYJ25qL6QRsTRb0R4rWVrLFj3TfdvI5PsRtZpUjT\nTs0qUIW+PVhe4ZwSgCWRnhzeUA6J6ixsnhyoxokZQDws45ojUNn6Ji7J4gEoBARv\naJ1uOYBKIvHuyTiJpsaaVtro5zhGVWLrOnUfF5beSPkmOz8zGtJfU1LzFBX2Cawx\nh8OIw+5fmg1e8/oUvAo6zob8SbuFmjeI5RZrqol8pPY7A1TkR0Eg8t+BQxemVhFP\nbp/jTQxwRS1Pj0m7MtllteXxucWHy1IqjFGtGKKa0EWAporkahq2Zi8on+4FE4yb\nKDk15wcMGA6swHBYPd70O8U+hEVuSJbJO8rg1UM/AQKBgQDpzkDegEi5+DY0cWxH\nbDbtWLbYwwVVT2DRCMb6D9cXjV5X+iRRWyIgtlWf1a9bTS3lPpGKcnnUtjHE/vk3\nrpgMkyKSus4OXpSnLL3KSlw3osKSC+h6+ACLymZzNqbiIp89/UD4flFjhDZKScXK\nRrvhLBOTtNN07kkmul6RGf85QwKBgQDlNpM6cz/j9LwgawogGQIOTjSOnxBIJCo+\nRSyZVNCAOM11133HSrPfvtrDT/wchuuM1j4MsuoDCq3LdI/JU+PVV13FDvC0bJgu\n1azl6bnXK6J0OQ1D9rSVqw6OJ3tYvC3xCoISJDCDV6RGt3qtnvqe+u9IT80sebhR\nrcll+ga6fwKBgQC4hSi48TF0Y6oT1XgJHiRzSNJ1W+R3oX/dOTof3CR61/0fHbFP\n68aRXpVQ4YnVWqHgDHM8eoAgGfJJcJkrEsW5Ft3wQzGgMZDMJwlZ/zmsRu2b6X3+\nnn9/06rrPrSSP5TBjX+bHcYJ7iwSkQpiS1S3rtt8dPd1jyF4SRmdFpFQlQKBgQDC\nY5JhE7SvgrK5W43uwsa3kyOHgOayB9m7jbbRItjgpUu6ENMe3P/HVXj6Ay9wkgva\nGSfuZR2JDtltnqECwR6Lo9hmctE4cpBtx9El+x4cmWjg4DGb3fIwrC1f6aP2EUF1\nFtBQylhKS12Ki7iC3jz17yJXVTZP7bqfqp8O2QgzyQKBgF8HPZ+71Fx4KNmlD4UA\nLxzADQb1D1Xj+ihKm4EbPYW4DQRiPsIRTRiyFN11C8AXo5LAfnKwfDQlFZadX9vJ\nWPFKbfkJ6k9840TH4svBUkP8XZO1rrSEMnCLFfxKnjUzo2ub5ABBi7pTpLVK+Z93\n2Qyrt4if2BCP2GUttcppMlZ4\n-----END PRIVATE KEY-----\n",
+  "client_email": "fastlane-supply@zivver-org.iam.gserviceaccount.com",
+  "client_id": "115432521707124445550",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/fastlane-supply%40zivver-org.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

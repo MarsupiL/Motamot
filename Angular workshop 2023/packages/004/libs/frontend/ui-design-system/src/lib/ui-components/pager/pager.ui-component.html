@@ -1,0 +1,16 @@
+Showing {{ (pageIndex * itemsPerPage) + 1 }}
+to
+{{ pageIndex < (Math.ceil(total / itemsPerPage) - 1) ? (pageIndex * itemsPerPage) + itemsPerPage : total }}
+of {{ total }} entries
+<button (click)="goToStart()" [disabled]="pageIndex === 0">
+  Begin
+</button>
+<button (click)="previous()" [disabled]="pageIndex === 0">
+  Previous
+</button>
+<button (click)="next()" [disabled]="pageIndex >= (Math.ceil(total / itemsPerPage) - 1)">
+  Next
+</button>
+<button (click)="goToEnd()" [disabled]="pageIndex >= (Math.ceil(total / itemsPerPage) - 1)">
+  End
+</button>

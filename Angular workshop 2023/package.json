@@ -1,0 +1,24 @@
+{
+  "name": "angular-best-practices-topics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx @11ty/eleventy --serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/billietbrecht/angular-best-practices-topics.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/billietbrecht/angular-best-practices-topics/issues"
+  },
+  "homepage": "https://gitlab.com/billietbrecht/angular-best-practices-topics#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^1.0.2",
+    "@11ty/eleventy-img": "^2.0.1",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^4.1.0"
+  }
+}

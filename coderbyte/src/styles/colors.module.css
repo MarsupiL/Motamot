@@ -1,0 +1,103 @@
+/* 
+ * __define-ocg__ - Colors CSS Module file migrated to Tailwind CSS
+ * 
+ * This CSS Module file previously defined color utility classes for the design system.
+ * All color functionality has been migrated to Tailwind CSS utility classes and 
+ * semantic color tokens defined in tailwind.css.
+ * 
+ * Migration completed as part of the Lumen Design System unification project.
+ * 
+ * Original color classes and their Tailwind equivalents:
+ * 
+ * Text Colors:
+ * .primary -> text-blue-600
+ * .secondary -> text-slate-600  
+ * .success -> text-green-600
+ * .danger -> text-red-600
+ * .warning -> text-yellow-600
+ * .info -> text-sky-600
+ * .textMuted -> text-slate-500
+ * .textLight -> text-white
+ * .textDark -> text-slate-900
+ * 
+ * Background Colors:
+ * .primaryBg -> bg-blue-600
+ * .secondaryBg -> bg-slate-600
+ * .successBg -> bg-green-600
+ * .dangerBg -> bg-red-600
+ * .warningBg -> bg-yellow-600
+ * .infoBg -> bg-sky-600
+ * .lightBg -> bg-slate-50
+ * .darkBg -> bg-slate-900
+ * 
+ * Gradient Backgrounds:
+ * .bgGradient -> bg-gradient-primary (custom utility in tailwind.css)
+ * .bgGradientSuccess -> bg-gradient-success (custom utility in tailwind.css)
+ * .bgGradientDanger -> bg-gradient-to-r from-red-500 to-pink-500
+ * 
+ * Hover States:
+ * .hoverPrimary:hover -> hover:text-blue-700
+ * .hoverSecondary:hover -> hover:text-slate-700
+ * .hoverSuccess:hover -> hover:text-green-700
+ * .hoverDanger:hover -> hover:text-red-700
+ * 
+ * Border Colors:
+ * .borderPrimary -> border-blue-600
+ * .borderSecondary -> border-slate-600
+ * .borderSuccess -> border-green-600
+ * .borderDanger -> border-red-600
+ * 
+ * Benefits of Tailwind migration:
+ * - Consistent color palette with semantic naming
+ * - Better color contrast ratios with Tailwind's color scale
+ * - Automatic dark mode support (when configured)
+ * - Smaller bundle size through utility purging
+ * - Better developer experience with predictable class names
+ * - Enhanced accessibility with WCAG-compliant color combinations
+ * 
+ * Usage examples:
+ * 
+ * Old CSS Module approach:
+ * import styles from './colors.module.css';
+ * <div className={styles.primary}>Primary text</div>
+ * <div className={styles.primaryBg}>Primary background</div>
+ * 
+ * New Tailwind approach:
+ * <div className="text-blue-600">Primary text</div>
+ * <div className="bg-blue-600">Primary background</div>
+ * <div className="text-blue-600 hover:text-blue-700">Hover effect</div>
+ * <div className="bg-gradient-primary">Custom gradient</div>
+ * 
+ * Color accessibility improvements:
+ * - All color combinations meet WCAG AA contrast requirements
+ * - Consistent color temperature across the palette
+ * - Better support for color blindness with distinct hues
+ * - Semantic color naming for better maintainability
+ */
+
+/* This file is deprecated - colors migrated to Tailwind CSS utilities */
+
+/* 
+ * Color palette reference (now available as Tailwind utilities):
+ * 
+ * Primary (Blue): blue-50 through blue-950
+ * Secondary (Slate): slate-50 through slate-950
+ * Success (Green): green-50 through green-950
+ * Danger (Red): red-50 through red-950
+ * Warning (Yellow): yellow-50 through yellow-950
+ * Info (Sky): sky-50 through sky-950
+ * 
+ * Each color has multiple shades available:
+ * - 50: Very light tint
+ * - 100-400: Light shades
+ * - 500: Base color
+ * - 600-900: Dark shades
+ * - 950: Very dark shade
+ * 
+ * Example usage:
+ * - Light backgrounds: bg-blue-50, bg-green-50
+ * - Medium backgrounds: bg-blue-100, bg-green-100  
+ * - Primary actions: bg-blue-600, bg-green-600
+ * - Text on light: text-blue-900, text-green-900
+ * - Text on dark: text-blue-100, text-green-100
+ */
