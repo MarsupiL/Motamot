@@ -35,7 +35,7 @@ function App() {
     if (newClickCount >= CLICKS_BEFORE_SENTENCE) {
       // Check if API key is configured
       if (!getStoredApiKey()) {
-        setError("Clé API manquante. Cliquez sur ⚙️ pour configurer votre clé API Groq.");
+        setError("API key missing. Click ⚙️ to configure your Groq API key.");
         return;
       }
 

@@ -64,11 +64,11 @@ export function Settings({ onClose }: SettingsProps) {
         className="bg-blackboard border-4 border-blackboard-border rounded-lg p-6 max-w-md w-full shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-2xl text-chalk font-bold mb-4">⚙️ Paramètres</h2>
+        <h2 className="text-2xl text-chalk font-bold mb-4">⚙️ Settings</h2>
         
         <form onSubmit={handleSave}>
           <label className="block text-chalk-dim mb-2">
-            Clé API Groq
+            Groq API Key
           </label>
           <input
             type="password"
@@ -79,7 +79,7 @@ export function Settings({ onClose }: SettingsProps) {
           />
           
           <p className="text-chalk-faint text-sm mb-4">
-            Obtenez votre clé API gratuite sur{' '}
+            Get your free API key at{' '}
             <a 
               href="https://console.groq.com/keys" 
               target="_blank" 
@@ -96,21 +96,21 @@ export function Settings({ onClose }: SettingsProps) {
               type="submit"
               className="flex-1 bg-chalk text-blackboard-dark py-2 px-4 rounded font-semibold hover:bg-white transition-colors"
             >
-              {saved ? '✓ Enregistré!' : 'Enregistrer'}
+              {saved ? '✓ Saved!' : 'Save'}
             </button>
             <button
               type="button"
               onClick={handleClear}
               className="px-4 py-2 border border-chalk-subtle text-chalk-dim rounded hover:border-chalk hover:text-chalk transition-colors"
             >
-              Effacer
+              Clear
             </button>
             <button
               type="button"
               onClick={onClose}
               className="px-4 py-2 border border-chalk-subtle text-chalk-dim rounded hover:border-chalk hover:text-chalk transition-colors"
             >
-              Fermer
+              Close
             </button>
           </div>
         </form>

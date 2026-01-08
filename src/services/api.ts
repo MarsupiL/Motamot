@@ -1,8 +1,8 @@
 import type { Word, GroqResponse } from '../types';
 import { getStoredApiKey } from '../components/Settings';
 
-const ERROR_NO_API_KEY = "Clé API manquante. Cliquez sur ⚙️ pour configurer votre clé API Groq.";
-const ERROR_API_FAILED = "Erreur: Impossible de générer la phrase. Veuillez réessayer.";
+const ERROR_NO_API_KEY = "API key missing. Click ⚙️ to configure your Groq API key.";
+const ERROR_API_FAILED = "Error: Unable to generate sentence. Please try again.";
 
 const STRUCTURE_HINTS = [
   "une phrase décrivant une action quotidienne avec une touche d'humour",
