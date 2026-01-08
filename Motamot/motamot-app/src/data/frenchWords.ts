@@ -1,6 +1,6 @@
-// French word list with common nouns, verbs, adverbs, and adjectives
+import type { NounData, Word } from '../types';
 
-export const nouns = [
+export const nouns: NounData[] = [
   { word: "homme", gender: "m" }, { word: "temps", gender: "m" }, { word: "jour", gender: "m" },
   { word: "monde", gender: "m" }, { word: "enfant", gender: "m" }, { word: "pays", gender: "m" },
   { word: "moment", gender: "m" }, { word: "travail", gender: "m" }, { word: "groupe", gender: "m" },
@@ -168,7 +168,7 @@ export const nouns = [
   { word: "promenade", gender: "f" }, { word: "visite", gender: "f" }, { word: "arrivée", gender: "f" },
   { word: "voiture", gender: "f" }, { word: "moto", gender: "f" }, { word: "bicyclette", gender: "f" },
   { word: "station", gender: "f" }, { word: "gare", gender: "f" }, { word: "banque", gender: "f" },
-  { word: "poste", gender: "f" }, { word: "pharmacie", gender: "f" }, { word: "boulangerie", gender: "f" },
+  { word: "poste", gender: "m" }, { word: "pharmacie", gender: "f" }, { word: "boulangerie", gender: "f" },
   { word: "librairie", gender: "f" }, { word: "bibliothèque", gender: "f" }, { word: "église", gender: "f" },
   { word: "prison", gender: "f" }, { word: "police", gender: "f" }, { word: "armée", gender: "f" },
   { word: "paix", gender: "f" }, { word: "violence", gender: "f" }, { word: "justice", gender: "f" },
@@ -199,7 +199,7 @@ export const nouns = [
   { word: "danseuse", gender: "f" }, { word: "reine", gender: "f" }, { word: "princesse", gender: "f" }
 ];
 
-export const verbs = [
+export const verbs: string[] = [
   "être", "avoir", "faire", "dire", "aller", "voir", "savoir", "pouvoir", "falloir", "vouloir",
   "venir", "prendre", "arriver", "croire", "mettre", "passer", "devoir", "parler", "trouver", "donner",
   "rester", "penser", "suivre", "tenir", "porter", "demander", "regarder", "aimer", "commencer", "attendre",
@@ -211,18 +211,18 @@ export const verbs = [
   "essayer", "garder", "manquer", "marcher", "exister", "refuser", "réussir", "produire", "décider", "éviter",
   "imaginer", "oublier", "payer", "acheter", "vendre", "travailler", "rentrer", "quitter", "utiliser", "envoyer",
   "finir", "choisir", "dormir", "manger", "boire", "coucher", "réveiller", "habiller", "laver", "promener",
-  "asseoir", "lever", "descendre", "monter", "conduire", "voyager", "visiter", "téléphoner", "écouter", "danser",
+  "asseoir", "descendre", "monter", "conduire", "voyager", "visiter", "téléphoner", "écouter", "danser",
   "chanter", "dessiner", "peindre", "photographier", "filmer", "cuisiner", "nettoyer", "ranger", "réparer", "construire",
   "détruire", "casser", "couper", "coller", "plier", "fermer", "allumer", "éteindre", "chauffer", "refroidir",
   "sécher", "mouiller", "remplir", "vider", "ajouter", "enlever", "mélanger", "séparer", "unir", "diviser",
   "multiplier", "calculer", "compter", "mesurer", "peser", "comparer", "préférer", "détester", "adorer", "apprécier",
   "respecter", "admirer", "critiquer", "féliciter", "remercier", "excuser", "pardonner", "punir", "récompenser", "encourager",
-  "aider", "soutenir", "protéger", "défendre", "attaquer", "battre", "gagner", "perdre", "participer", "concourir",
-  "nager", "plonger", "skier", "patiner", "grimper", "sauter", "courir", "marcher", "ramper", "voler",
+  "aider", "soutenir", "protéger", "défendre", "attaquer", "battre", "gagner", "participer", "concourir",
+  "nager", "plonger", "skier", "patiner", "grimper", "sauter", "ramper", "voler",
   "atterrir", "décoller", "naviguer", "ramer", "pédaler", "freiner", "accélérer", "ralentir", "tourner", "reculer"
 ];
 
-export const adjectives = [
+export const adjectives: string[] = [
   "grand", "petit", "bon", "mauvais", "nouveau", "vieux", "jeune", "beau", "joli", "laid",
   "gros", "mince", "long", "court", "haut", "bas", "large", "étroit", "épais", "fin",
   "lourd", "léger", "dur", "mou", "doux", "rugueux", "lisse", "chaud", "froid", "tiède",
@@ -235,35 +235,35 @@ export const adjectives = [
   "triste", "heureux", "malheureux", "joyeux", "mélancolique", "optimiste", "pessimiste", "confiant", "inquiet", "surpris",
   "étonné", "choqué", "effrayé", "courageux", "peureux", "timide", "audacieux", "prudent", "imprudent", "sage",
   "fou", "intelligent", "stupide", "cultivé", "ignorant", "savant", "curieux", "indifférent", "passionné", "ennuyé",
-  "intéressant", "ennuyeux", "amusant", "drôle", "sérieux", "grave", "léger", "important", "insignifiant", "essentiel",
+  "intéressant", "ennuyeux", "amusant", "drôle", "sérieux", "grave", "important", "insignifiant", "essentiel",
   "nécessaire", "inutile", "utile", "pratique", "théorique", "concret", "abstrait", "réel", "imaginaire", "vrai",
-  "faux", "exact", "approximatif", "précis", "vague", "clair", "confus", "simple", "compliqué", "complexe",
+  "faux", "exact", "approximatif", "précis", "vague", "confus", "simple", "compliqué", "complexe",
   "facile", "difficile", "possible", "impossible", "probable", "improbable", "certain", "incertain", "sûr", "douteux",
   "évident", "mystérieux", "secret", "public", "privé", "personnel", "commun", "rare", "fréquent", "habituel",
   "exceptionnel", "ordinaire", "extraordinaire", "normal", "anormal", "naturel", "artificiel", "original", "banal", "unique",
   "identique", "différent", "semblable", "pareil", "égal", "inégal", "supérieur", "inférieur", "premier", "dernier",
-  "suivant", "précédent", "prochain", "actuel", "ancien", "moderne", "contemporain", "futur", "passé", "présent",
+  "suivant", "précédent", "prochain", "actuel", "ancien", "moderne", "contemporain", "futur", "présent",
   "permanent", "temporaire", "éternel", "mortel", "immortel", "quotidien", "hebdomadaire", "mensuel", "annuel", "régulier",
   "irrégulier", "constant", "variable", "stable", "instable", "fixe", "mobile", "immobile", "statique", "dynamique",
   "actif", "passif", "positif", "négatif", "neutre", "favorable", "défavorable", "avantageux", "désavantageux", "profitable",
-  "gratuit", "payant", "cher", "bon marché", "économique", "luxueux", "modeste", "riche", "pauvre", "aisé",
-  "confortable", "inconfortable", "agréable", "désagréable", "plaisant", "déplaisant", "sympathique", "antipathique", "aimable", "désagréable",
+  "gratuit", "payant", "cher", "économique", "luxueux", "modeste", "riche", "pauvre", "aisé",
+  "confortable", "inconfortable", "agréable", "désagréable", "plaisant", "déplaisant", "sympathique", "antipathique", "aimable",
   "poli", "impoli", "gentil", "méchant", "généreux", "avare", "égoïste", "altruiste", "honnête", "malhonnête",
   "sincère", "hypocrite", "fidèle", "infidèle", "loyal", "déloyal", "juste", "injuste", "équitable", "partial",
   "libre", "prisonnier", "indépendant", "dépendant", "autonome", "soumis", "obéissant", "rebelle", "docile", "têtu",
-  "patient", "impatient", "tolérant", "intolérant", "ouvert", "fermé", "accueillant", "hostile", "amical", "froid",
+  "patient", "impatient", "tolérant", "intolérant", "accueillant", "hostile", "amical",
   "chaleureux", "distant", "proche", "lointain", "voisin", "étranger", "familier", "inconnu", "célèbre", "anonyme"
 ];
 
-export const adverbs = [
+export const adverbs: string[] = [
   "très", "bien", "mal", "vite", "lentement", "souvent", "parfois", "toujours", "jamais", "encore",
   "déjà", "bientôt", "maintenant", "hier", "demain", "aujourd'hui", "autrefois", "longtemps", "récemment", "immédiatement",
   "soudain", "progressivement", "graduellement", "rapidement", "doucement", "fortement", "faiblement", "légèrement", "profondément", "complètement",
   "partiellement", "totalement", "entièrement", "absolument", "relativement", "approximativement", "exactement", "précisément", "environ", "presque",
-  "à peine", "assez", "trop", "peu", "beaucoup", "énormément", "suffisamment", "insuffisamment", "davantage", "moins",
+  "assez", "trop", "peu", "beaucoup", "énormément", "suffisamment", "insuffisamment", "davantage", "moins",
   "plus", "autant", "également", "aussi", "seulement", "uniquement", "simplement", "facilement", "difficilement", "naturellement",
-  "artificiellement", "volontairement", "involontairement", "consciemment", "inconsciemment", "intentionnellement", "accidentellement", "exprès", "par hasard", "heureusement",
-  "malheureusement", "certainement", "probablement", "peut-être", "sans doute", "sûrement", "vraiment", "réellement", "effectivement", "apparemment",
+  "artificiellement", "volontairement", "involontairement", "consciemment", "inconsciemment", "intentionnellement", "accidentellement", "heureusement",
+  "malheureusement", "certainement", "probablement", "sûrement", "vraiment", "réellement", "effectivement", "apparemment",
   "visiblement", "évidemment", "clairement", "confusément", "vaguement", "secrètement", "publiquement", "ouvertement", "franchement", "sincèrement",
   "honnêtement", "poliment", "gentiment", "méchamment", "cruellement", "tendrement", "affectueusement", "passionnément", "calmement", "tranquillement",
   "paisiblement", "violemment", "brutalement", "agressivement", "pacifiquement", "silencieusement", "bruyamment", "discrètement", "ostensiblement", "modestement",
@@ -272,25 +272,23 @@ export const adverbs = [
   "irrégulièrement", "constamment", "occasionnellement", "fréquemment", "rarement", "quotidiennement", "hebdomadairement", "mensuellement", "annuellement", "perpétuellement",
   "temporairement", "définitivement", "provisoirement", "alternativement", "successivement", "simultanément", "séparément", "ensemble", "individuellement", "collectivement",
   "personnellement", "généralement", "particulièrement", "spécialement", "notamment", "principalement", "essentiellement", "fondamentalement", "basiquement", "globalement",
-  "localement", "nationalement", "internationalement", "mondialement", "universellement", "partout", "nulle part", "quelque part", "ailleurs", "ici",
+  "localement", "nationalement", "internationalement", "mondialement", "universellement", "partout", "ailleurs", "ici",
   "là", "dedans", "dehors", "dessus", "dessous", "devant", "derrière", "autour", "entre", "parmi",
-  "près", "loin", "haut", "bas", "avant", "après", "pendant", "durant", "depuis", "jusqu'à"
+  "près", "loin", "haut", "bas", "avant", "après", "pendant", "durant", "depuis"
 ];
 
-// Helper function to get a random word
-export const getRandomWord = () => {
-  const allWords = [
-    ...nouns.map(n => ({ ...n, type: 'noun' })),
-    ...verbs.map(v => ({ word: v, type: 'verb' })),
-    ...adjectives.map(a => ({ word: a, type: 'adjective' })),
-    ...adverbs.map(a => ({ word: a, type: 'adverb' }))
+export const getRandomWord = (): Word => {
+  const allWords: Word[] = [
+    ...nouns.map(n => ({ word: n.word, type: 'noun' as const, gender: n.gender })),
+    ...verbs.map(v => ({ word: v, type: 'verb' as const })),
+    ...adjectives.map(a => ({ word: a, type: 'adjective' as const })),
+    ...adverbs.map(a => ({ word: a, type: 'adverb' as const }))
   ];
   return allWords[Math.floor(Math.random() * allWords.length)];
 };
 
-// Helper function to format word with article for nouns
-export const formatWordWithArticle = (wordObj) => {
-  if (wordObj.type === 'noun') {
+export const formatWordWithArticle = (wordObj: Word): string => {
+  if (wordObj.type === 'noun' && wordObj.gender) {
     const article = wordObj.gender === 'm' ? 'un' : 'une';
     return `${article} ${wordObj.word}`;
   }
