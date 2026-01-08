@@ -90,28 +90,32 @@ export const generateSentence = async (words: Word[]): Promise<string> => {
       messages: [
         {
           role: 'system',
-          content: `Tu es un professeur de français qui crée des phrases drôles ET grammaticalement parfaites pour des débutants (niveau A2/B1).
+          content: `Tu es un professeur de français NATIF. Tu écris UNIQUEMENT en français correct des phrases drôles ET grammaticalement parfaites pour des débutants (niveau A2/B1).
 
-PRIORITÉS (dans l'ordre):
-1. SENS LOGIQUE - La phrase décrit une situation RÉELLE ou PLAUSIBLE
-2. GRAMMAIRE PARFAITE - Verbes conjugués, accords corrects, apostrophes
-3. SIMPLICITÉ - Phrases courtes (max 20 mots), vocabulaire simple
-4. HUMOUR - Situation cocasse, observation ironique, exagération crédible
+RÈGLES ABSOLUES:
+1. FRANÇAIS UNIQUEMENT - Pas de mots espagnols, anglais ou autres langues
+2. SENS LOGIQUE - Chaque phrase doit avoir un sens clair et réaliste
+3. GRAMMAIRE PARFAITE - Verbes conjugués, accords en genre/nombre
+4. SIMPLICITÉ - Maximum 15 mots, vocabulaire courant
 
-RÈGLE D'OR: Si les mots ne peuvent pas former une phrase logique ensemble, utilise SEULEMENT ceux qui fonctionnent. Ne force JAMAIS des mots incompatibles.
+AVANT de répondre, vérifie:
+- Tous les mots sont-ils français? (pas "defender", "house", etc.)
+- La phrase a-t-elle un sens logique?
+- Les verbes sont-ils conjugués?
+- Les accords sont-ils corrects?
 
 INTERDIT:
-- Phrases absurdes (objets qui font des actions impossibles)
-- Associations illogiques (ex: "la maison mange", "le bonheur court")
-- Verbes non conjugués
-- Phrases trop longues ou complexes`
+- Mots d'autres langues
+- Phrases absurdes ou illogiques
+- Verbes à l'infinitif non conjugués
+- Associations impossibles (ex: "défendre son ventre")`
         },
         {
           role: 'user',
           content: prompt
         }
       ],
-      temperature: 0.6,
+      temperature: 0.4,
       max_tokens: 100,
     }),
   });
