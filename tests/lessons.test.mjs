@@ -4,7 +4,6 @@ import { existsSync } from 'node:fs';
 import { allWords, wordKey, formatWordWithArticle } from '../src/data/frenchWords.ts';
 import { examples } from '../src/data/sentences.ts';
 import { createLesson, createLessonOrder, getExampleWord, formPattern, sentenceParts, LESSON_SIZE } from '../src/services/lessons.ts';
-import { selectFrenchVoice } from '../src/services/speech.ts';
 
 const seeded = seed => () => ((seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) / 2 ** 32);
 
@@ -88,16 +87,4 @@ test('highlighting respects accented word boundaries and inflected forms', () =>
     const parts = sentenceParts(examples.find(e => e.id === id));
     assert.ok(parts.some(part => part.highlighted && part.text === form));
   }
-});
-
-test('pronunciation prefers France French, then a local French voice, never another language', () => {
-  const english = { lang: 'en-US', localService: true };
-  const canadian = { lang: 'fr-CA', localService: true };
-  const remote = { lang: 'fr-FR', localService: false };
-  const local = { lang: 'fr_FR', localService: true };
-  assert.equal(selectFrenchVoice([english, canadian, remote, local]), local);
-  assert.equal(selectFrenchVoice([canadian, remote]), remote);
-  assert.equal(selectFrenchVoice([english, canadian]), canadian);
-  assert.equal(selectFrenchVoice([english]), undefined);
-  assert.equal(selectFrenchVoice([]), undefined);
 });

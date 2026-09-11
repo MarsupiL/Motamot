@@ -47,6 +47,7 @@ function App() {
           <strong>Un mot après l’autre.</strong>
           <p>Découvrez dix mots, puis retrouvez-en plusieurs dans une petite scène du quotidien. Écoutez, revenez en arrière et prenez votre temps.</p>
           <p>Les phrases sont préparées à l’avance pour préserver le sens et les accords. Les mots supplémentaires viennent de tout le lexique.</p>
+          <p>Une voix féminine française vous accompagne. Les enregistrements sont créés par synthèse vocale et se chargent à la demande. Cochez « Lentement » pour écouter à votre rythme.</p>
         </aside>}
 
         <div className="lesson-heading">

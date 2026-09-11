@@ -9,7 +9,7 @@ Learn French ten words at a time, then see several of them in a short, gently fu
 - **1,273 dictionary entries.** Duplicate nouns were removed while keeping their illustrations. Nouns show definite articles and gender, with elision for words such as l’eau and l’homme and an explicit exception for le héros. Five prepositions previously classified as adverbs now have the right label.
 - **A calmer chalkboard.** Explicit next/back buttons, a revisitable word list, highlighted words in sentences, visible progress, keyboard focus, small-screen scrolling, zoom and reduced-motion support.
 - **Phone-friendly lessons.** Full-width navigation and larger touch targets on small screens, a collapsible vocabulary list, safe-area spacing around notches and home indicators, and support for both portrait and landscape. Installed mode keeps the system status bar available.
-- **French pronunciation.** Listen to each word or the whole sentence, at normal or slower speed. The browser prefers a France French voice and then another French voice. It never silently chooses an English voice. Voices load asynchronously; a missing French voice or speech error produces a useful message. Voice quality and offline availability depend on the device; some browser voices use a remote service. No microphone permission is needed.
+- **A consistent French feminine voice.** Every word and sentence has a locally generated neural speech recording using Kokoro’s `ff_siwis` voice. Small MP3s load only when “Écouter” is pressed; phones do not download or run an AI model. Normal playback preserves the sampled delivery; “Lentement” plays at 80% speed while preserving pitch. Moving to another word stops the previous recording, and failed playback can be retried. No installed system voice or microphone permission is needed.
 - **50 local illustrations and local fonts.** The app no longer depends on Supabase or Google Fonts at runtime. The PWA caches text, images and fonts for use after the first successful online visit.
 
 ## Cost and limitations
@@ -17,6 +17,8 @@ Learn French ten words at a time, then see several of them in a short, gently fu
 No user account, API key, model download, backend or paid service is needed. The existing GitHub Pages workflow still hosts the app; a separate private Sites preview may be used to review changes. Runtime dependencies are React and React DOM only.
 
 The tradeoff is finite sentence variety: 72 complete examples, rather than unlimited AI output. Additional vocabulary is sampled across the full lexicon, but only the annotated words are guaranteed a sentence example in that round. Automated checks verify annotations, length, vocabulary coverage and lesson behavior; they do **not** prove grammar or semantic correctness. New or changed examples should receive a fluent French editorial review.
+
+Audio is synthetic, with the same voice on each supported device. Recordings are deliberately excluded from the PWA’s initial download, so uncached audio needs a connection. Text, images and fonts remain available offline after installation. Changing the French content also requires generating its new recording; an exact-text index and automated coverage check prevent a changed sentence from silently playing an old recording.
 
 ## Development
 
@@ -39,3 +41,19 @@ Add a complete example in `src/data/sentences.ts`. Its vocabulary annotations ex
 Run `npm test` after editing content. Checks cover every example and thousands of shuffled lessons, articles and elision, inflected-word highlighting, repetition and image availability. They are structural safeguards, not a substitute for reviewing French meaning and usage.
 
 Images are in `public/images/`. The original image-generation scripts are optional maintenance utilities, not used by the app or its build. Font licenses are included in `public/fonts/OFL.txt`.
+
+## Maintaining pronunciation
+
+The finished MP3s in `public/audio/` are committed, so normal development and deployment need no speech dependencies. `src/data/pronunciations.json` maps the exact displayed text to a recording. The optional generator uses Python 3.11–3.13, Node and a local copy of the model, with no cloud API.
+
+1. Create a Python virtual environment outside the repository and install `scripts/audio-requirements.txt` into it.
+2. Download `kokoro-v1.0.onnx` and `voices-v1.0.bin` from the [kokoro-onnx model-files-v1.1 release](https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.1), also outside the repository.
+3. Run the generator with that environment’s Python:
+
+```sh
+python scripts/generate-audio.py --model /path/to/kokoro-v1.0.onnx --voices /path/to/voices-v1.0.bin
+```
+
+The generator resumes existing recordings and publishes the index only when the complete corpus is ready. Filenames include a hash of the text, voice configuration and model checksums. Remove recordings no longer referenced by the index after changing content or generation settings. Run `npm test`, and listen to changed words and sentences before publishing: file checks do not establish pronunciation accuracy. Commit the new MP3s and index together. Model files and Python dependencies never belong in the browser build.
+
+See [audio credits](public/audio/CREDITS.md) for model, voice and dataset attribution.

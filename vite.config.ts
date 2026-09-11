@@ -39,6 +39,7 @@ export default defineConfig({
         ]
       },
       workbox: {
+        // Recordings load only on demand, not as part of the offline app install.
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,ttf}'],
       }
     })
