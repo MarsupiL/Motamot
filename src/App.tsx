@@ -4,6 +4,7 @@ import { LESSON_SIZE, sentenceParts } from './services/lessons';
 import { createSession, nextInSession, previousInSession, revisitWord } from './services/session';
 import { useLessonGestures } from './hooks/useLessonGestures';
 import { Pronunciation } from './components/Pronunciation';
+import { translateSentence, translateWord } from './services/translations';
 import type { Word } from './types';
 
 function WordIllustration({ word }: { word: Word }) {
@@ -24,6 +25,7 @@ function App() {
   const isSentence = index === LESSON_SIZE;
   const currentWord = lesson.words[Math.min(index, LESSON_SIZE - 1)];
   const displayText = isSentence ? lesson.example.text : formatWordWithArticle(currentWord);
+  const englishText = isSentence ? translateSentence(displayText) : translateWord(currentWord);
   const [showHelp, setShowHelp] = useState(false);
   const [showWords, setShowWords] = useState(false);
   const seenWords = lesson.words.slice(0, Math.min(furthest + 1, LESSON_SIZE));
@@ -57,14 +59,11 @@ function App() {
 
         <section className="learning-surface" aria-label={isSentence ? 'Les mots en contexte' : 'Vocabulaire'} {...gestures}>
           <div className="lesson-content" aria-live="polite" aria-atomic="true">
-            {isSentence ? (
-              <h1 className="sentence">{sentenceParts(lesson.example).map((part, i) => part.highlighted ? <mark key={i}>{part.text}</mark> : part.text)}</h1>
-            ) : (
-              <>
-                <h1 className="vocabulary-word">{displayText}</h1>
-                <WordIllustration key={wordKey(currentWord)} word={currentWord} />
-              </>
-            )}
+            {isSentence
+              ? <h1 className="sentence">{sentenceParts(lesson.example).map((part, i) => part.highlighted ? <mark key={i}>{part.text}</mark> : part.text)}</h1>
+              : <h1 className="vocabulary-word">{displayText}</h1>}
+            <p className="english-translation" lang="en">{englishText}</p>
+            {!isSentence && <WordIllustration key={wordKey(currentWord)} word={currentWord} />}
           </div>
           <Pronunciation key={`${lessonIndex}:${index}`} text={displayText} />
         </section>
