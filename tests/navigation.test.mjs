@@ -46,19 +46,23 @@ test('revisiting a word preserves discovery progress and rejects unseen or inval
   assert.equal(session.index, 5);
 });
 
-test('backtracking across a complete cycle preserves lesson order and does not consume future lessons', () => {
+test('backtracking preserves lesson order, and finishing the collection never starts an automatic repeat', () => {
   const random = seeded(12);
   let session = advance(createSession(random), examples.length * (LESSON_SIZE + 1), random);
   const visited = session.visited;
   const remaining = session.remaining;
   const ids = visited.map(entry => entry.lesson.example.id);
   assert.equal(new Set(ids.slice(0, examples.length)).size, examples.length);
-  assert.notEqual(ids.at(-1), ids.at(-2));
+  assert.equal(session.completed, true);
+  assert.equal(session.seen.length, examples.length);
+  assert.equal(nextInSession(session, random), session);
+  session = previousInSession(session);
+  assert.equal(session.completed, false);
   const steps = 2 * (LESSON_SIZE + 1);
   for (let i = 0; i < steps; i++) session = previousInSession(session);
   session = advance(session, steps, random);
-  assert.equal(session.index, 0);
-  assert.equal(session.lessonIndex, examples.length);
+  assert.equal(session.index, LESSON_SIZE);
+  assert.equal(session.lessonIndex, examples.length - 1);
   assert.equal(session.remaining, remaining);
   assert.deepEqual(session.visited.map(entry => entry.lesson), visited.map(entry => entry.lesson));
 });

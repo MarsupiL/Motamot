@@ -7,7 +7,7 @@ import { createLesson, createLessonOrder, getExampleWord, formPattern, sentenceP
 
 const seeded = seed => () => ((seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) / 2 ** 32);
 
-test('each complete sentence has usable vocabulary, accurate surface annotations and a short grammar note', () => {
+test('each complete sentence has usable vocabulary, accurate surface annotations and a topic', () => {
   assert.equal(new Set(examples.map(e => e.id)).size, examples.length);
   assert.equal(new Set(examples.map(e => e.text)).size, examples.length);
   for (const example of examples) {
@@ -16,7 +16,8 @@ test('each complete sentence has usable vocabulary, accurate surface annotations
     assert.ok(example.text.split(/\s+/).filter(word => /[\p{L}\p{N}]/u.test(word)).length <= 25, example.id);
     assert.match(example.text, /^[A-ZÀ-ÜJ]/u);
     assert.match(example.text, /[.!?]$/u);
-    assert.ok(example.note.length > 20, example.id);
+    assert.ok(example.topic.length > 0, example.id);
+    if (example.note !== undefined) assert.ok(example.note.length > 20, example.id);
     for (const target of example.words) {
       assert.ok(getExampleWord(target), example.id);
       assert.ok(formPattern(target.form).test(example.text), `${example.id}: ${target.form}`);

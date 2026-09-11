@@ -1,5 +1,7 @@
 # Motamot review — 11 September 2026
 
+These measurements describe the 72-sentence version reviewed before the English translations and larger library were added. See the README for current features and asset sizes.
+
 ## Assessment
 
 The existing static architecture fits this app. Runtime dependencies are React and React DOM; there is no database, learner authentication, API key, remote text generation or model inference. French content, lesson ordering, navigation and audio playback are separate from the view. Keep this structure and GitHub Pages hosting.

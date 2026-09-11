@@ -23,8 +23,9 @@ export interface SentenceWord {
 
 export interface SentenceExample {
   id: string;
+  topic: string;
   text: string;
-  note: string;
+  note?: string;
   words: SentenceWord[];
 }
 

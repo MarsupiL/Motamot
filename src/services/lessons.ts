@@ -27,10 +27,21 @@ export const createLesson = (example: SentenceExample, random = Math.random): Le
   return { example, words: shuffle([...targets, ...extraWords.slice(0, LESSON_SIZE - targets.length)], random) };
 };
 
-export const createLessonOrder = (previousId?: string, random = Math.random): SentenceExample[] => {
-  const order = shuffle(examples, random);
-  if (order[0].id === previousId && order.length > 1) {
+export const createLessonOrder = (previousId?: string, random = Math.random, seen: readonly string[] = []): SentenceExample[] => {
+  const excluded = new Set(seen);
+  const order = shuffle(examples.filter(example => !excluded.has(example.text)), random);
+  const previous = examples.find(example => previousId
+    ? example.id === previousId : example.text === seen[seen.length - 1]);
+  if (order[0]?.id === previous?.id && order.length > 1) {
     [order[0], order[1]] = [order[1], order[0]];
+  }
+  let previousTopic = previous?.topic;
+  for (let i = 0; i < order.length; i++) {
+    if (order[i].topic === previousTopic) {
+      const different = order.findIndex((example, j) => j > i && example.topic !== previousTopic && example.id !== previous?.id);
+      if (different !== -1) [order[i], order[different]] = [order[different], order[i]];
+    }
+    previousTopic = order[i].topic;
   }
   return order;
 };
