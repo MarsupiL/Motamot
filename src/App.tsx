@@ -82,7 +82,8 @@ function App() {
 
         {showHelp && <aside id="how-it-works" className="help-panel">
           <strong>Un mot après l’autre.</strong>
-          <p>Découvrez dix mots, puis retrouvez-en plusieurs dans une petite scène du quotidien. Écoutez, revenez en arrière et prenez votre temps.</p>
+          <p>Découvrez {LESSON_SIZE} mots, puis retrouvez-en plusieurs dans une petite scène du quotidien. Écoutez, revenez en arrière et prenez votre temps.</p>
+          <p>Sur un parcours complet de {examples.length} leçons avec ce programme, chaque entrée du dictionnaire revient dans au moins trois leçons différentes.</p>
           <p>Dans la zone du mot ou de la phrase, touchez la moitié droite pour avancer, ou la moitié gauche pour revenir. Vous pouvez aussi glisser vers la gauche pour avancer, et vers la droite pour revenir.</p>
           <p>Une voix féminine française vous accompagne. Les enregistrements sont créés par synthèse vocale et se chargent à la demande.</p>
           <p>{canRemember
@@ -107,7 +108,7 @@ function App() {
         </section>
 
         <footer className="lesson-footer">
-          <div className="progress-label"><span>{isSentence ? 'Dix mots, une petite scène.' : 'Dix mots, puis une phrase.'}</span><span>{isSentence ? '10 / 10' : `${index + 1} / 10`}</span></div>
+          <div className="progress-label"><span>{isSentence ? 'Les mots prennent vie.' : 'Un mot après l’autre.'}</span><span>{isSentence ? LESSON_SIZE : index + 1} / {LESSON_SIZE}</span></div>
           <div className="progress-track" role="progressbar" aria-label="Progression de la leçon" aria-valuemin={0} aria-valuemax={LESSON_SIZE} aria-valuenow={isSentence ? LESSON_SIZE : index + 1}>
             {lesson.words.map((word, i) => <span key={wordKey(word)} className={i <= index ? 'filled' : ''} />)}
           </div>

@@ -1,9 +1,16 @@
 import { allWords, wordKey } from '../data/frenchWords.ts';
 import { examples } from '../data/sentences.ts';
+import curriculum from '../data/curriculum.json' with { type: 'json' };
 import type { Lesson, SentenceExample, SentenceWord, Word } from '../types';
 
-export const LESSON_SIZE = 10;
+export const LESSON_SIZE = curriculum.lessonSize;
 const dictionary = new Map(allWords.map(word => [wordKey(word), word]));
+// Fixed membership preserves whole-course coverage regardless of lesson order or reloads.
+const plannedWords = new Map(Object.entries(curriculum.lessons).map(([id, keys]) => [id, keys.map(key => {
+  const word = dictionary.get(key);
+  if (!word) throw new Error(`Unknown curriculum vocabulary: ${key}`);
+  return word;
+})]));
 
 export const shuffle = <T,>(items: readonly T[], random = Math.random): T[] => {
   const result = [...items];
@@ -21,10 +28,9 @@ export const getExampleWord = (target: SentenceWord): Word => {
 };
 
 export const createLesson = (example: SentenceExample, random = Math.random): Lesson => {
-  const targets = example.words.map(getExampleWord);
-  const targetKeys = new Set(targets.map(wordKey));
-  const extraWords = shuffle(allWords.filter(word => !targetKeys.has(wordKey(word))), random);
-  return { example, words: shuffle([...targets, ...extraWords.slice(0, LESSON_SIZE - targets.length)], random) };
+  const words = plannedWords.get(example.id);
+  if (!words) throw new Error(`Missing curriculum lesson: ${example.id}`);
+  return { example, words: shuffle(words, random) };
 };
 
 export const createLessonOrder = (previousId?: string, random = Math.random, seen: readonly string[] = []): SentenceExample[] => {

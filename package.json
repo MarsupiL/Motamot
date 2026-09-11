@@ -8,7 +8,8 @@
     "build": "tsc --noEmit && tsc -p tsconfig.node.json && vite build --config vite.config.ts",
     "lint": "eslint . --max-warnings 0",
     "preview": "vite preview",
-    "test": "node --experimental-strip-types --test tests/*.test.mjs"
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "curriculum": "node --experimental-strip-types scripts/generate-curriculum.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

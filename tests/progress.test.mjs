@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { examples } from '../src/data/sentences.ts';
+import { allWords, wordKey } from '../src/data/frenchWords.ts';
 import { createLessonOrder, LESSON_SIZE } from '../src/services/lessons.ts';
 import { createSession, nextInSession, previousInSession, revisitWord } from '../src/services/session.ts';
 import { clearSeen, PROGRESS_KEY, readSeen, saveSeen } from '../src/services/progress.ts';
@@ -33,20 +34,26 @@ test('leaving during the vocabulary does not mark an unread sentence as seen', (
   assert.equal(session.seen.length, 1);
 });
 
-test('360 separate visits never repeat a seen sentence and the final visit is complete', () => {
+test('360 separate visits cover every word three times, never repeat a seen sentence, and finish safely', () => {
   const saved = storage();
   const random = seeded(123);
   const encountered = new Set();
+  const wordAppearances = new Map(allWords.map(word => [wordKey(word), 0]));
   for (let i = 0; i < examples.length; i++) {
     let session = createSession(random, readSeen(saved));
     assert.equal(session.completed, false);
     const text = session.visited[0].lesson.example.text;
     assert.equal(encountered.has(text), false, text);
     encountered.add(text);
-    session = reachSentence(session, random);
+    for (let card = 0; card < LESSON_SIZE; card++) {
+      const key = wordKey(session.visited[0].lesson.words[session.index]);
+      wordAppearances.set(key, wordAppearances.get(key) + 1);
+      session = nextInSession(session, random);
+    }
     assert.equal(saveSeen(saved, session.seen), true);
   }
   assert.equal(encountered.size, 360);
+  for (const [key, count] of wordAppearances) assert.ok(count >= 3, `${key}: ${count} presentations`);
   const complete = createSession(random, readSeen(saved));
   assert.equal(complete.completed, true);
   assert.equal(complete.visited.length, 0);

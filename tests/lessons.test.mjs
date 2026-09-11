@@ -28,7 +28,8 @@ test('each complete sentence has usable vocabulary, accurate surface annotations
   }
 });
 
-test('every lesson has ten distinct words and includes every word promised in its sentence', () => {
+test('every lesson has twelve distinct words and includes every word promised in its sentence', () => {
+  assert.equal(LESSON_SIZE, 12);
   for (let seed = 0; seed < 100; seed++) {
     for (const example of examples) {
       const lesson = createLesson(example, seeded(seed));
@@ -53,13 +54,23 @@ test('sentence cycles do not repeat until the whole collection is used, includin
   }
 });
 
-test('all dictionary words remain eligible for the additional discovery words', () => {
-  const seen = new Set();
-  const random = seeded(901);
-  for (let i = 0; i < 4000; i++) {
-    for (const word of createLesson(examples[i % examples.length], random).words) seen.add(wordKey(word));
+test('every dictionary entry appears as a word card in at least three distinct lessons', () => {
+  const counts = new Map(allWords.map(word => [wordKey(word), new Set()]));
+  for (const example of examples) {
+    for (const word of createLesson(example, seeded(901)).words) counts.get(wordKey(word)).add(example.id);
   }
-  assert.equal(seen.size, allWords.length);
+  assert.equal(counts.size, 1273);
+  for (const [key, lessons] of counts) assert.ok(lessons.size >= 3, `${key}: only ${lessons.size} lessons`);
+});
+
+test('changing the random order or reopening a lesson cannot change its assigned vocabulary', () => {
+  for (const example of examples) {
+    const expected = createLesson(example, seeded(1)).words.map(wordKey).sort();
+    for (const seed of [2, 57, 999]) {
+      assert.deepEqual(createLesson(example, seeded(seed)).words.map(wordKey).sort(), expected, example.id);
+    }
+  }
+  assert.throws(() => createLesson({ ...examples[0], id: 'unplanned-example' }), /Missing curriculum lesson/);
 });
 
 test('dictionary deduplication retains illustrations and all image references exist locally', () => {
