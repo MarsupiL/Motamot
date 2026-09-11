@@ -15,8 +15,8 @@ export default defineConfig({
         description: 'Application pour apprendre le vocabulaire français',
         theme_color: '#2d4a3e',
         background_color: '#2d4a3e',
-        display: 'fullscreen',
-        orientation: 'portrait',
+        display: 'standalone',
+        orientation: 'any',
         scope: './',
         start_url: './',
         icons: [

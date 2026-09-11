@@ -25,6 +25,7 @@ function App() {
   const currentWord = lesson.words[Math.min(index, LESSON_SIZE - 1)];
   const displayText = isSentence ? lesson.example.text : formatWordWithArticle(currentWord);
   const [showHelp, setShowHelp] = useState(false);
+  const [showWords, setShowWords] = useState(false);
   const seenWords = lesson.words.slice(0, Math.min(furthest + 1, LESSON_SIZE));
 
   const next = () => setSession(previous => {
@@ -78,7 +79,10 @@ function App() {
             <button className="back-button" disabled={index === 0} onClick={() => setSession(previous => ({ ...previous, index: Math.max(0, previous.index - 1) }))}><span aria-hidden="true">←</span> Retour</button>
             <button className="next-button" onClick={next}>{isSentence ? 'Une autre leçon' : index === LESSON_SIZE - 1 ? 'Découvrir la phrase' : 'Le mot suivant'}<span aria-hidden="true">→</span></button>
           </div>
-          <div className="word-notebook" aria-label="Mots découverts">
+          <button className="word-review-toggle" aria-expanded={showWords} aria-controls="discovered-words" onClick={() => setShowWords(value => !value)}>
+            {showWords ? 'Masquer les mots' : 'Revoir les mots'} <span>({seenWords.length})</span>
+          </button>
+          <div id="discovered-words" className={`word-notebook${showWords ? ' is-open' : ''}`} aria-label="Mots découverts">
             {seenWords.map((word, i) => <button key={wordKey(word)} className={!isSentence && index === i ? 'current' : ''} aria-label={`Revoir : ${formatWordWithArticle(word)}`} aria-current={!isSentence && index === i ? 'step' : undefined} onClick={() => setSession(previous => ({ ...previous, index: i }))}>{formatWordWithArticle(word)}</button>)}
           </div>
         </footer>
