@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { describeWord, formatWordWithArticle, wordKey } from './data/frenchWords';
-import { createLesson, createLessonOrder, LESSON_SIZE, sentenceParts } from './services/lessons';
+import { formatWordWithArticle, wordKey } from './data/frenchWords';
+import { LESSON_SIZE, sentenceParts } from './services/lessons';
+import { createSession, nextInSession, previousInSession, revisitWord } from './services/session';
+import { useLessonGestures } from './hooks/useLessonGestures';
 import { Pronunciation } from './components/Pronunciation';
 import type { Word } from './types';
 import './index.css';
@@ -10,17 +12,16 @@ function WordIllustration({ word }: { word: Word }) {
   if (!word.image || failed) return null;
   return (
     <figure className="word-illustration">
-      <img src={`${import.meta.env.BASE_URL}images/${word.image}`} alt={`Illustration : ${word.word}`} width="220" height="220" onError={() => setFailed(true)} />
+      <img src={`${import.meta.env.BASE_URL}images/${word.image}`} alt={`Illustration : ${word.word}`} width="220" height="220" draggable={false} onError={() => setFailed(true)} />
     </figure>
   );
 }
 
 function App() {
-  const [session, setSession] = useState(() => {
-    const order = createLessonOrder();
-    return { order, lesson: createLesson(order[0]), index: 0, furthest: 0, round: 1 };
-  });
-  const { lesson, index, furthest, round } = session;
+  const [session, setSession] = useState(() => createSession());
+  const { index, lessonIndex } = session;
+  const { lesson, furthest } = session.visited[lessonIndex];
+  const round = lessonIndex + 1;
   const isSentence = index === LESSON_SIZE;
   const currentWord = lesson.words[Math.min(index, LESSON_SIZE - 1)];
   const displayText = isSentence ? lesson.example.text : formatWordWithArticle(currentWord);
@@ -28,11 +29,11 @@ function App() {
   const [showWords, setShowWords] = useState(false);
   const seenWords = lesson.words.slice(0, Math.min(furthest + 1, LESSON_SIZE));
 
-  const next = () => setSession(previous => {
-    if (previous.index < LESSON_SIZE) return { ...previous, index: previous.index + 1, furthest: Math.max(previous.furthest, previous.index + 1) };
-    const remaining = previous.order.slice(1);
-    const order = remaining.length ? remaining : createLessonOrder(previous.lesson.example.id);
-    return { order, lesson: createLesson(order[0]), index: 0, furthest: 0, round: previous.round + 1 };
+  const next = () => setSession(previous => nextInSession(previous));
+  const back = () => setSession(previousInSession);
+  const gestures = useLessonGestures(direction => {
+    if (direction === 'next') next();
+    else back();
   });
 
   return (
@@ -46,8 +47,8 @@ function App() {
         {showHelp && <aside id="how-it-works" className="help-panel">
           <strong>Un mot après l’autre.</strong>
           <p>Découvrez dix mots, puis retrouvez-en plusieurs dans une petite scène du quotidien. Écoutez, revenez en arrière et prenez votre temps.</p>
-          <p>Les phrases sont préparées à l’avance pour préserver le sens et les accords. Les mots supplémentaires viennent de tout le lexique.</p>
-          <p>Une voix féminine française vous accompagne. Les enregistrements sont créés par synthèse vocale et se chargent à la demande. Cochez « Lentement » pour écouter à votre rythme.</p>
+          <p>Dans la zone du mot ou de la phrase, touchez la moitié droite pour avancer, ou la moitié gauche pour revenir. Vous pouvez aussi glisser vers la gauche pour avancer, et vers la droite pour revenir.</p>
+          <p>Une voix féminine française vous accompagne. Les enregistrements sont créés par synthèse vocale et se chargent à la demande.</p>
         </aside>}
 
         <div className="lesson-heading">
@@ -55,8 +56,7 @@ function App() {
           <span className="lesson-number">n° {String(round).padStart(2, '0')}</span>
         </div>
 
-        <section className={`learning-surface ${isSentence ? 'sentence-surface' : ''}`} aria-label={isSentence ? 'Les mots en contexte' : 'Vocabulaire'}>
-          <div className="word-meta"><span className="tiny-line" />{isSentence ? 'Les mots prennent vie' : describeWord(currentWord)}<span className="tiny-line" /></div>
+        <section className="learning-surface" aria-label={isSentence ? 'Les mots en contexte' : 'Vocabulaire'} {...gestures}>
           <div className="lesson-content" aria-live="polite" aria-atomic="true">
             {isSentence ? (
               <h1 className="sentence">{sentenceParts(lesson.example).map((part, i) => part.highlighted ? <mark key={i}>{part.text}</mark> : part.text)}</h1>
@@ -67,8 +67,7 @@ function App() {
               </>
             )}
           </div>
-          <Pronunciation text={displayText} />
-          {isSentence && <div className="grammar-note"><span>Le petit déclic</span><p>{lesson.example.note}</p></div>}
+          <Pronunciation key={`${lessonIndex}:${index}`} text={displayText} />
         </section>
 
         <footer className="lesson-footer">
@@ -77,17 +76,16 @@ function App() {
             {lesson.words.map((word, i) => <span key={wordKey(word)} className={i <= index ? 'filled' : ''} />)}
           </div>
           <div className="navigation">
-            <button className="back-button" disabled={index === 0} onClick={() => setSession(previous => ({ ...previous, index: Math.max(0, previous.index - 1) }))}><span aria-hidden="true">←</span> Retour</button>
+            <button className="back-button" disabled={index === 0 && lessonIndex === 0} onClick={back}><span aria-hidden="true">←</span> Retour</button>
             <button className="next-button" onClick={next}>{isSentence ? 'Une autre leçon' : index === LESSON_SIZE - 1 ? 'Découvrir la phrase' : 'Le mot suivant'}<span aria-hidden="true">→</span></button>
           </div>
           <button className="word-review-toggle" aria-expanded={showWords} aria-controls="discovered-words" onClick={() => setShowWords(value => !value)}>
             {showWords ? 'Masquer les mots' : 'Revoir les mots'} <span>({seenWords.length})</span>
           </button>
           <div id="discovered-words" className={`word-notebook${showWords ? ' is-open' : ''}`} aria-label="Mots découverts">
-            {seenWords.map((word, i) => <button key={wordKey(word)} className={!isSentence && index === i ? 'current' : ''} aria-label={`Revoir : ${formatWordWithArticle(word)}`} aria-current={!isSentence && index === i ? 'step' : undefined} onClick={() => setSession(previous => ({ ...previous, index: i }))}>{formatWordWithArticle(word)}</button>)}
+            {seenWords.map((word, i) => <button key={wordKey(word)} className={!isSentence && index === i ? 'current' : ''} aria-label={`Revoir : ${formatWordWithArticle(word)}`} aria-current={!isSentence && index === i ? 'step' : undefined} onClick={() => setSession(previous => revisitWord(previous, i))}>{formatWordWithArticle(word)}</button>)}
           </div>
         </footer>
-        <div className="board-signature" aria-hidden="true">À demain, ou à tout de suite.</div>
       </div>
     </main>
   );

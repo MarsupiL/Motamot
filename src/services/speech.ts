@@ -20,7 +20,7 @@ export function createPronunciationPlayer(
   return {
     stop() { release(); onState('idle'); },
     dispose: release,
-    play(source: string, slow: boolean) {
+    play(source: string) {
       release();
       let audio: HTMLAudioElement;
       try {
@@ -44,8 +44,6 @@ export function createPronunciationPlayer(
       audio.onplaying = () => { if (current === audio) onState('playing'); };
       audio.onwaiting = () => { if (current === audio) onState('loading'); };
       audio.preload = 'none';
-      audio.playbackRate = slow ? 0.8 : 1;
-      audio.preservesPitch = true;
       audio.src = source;
       onState('loading');
       // Call play directly in the tap handler to retain mobile user activation.

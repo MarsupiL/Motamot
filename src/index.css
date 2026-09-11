@@ -61,11 +61,9 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .help-panel p { margin-top: 10px; font-size: 1rem; color: var(--muted); }
 .lesson-heading { width: 100%; max-width: 850px; display: flex; justify-content: space-between; align-items: center; align-self: center; margin-top: 26px; }
 .lesson-number { font-family: var(--hand); font-size: .95rem; color: var(--yellow); }
-.learning-surface { flex: 1; width: 100%; max-width: 970px; align-self: center; text-align: center; padding: 36px 0 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-.word-meta { color: var(--muted); display: flex; align-items: center; justify-content: center; gap: 14px; font-size: .875rem; flex-wrap: wrap; }
-.tiny-line { width: 22px; height: 1px; background: var(--rule); }
+.learning-surface { flex: 1; width: 100%; max-width: 970px; align-self: center; text-align: center; padding: 36px 0 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; touch-action: pan-y pinch-zoom; user-select: none; -webkit-user-select: none; }
 .lesson-content { width: 100%; animation: chalk-appear .25s ease-out; }
-.vocabulary-word { font-family: var(--hand); font-weight: 300; font-size: clamp(2rem, 5.1vw, 4.1rem); line-height: 2.05; padding: 12px 0 18px; margin: 0; overflow-wrap: anywhere; text-shadow: 0 0 2px #f3f1e72b; }
+.vocabulary-word { font-family: var(--hand); font-weight: 300; font-size: clamp(2.7rem, 6.3vw, 5.2rem); line-height: 1.9; padding: 12px 0 18px; margin: 0; overflow-wrap: anywhere; text-shadow: 0 0 2px #f3f1e72b; }
 .word-illustration { width: clamp(130px, 17vw, 190px); aspect-ratio: 1; margin: 0 auto 22px; padding: 8px; background: #f1f0e6; border: 1px solid #dcd8c9; transform: rotate(-3deg); box-shadow: 4px 8px 14px #05191145; }
 .word-illustration img { display: block; width: 100%; height: 100%; object-fit: contain; background: white; }
 .sentence { font-family: var(--hand); font-size: clamp(1.35rem, 2.4vw, 2.1rem); font-weight: 300; line-height: 2.2; margin: 24px 0; overflow-wrap: anywhere; text-wrap: pretty; }
@@ -74,13 +72,8 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .audio-controls { display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; }
 .listen-button { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; border: 1px solid #c2d5c454; border-radius: 24px; padding: 8px 20px; color: var(--chalk); background: #d0e5d008; font-size: .875rem; }
 .listen-button:hover:enabled { background: #d0e5d016; border-color: #c2d5c4a0; }
-.slow-toggle { display: flex; align-items: center; gap: 8px; min-height: 44px; font-size: .875rem; color: var(--muted); cursor: pointer; }
-.slow-toggle input { width: 16px; height: 16px; accent-color: var(--yellow); }
 .audio-status { font-size: .875rem; line-height: 1.6; color: var(--muted); max-width: 450px; margin: 6px auto 0; }
 .audio-status:empty { display: none; }
-.grammar-note { max-width: 660px; border-top: 1px dashed #d4d7bc50; padding-top: 18px; margin: 22px 0 12px; }
-.grammar-note > span { font-family: var(--hand); font-size: 1rem; color: var(--yellow); }
-.grammar-note p { font-size: 1rem; line-height: 1.75; color: var(--muted); margin: 12px 0 0; }
 .lesson-footer { width: 100%; max-width: 640px; align-self: center; padding-top: 20px; }
 .progress-label { display: flex; justify-content: space-between; gap: 12px; font-size: .875rem; color: var(--muted); }
 .progress-label > span:last-child { color: var(--yellow); font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -100,7 +93,6 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .word-notebook { display: flex; gap: 2px 12px; flex-wrap: wrap; justify-content: center; margin-top: 20px; min-height: 44px; }
 .word-notebook button { min-height: 44px; font-size: .875rem; background: transparent; border: 0; border-bottom: 1px solid transparent; color: var(--muted); padding: 4px 3px; }
 .word-notebook button:hover, .word-notebook button.current { color: var(--yellow); text-decoration: underline; text-underline-offset: 5px; }
-.board-signature { margin-top: 24px; text-align: right; font-family: var(--hand); color: #a3b6a9; font-size: .8rem; line-height: 2; }
 @keyframes chalk-appear { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 @media (min-width: 1100px) and (min-height: 850px) { .learning-surface { padding-top: 48px; padding-bottom: 30px; } .vocabulary-word { padding-top: 22px; } }
 @media (max-width: 600px) {
@@ -112,24 +104,20 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   .board-header { padding-bottom: 14px; }
   .lesson-heading { margin-top: 16px; }
   .learning-surface { padding-top: 24px; }
-  .vocabulary-word { font-size: clamp(1.65rem, 7.5vw, 2.5rem); line-height: 1.95; }
+  .vocabulary-word { font-size: clamp(2.15rem, 9vw, 3.25rem); line-height: 1.9; }
   .word-illustration { width: clamp(112px, 31vw, 155px); margin-bottom: 16px; }
   .sentence { line-height: 1.95; margin: 20px 0; }
   .navigation { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .next-button { order: -1; width: 100%; min-height: 52px; padding: 13px 16px; gap: 14px; }
   .back-button { width: 100%; min-height: 48px; padding: 12px; }
   .help-button { min-width: 48px; min-height: 48px; }
-  .listen-button, .slow-toggle { min-height: 48px; font-size: 1rem; }
-  .slow-toggle { padding: 0 8px; }
-  .slow-toggle input { width: 20px; height: 20px; }
+  .listen-button { min-height: 48px; font-size: 1rem; }
   .word-review-toggle { display: block; width: 100%; min-height: 48px; margin-top: 8px; padding: 10px; border: 1px solid var(--rule); border-radius: 4px; color: var(--muted); background: transparent; font-size: .875rem; }
   .word-review-toggle span { color: var(--yellow); }
   .word-notebook { display: none; margin-top: 12px; gap: 8px; }
   .word-notebook.is-open { display: flex; }
   .word-notebook button { min-height: 48px; max-width: 100%; padding: 8px 12px; border: 1px solid var(--rule); border-radius: 4px; overflow-wrap: anywhere; }
   .audio-controls { gap: 16px; }
-  .board-signature { text-align: center; margin-top: 16px; }
-  .tiny-line { width: 14px; }
 }
 @media (max-height: 500px) and (orientation: landscape) {
   .classroom { --page-gap: 6px; }
@@ -137,9 +125,8 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   .board-header { padding-bottom: 10px; }
   .lesson-heading { margin-top: 12px; }
   .learning-surface { padding-top: 18px; }
-  .vocabulary-word { font-size: clamp(1.65rem, 4vw, 2.5rem); padding: 4px 0 12px; }
+  .vocabulary-word { font-size: clamp(2rem, 5vw, 3.25rem); padding: 4px 0 12px; }
   .word-illustration { width: 112px; margin-bottom: 12px; }
   .sentence { font-size: 1.4rem; line-height: 1.9; }
-  .board-signature { margin-top: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

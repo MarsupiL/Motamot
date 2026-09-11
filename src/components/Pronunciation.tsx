@@ -4,7 +4,6 @@ import { recordingFor } from '../services/recordings';
 
 export function Pronunciation({ text }: { text: string }) {
   const [state, setState] = useState<PlaybackState>('idle');
-  const [slow, setSlow] = useState(false);
   const [player] = useState(() => createPronunciationPlayer(() => new Audio(), setState));
   const source = recordingFor(text, import.meta.env.BASE_URL);
   const active = state === 'loading' || state === 'playing';
@@ -16,7 +15,7 @@ export function Pronunciation({ text }: { text: string }) {
 
   const speak = () => {
     if (active) player.stop();
-    else if (source) player.play(source, slow);
+    else if (source) player.play(source);
   };
 
   return (
@@ -28,7 +27,6 @@ export function Pronunciation({ text }: { text: string }) {
           </svg>
           {active ? 'Arrêter' : 'Écouter'}
         </button>
-        <label className="slow-toggle"><input type="checkbox" checked={slow} onChange={event => { player.stop(); setSlow(event.target.checked); }} /> Lentement</label>
       </div>
       <p className="audio-status" role="status">
         {!source ? 'La prononciation de ce texte n’est pas encore disponible.'

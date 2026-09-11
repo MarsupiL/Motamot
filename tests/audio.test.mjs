@@ -48,7 +48,7 @@ function setup() {
 
 test('stopping a loading recording releases it and ignores late playback and network errors', async () => {
   const { player, elements, states } = setup();
-  player.play('./audio/word.mp3', false);
+  player.play('./audio/word.mp3');
   const previous = elements[0];
   const latePlaying = previous.onplaying;
   player.stop();
@@ -60,13 +60,12 @@ test('stopping a loading recording releases it and ignores late playback and net
   assert.equal(previous.src, undefined);
 });
 
-test('switching words cancels the previous voice; slow mode retains pitch and stale events cannot stop the new word', async () => {
+test('switching words cancels the previous voice and stale events cannot stop the new word', async () => {
   const { player, elements, states } = setup();
-  player.play('first.mp3', false);
+  player.play('first.mp3');
   const first = elements[0];
   const lateEnd = first.onended;
-  assert.equal(first.playbackRate, 1);
-  player.play('second.mp3', true);
+  player.play('second.mp3');
   const second = elements[1];
   second.onplaying();
   lateEnd();
@@ -76,8 +75,6 @@ test('switching words cancels the previous voice; slow mode retains pitch and st
   assert.equal(first.paused, true);
   assert.equal(second.paused, false);
   assert.equal(second.src, 'second.mp3');
-  assert.equal(second.playbackRate, 0.8);
-  assert.equal(second.preservesPitch, true);
   second.onended();
   assert.equal(states.at(-1), 'idle');
   assert.equal(second.paused, true);
@@ -85,11 +82,11 @@ test('switching words cancels the previous voice; slow mode retains pitch and st
 
 test('a failed play can be retried, and disposal ignores later callbacks', async () => {
   const { player, elements, states } = setup();
-  player.play('word.mp3', false);
+  player.play('word.mp3');
   elements[0].reject(new Error('playback blocked'));
   await Promise.resolve();
   assert.equal(states.at(-1), 'error');
-  player.play('word.mp3', false);
+  player.play('word.mp3');
   elements[1].onplaying();
   assert.equal(states.at(-1), 'playing');
   const lateError = elements[1].onerror;

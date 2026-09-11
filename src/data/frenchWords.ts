@@ -354,13 +354,3 @@ export const formatWordWithArticle = (word: Word): string => {
   }
   return `${word.gender === 'f' ? 'la' : 'le'} ${word.word}`;
 };
-
-export const describeWord = (word: Word): string => {
-  switch (word.type) {
-    case 'noun': return word.gender === 'f' ? 'nom féminin' : 'nom masculin';
-    case 'verb': return 'verbe · infinitif';
-    case 'adjective': return 'adjectif · masculin singulier';
-    case 'adverb': return 'adverbe · invariable';
-    case 'preposition': return 'préposition · invariable';
-  }
-};
