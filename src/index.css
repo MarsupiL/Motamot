@@ -46,7 +46,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   padding: var(--safe-top) max(var(--page-gap), env(safe-area-inset-right, 0px)) var(--safe-bottom) max(var(--page-gap), env(safe-area-inset-left, 0px));
   background: radial-gradient(ellipse at 50% 0, #30443b, #111b18 80%);
 }
-.blackboard { position: relative; isolation: isolate; min-height: calc(100vh - var(--safe-top) - var(--safe-bottom)); min-height: calc(100svh - var(--safe-top) - var(--safe-bottom)); max-width: 1440px; margin: auto; padding: 30px clamp(24px, 6vw, 90px) 26px; border: 10px solid #71533a; border-bottom-width: 18px; border-radius: 5px; box-shadow: 0 1px 0 #a07b50 inset, 0 0 0 1px #32291d, 0 18px 55px #0007, inset 0 0 70px #071b2060; background: radial-gradient(ellipse at 28% 22%, #46715730, transparent 55%), radial-gradient(ellipse at 85% 90%, #b4c4a00c, transparent 45%), var(--board); display: flex; flex-direction: column; }
+.blackboard { position: relative; isolation: isolate; min-height: calc(100vh - var(--safe-top) - var(--safe-bottom)); min-height: calc(100svh - var(--safe-top) - var(--safe-bottom)); max-width: 1440px; margin: auto; padding: 30px clamp(24px, 6vw, 90px) 26px; border: 0; border-radius: 5px; box-shadow: 0 18px 55px #0007, inset 0 0 70px #071b2060; background: radial-gradient(ellipse at 28% 22%, #46715730, transparent 55%), radial-gradient(ellipse at 85% 90%, #b4c4a00c, transparent 45%), var(--board); display: flex; flex-direction: column; }
 .blackboard > *, .lesson-content, .pronunciation { min-width: 0; max-width: 100%; }
 .blackboard::before { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: -1; opacity: .16; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23n)' opacity='.3' d='M0 0h180v180H0z'/%3E%3C/svg%3E"); }
 .board-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; padding-bottom: 22px; border-bottom: 1px solid var(--rule); }
@@ -99,7 +99,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 @media (min-width: 1100px) and (min-height: 850px) { .learning-surface { padding-top: 48px; padding-bottom: 30px; } .vocabulary-word { padding-top: 22px; } }
 @media (max-width: 600px) {
   .classroom { --page-gap: 7px; }
-  .blackboard { border-width: 6px; border-bottom-width: 11px; padding: 16px clamp(12px, 4vw, 20px) 16px; }
+  .blackboard { padding: 16px clamp(12px, 4vw, 20px) 16px; }
   .brand { font-size: 1.25rem; }
   .header-right { gap: 14px; }
   .language-label { font-size: .75rem; letter-spacing: .12em; }
