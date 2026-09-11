@@ -1,6 +1,10 @@
 import type { NounData, Word } from '../types';
 
 export const nouns: NounData[] = [
+  { word: "valise", gender: "f" }, { word: "photo", gender: "f" },
+  { word: "carte", gender: "f" }, { word: "taille", gender: "f" },
+  { word: "dessert", gender: "m" }, { word: "surprise", gender: "f" },
+  { word: "énergie", gender: "f" },
   // First 50 nouns with images (concrete, easy to illustrate)
   { word: "homme", gender: "m", image: "homme.png" },
   { word: "enfant", gender: "m", image: "enfant.png" },
@@ -324,29 +328,39 @@ export const adverbs: string[] = [
   "temporairement", "définitivement", "provisoirement", "alternativement", "successivement", "simultanément", "séparément", "ensemble", "individuellement", "collectivement",
   "personnellement", "généralement", "particulièrement", "spécialement", "notamment", "principalement", "essentiellement", "fondamentalement", "basiquement", "globalement",
   "localement", "nationalement", "internationalement", "mondialement", "universellement", "partout", "ailleurs", "ici",
-  "là", "dedans", "dehors", "dessus", "dessous", "devant", "derrière", "autour", "entre", "parmi",
-  "près", "loin", "haut", "bas", "avant", "après", "pendant", "durant", "depuis"
+  "là", "dedans", "dehors", "dessus", "dessous", "devant", "derrière", "autour",
+  "près", "loin", "haut", "bas", "avant", "après",
 ];
 
-export const getRandomWord = (): Word => {
-  const allWords: Word[] = [
-    ...nouns.map(n => ({ word: n.word, type: 'noun' as const, gender: n.gender, image: n.image })),
-    ...verbs.map(v => ({ word: v, type: 'verb' as const })),
-    ...adjectives.map(a => ({ word: a, type: 'adjective' as const })),
-    ...adverbs.map(a => ({ word: a, type: 'adverb' as const }))
-  ];
-  return allWords[Math.floor(Math.random() * allWords.length)];
-};
+export const prepositions = ['entre', 'parmi', 'pendant', 'durant', 'depuis'];
 
-// Get nouns with images (for preloading)
-export const getNounsWithImages = (): NounData[] => {
-  return nouns.filter(n => n.image);
-};
+// Keep the first entry: duplicate nouns later in the source omit their illustration.
+export const allWords: Word[] = Array.from(new Map([
+  ...nouns.map(n => ({ ...n, type: 'noun' as const })),
+  ...verbs.map(word => ({ word, type: 'verb' as const })),
+  ...adjectives.map(word => ({ word, type: 'adjective' as const })),
+  ...adverbs.map(word => ({ word, type: 'adverb' as const })),
+  ...prepositions.map(word => ({ word, type: 'preposition' as const })),
+].reverse().map(word => [`${word.type}:${word.word}`, word])).values()).reverse();
 
-export const formatWordWithArticle = (wordObj: Word): string => {
-  if (wordObj.type === 'noun' && wordObj.gender) {
-    const article = wordObj.gender === 'm' ? 'un' : 'une';
-    return `${article} ${wordObj.word}`;
+export const wordKey = (word: Pick<Word, 'type' | 'word'>): string =>
+  `${word.type}:${word.word}`;
+
+export const formatWordWithArticle = (word: Word): string => {
+  if (word.type !== 'noun') return word.word;
+  // The h in héros is aspirated; the other h-initial nouns here permit elision.
+  if (/^[aàâäeéèêëiîïoôöuùûüyÿœæh]/i.test(word.word) && word.word !== 'héros') {
+    return `l’${word.word}`;
   }
-  return wordObj.word;
+  return `${word.gender === 'f' ? 'la' : 'le'} ${word.word}`;
+};
+
+export const describeWord = (word: Word): string => {
+  switch (word.type) {
+    case 'noun': return word.gender === 'f' ? 'nom féminin' : 'nom masculin';
+    case 'verb': return 'verbe · infinitif';
+    case 'adjective': return 'adjectif · masculin singulier';
+    case 'adverb': return 'adverbe · invariable';
+    case 'preposition': return 'préposition · invariable';
+  }
 };

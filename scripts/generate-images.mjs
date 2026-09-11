@@ -74,7 +74,7 @@ const words = [
 ];
 
 // Output directory
-const outputDir = path.join(__dirname, '..', 'generated-images');
+const outputDir = path.join(__dirname, '..', 'public', 'images');
 
 // Ensure output directory exists
 if (!fs.existsSync(outputDir)) {
@@ -185,16 +185,9 @@ async function main() {
   console.log(`Images saved to: ${outputDir}`);
   console.log(`
 NEXT STEPS:
-1. Convert PNG to WebP (optional, for smaller file size):
-   cd generated-images
-   for f in *.png; do cwebp "$f" -o "\${f%.png}.webp"; done
-
-2. Or just rename .png to .webp and update the code to use PNG
-
-3. Upload all images to Supabase storage bucket "images"
-   - Go to: https://supabase.com/dashboard/project/gvsbrkvrqjlptzlvbaax/storage/buckets
-   - Select "images" bucket
-   - Upload all files from generated-images folder
+1. Review the illustrations in public/images.
+2. Keep the filenames aligned with src/data/frenchWords.ts.
+3. Run npm test and npm run build to include them in the app.
 `);
 }
 

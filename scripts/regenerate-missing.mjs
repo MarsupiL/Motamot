@@ -31,7 +31,7 @@ const missingWords = [
   { word: "livre", filename: "livre.png", prompt: "simple flat illustration of a book, open book, minimal design, solid white background, educational flashcard style, vector art" },
 ];
 
-const outputDir = path.join(__dirname, '..', 'generated-images');
+const outputDir = path.join(__dirname, '..', 'public', 'images');
 
 function downloadImage(url, filepath) {
   return new Promise((resolve, reject) => {
