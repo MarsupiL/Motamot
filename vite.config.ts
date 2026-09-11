@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
+      includeAssets: ['icons/*.png'],
       manifest: {
         name: 'Motamot - Apprendre le français',
         short_name: 'Motamot',
@@ -21,20 +21,20 @@ export default defineConfig({
         start_url: './',
         icons: [
           {
-            src: 'pwa-192x192.png',
+            src: 'icons/motamot-bubble-192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'pwa-512x512.png',
+            src: 'icons/motamot-bubble-512.png',
             sizes: '512x512',
             type: 'image/png'
           },
           {
-            src: 'pwa-512x512.png',
+            src: 'icons/motamot-bubble-512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any maskable'
+            purpose: 'maskable'
           }
         ]
       },

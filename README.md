@@ -12,6 +12,7 @@ Learn French ten words at a time, then see several of them in a short, gently fu
 - **Phone-friendly lessons.** Full-width navigation and larger touch targets on small screens, a collapsible vocabulary list, safe-area spacing around notches and home indicators, and support for both portrait and landscape. Installed mode keeps the system status bar available.
 - **A consistent French feminine voice.** Every word and sentence has a locally generated neural speech recording using Kokoro’s `ff_siwis` voice. Small MP3s load only when “Écouter” is pressed; phones do not download or run an AI model. Playback preserves the sampled delivery. Moving to another word stops the previous recording, and failed playback can be retried. No installed system voice or microphone permission is needed.
 - **50 local illustrations and local fonts.** The app no longer depends on Supabase or Google Fonts at runtime. The PWA caches text, images and fonts for use after the first successful online visit.
+- **A chalk speech-bubble icon.** The selected yellow handwritten “m” appears on the home screen and browser tab. Opaque PNG exports cover 32, 48, 180, 192 and 512 pixels, with the full bubble inside the maskable icon safe area. The original artwork and export notes live in `assets/branding/`.
 
 ## Cost and limitations
 
