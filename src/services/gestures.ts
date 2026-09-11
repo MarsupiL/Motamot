@@ -22,7 +22,11 @@ export function createNavigationGesture() {
   };
 
   return {
-    start(point: Point) { start = { ...point }; moved = 0; },
+    start({ pointerId, clientX, clientY, timeStamp }: Point) {
+      // Retain only coordinates, never the event's DOM and native-event objects.
+      start = { pointerId, clientX, clientY, timeStamp };
+      moved = 0;
+    },
     move,
     cancel,
     end(point: Point, bounds: { left: number; width: number }): Direction | undefined {

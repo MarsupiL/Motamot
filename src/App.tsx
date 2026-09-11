@@ -5,7 +5,6 @@ import { createSession, nextInSession, previousInSession, revisitWord } from './
 import { useLessonGestures } from './hooks/useLessonGestures';
 import { Pronunciation } from './components/Pronunciation';
 import type { Word } from './types';
-import './index.css';
 
 function WordIllustration({ word }: { word: Word }) {
   const [failed, setFailed] = useState(false);

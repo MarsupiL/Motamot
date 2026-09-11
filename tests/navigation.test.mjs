@@ -42,6 +42,7 @@ test('revisiting a word preserves discovery progress and rejects unseen or inval
   const next = nextInSession(revisited, random);
   assert.equal(next.index, 2);
   assert.equal(next.visited[0].furthest, 5);
+  assert.equal(next.visited, session.visited);
   assert.equal(session.index, 5);
 });
 
@@ -101,4 +102,16 @@ test('cancelling for a pinch, a control or a browser interruption prevents later
   assert.equal(gesture.end(point(100, 100, 200), bounds), undefined);
   gesture.start(point(260));
   assert.equal(gesture.end(point(100, 100, 200, 2), bounds), undefined);
+});
+
+test('gestures snapshot coordinates without copying unrelated event properties', () => {
+  const gesture = createNavigationGesture();
+  const event = Object.create(point(260));
+  Object.defineProperty(event, 'target', {
+    enumerable: true,
+    get() { throw new Error('The gesture must not copy the DOM target'); },
+  });
+  gesture.start(event);
+  event.clientX = 60;
+  assert.equal(gesture.end(point(260, 100, 120), bounds), 'next');
 });

@@ -20,7 +20,15 @@ No user account, API key, model download, backend or paid service is needed. The
 
 The tradeoff is finite sentence variety: 72 complete examples, rather than unlimited AI output. Additional vocabulary is sampled across the full lexicon, but only the annotated words are guaranteed a sentence example in that round. Automated checks verify annotations, length, vocabulary coverage and lesson behavior; they do **not** prove grammar or semantic correctness. New or changed examples should receive a fluent French editorial review.
 
-Audio is synthetic, with the same voice on each supported device. Recordings are deliberately excluded from the PWA’s initial download, so uncached audio needs a connection. Text, images and fonts remain available offline after installation. Changing the French content also requires generating its new recording; an exact-text index and automated coverage check prevent a changed sentence from silently playing an old recording.
+Audio is synthetic, with the same voice on each supported device. Recordings are deliberately excluded from the PWA’s initial download, so uncached audio needs a connection. Playback reports a retryable error after 15 seconds without starting or recovering from buffering. Text, images and fonts remain available offline after installation. Changing the French content also requires generating its new recording; an exact-text index and automated coverage check prevent a changed sentence from silently playing an old recording.
+
+## Size and hosting
+
+The production files total approximately **20.9 MB**, including **19.0 MB** for 1,343 recordings. The offline app is only **1.84 MB before transfer compression**, including all 50 illustrations (0.84 MB), both fonts and the icons. A typical audio file is 12.5 KB; the largest is 59.3 KB. No speech model or development dependencies are downloaded by learners.
+
+Keep these assets on GitHub Pages at this scale. Separate cloud storage would add another service without reducing the bytes needed to display an image or play a word. Reconsider storage if the media library grows substantially, uploads become necessary, or measured traffic approaches the host’s limits. See the [review and measurement notes](docs/code-review.md).
+
+The build rejects an offline precache above **2.5 MB** and prevents audio from being added to it. Optimize new assets before increasing that budget. Browser-managed caches can be cleared or evicted, so offline availability requires a completed initial cache and retained browser storage.
 
 ## Development
 
@@ -34,7 +42,7 @@ npm run lint
 npm run build
 ```
 
-The application is static. Relative asset URLs work both at `/Motamot/` on GitHub Pages and at the root of another static host. `dist/` contains the distributable app. The production build also generates its service worker and manifest.
+The application is static. Relative asset URLs work both at `/Motamot/` on GitHub Pages and at the root of another static host. `dist/` contains the distributable app. The production build type-checks both the application and build configuration, then generates the service worker and manifest. Lint includes application code, JavaScript configuration, maintenance scripts and tests. Run `npm audit` periodically to review dependency advisories; commit compatible fixes with their updated lockfile and rerun the checks.
 
 ## Maintaining the French content
 
@@ -42,7 +50,7 @@ Add a complete example in `src/data/sentences.ts`. Its vocabulary annotations ex
 
 Run `npm test` after editing content. Checks cover every example and thousands of shuffled lessons, articles and elision, inflected-word highlighting, repetition and image availability. They are structural safeguards, not a substitute for reviewing French meaning and usage.
 
-Images are in `public/images/`. The original image-generation scripts are optional maintenance utilities, not used by the app or its build. Font licenses are included in `public/fonts/OFL.txt`.
+Images are in `public/images/`. The 50 original illustration prompts are preserved in `assets/illustrations/prompts.json`, outside the browser build. The old remote image downloaders were retired because they could truncate existing illustrations before checking a response. Generate replacement artwork separately, inspect the finished PNG, then replace its matching file and run the checks. Font licenses are included in `public/fonts/OFL.txt`.
 
 ## Maintaining pronunciation
 

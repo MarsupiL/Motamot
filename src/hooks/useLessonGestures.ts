@@ -1,8 +1,8 @@
-import { useRef, type PointerEvent } from 'react';
+import { useState, type PointerEvent } from 'react';
 import { createNavigationGesture, type Direction } from '../services/gestures';
 
 export function useLessonGestures(navigate: (direction: Direction) => void) {
-  const gesture = useRef(createNavigationGesture()).current;
+  const [gesture] = useState(createNavigationGesture);
 
   return {
     onPointerDown(event: PointerEvent<HTMLElement>) {

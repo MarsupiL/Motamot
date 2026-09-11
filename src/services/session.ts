@@ -21,10 +21,12 @@ export function createSession(random = Math.random): Session {
 export function nextInSession(session: Session, random = Math.random): Session {
   if (session.index < LESSON_SIZE) {
     const index = session.index + 1;
+    // Backtracking changes the position, not the recorded discovery history.
+    if (index <= session.visited[session.lessonIndex].furthest) return { ...session, index };
     return {
       ...session, index,
       visited: session.visited.map((entry, i) => i === session.lessonIndex
-        ? { ...entry, furthest: Math.max(entry.furthest, index) } : entry),
+        ? { ...entry, furthest: index } : entry),
     };
   }
   if (session.lessonIndex + 1 < session.visited.length) {

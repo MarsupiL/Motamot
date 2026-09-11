@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build --config vite.config.ts",
-    "lint": "eslint src --max-warnings 0",
+    "build": "tsc --noEmit && tsc -p tsconfig.node.json && vite build --config vite.config.ts",
+    "lint": "eslint . --max-warnings 0",
     "preview": "vite preview",
     "test": "node --experimental-strip-types --test tests/*.test.mjs"
   },

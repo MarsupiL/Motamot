@@ -96,3 +96,58 @@ test('a failed play can be retried, and disposal ignores later callbacks', async
   assert.deepEqual(states, before);
   assert.equal(elements[1].paused, true);
 });
+
+test('an unresolved recording times out, releases its request and allows a fresh retry', context => {
+  context.mock.timers.enable({ apis: ['setTimeout'] });
+  const { player, elements, states } = setup();
+  player.play('word.mp3');
+  const latePlaying = elements[0].onplaying;
+  context.mock.timers.tick(14_999);
+  assert.equal(states.at(-1), 'loading');
+  context.mock.timers.tick(1);
+  assert.equal(states.at(-1), 'error');
+  assert.equal(elements[0].paused, true);
+  assert.equal(elements[0].src, undefined);
+
+  player.play('word.mp3');
+  latePlaying();
+  assert.equal(states.at(-1), 'loading');
+  elements[1].onplaying();
+  context.mock.timers.tick(60_000);
+  assert.equal(states.at(-1), 'playing');
+  player.dispose();
+});
+
+test('buffering has a timeout that repeated waiting events cannot extend, and playback clears it', context => {
+  context.mock.timers.enable({ apis: ['setTimeout'] });
+  const { player, elements, states } = setup();
+  player.play('sentence.mp3');
+  elements[0].onplaying();
+  elements[0].onwaiting();
+  context.mock.timers.tick(10_000);
+  elements[0].onwaiting();
+  context.mock.timers.tick(5_000);
+  assert.equal(states.at(-1), 'error');
+
+  player.play('sentence.mp3');
+  elements[1].onplaying();
+  elements[1].onwaiting();
+  context.mock.timers.tick(14_000);
+  elements[1].onplaying();
+  context.mock.timers.tick(60_000);
+  assert.equal(states.at(-1), 'playing');
+  player.dispose();
+});
+
+test('stopping or leaving a word cancels the loading timeout without later state changes', context => {
+  context.mock.timers.enable({ apis: ['setTimeout'] });
+  const { player, states } = setup();
+  player.play('word.mp3');
+  player.stop();
+  context.mock.timers.tick(30_000);
+  assert.deepEqual(states, ['loading', 'idle']);
+  player.play('next.mp3');
+  player.dispose();
+  context.mock.timers.tick(30_000);
+  assert.deepEqual(states, ['loading', 'idle', 'loading']);
+});
