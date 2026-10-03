@@ -42,6 +42,7 @@ test('360 separate visits cover every word three times, never repeat a seen sent
   for (let i = 0; i < examples.length; i++) {
     let session = createSession(random, readSeen(saved));
     assert.equal(session.completed, false);
+    assert.equal(session.visited[0].number, i + 1);
     const text = session.visited[0].lesson.example.text;
     assert.equal(encountered.has(text), false, text);
     encountered.add(text);
@@ -69,6 +70,7 @@ test('review starts a new collection only after an explicit history reset', () =
   assert.equal(clearSeen(saved), true);
   const restarted = createSession(seeded(5), readSeen(saved), examples[0].id);
   assert.equal(restarted.completed, false);
+  assert.equal(restarted.visited[0].number, 1);
   assert.deepEqual(restarted.seen, []);
   assert.notEqual(restarted.visited[0].lesson.example.id, examples[0].id);
 });
@@ -105,6 +107,30 @@ test('stale progress writers merge discoveries, and newly selected lessons skip 
   session = nextInSession(session, random, [nextText]);
   assert.notEqual(session.visited[1].lesson.example.text, nextText);
   assert.ok(session.seen.includes(nextText));
+  assert.equal(session.visited[0].number, 1);
+  assert.equal(session.visited[1].number, 3);
+});
+
+test('lesson numbers continue from existing saved progress and stay stable through words, sentences and backtracking', () => {
+  const saved = storage();
+  const random = seeded(87);
+  saveSeen(saved, examples.slice(0, 5).map(example => example.text));
+  let session = createSession(random, readSeen(saved));
+  assert.equal(session.visited[0].number, 6);
+  session = nextInSession(session, random);
+  saveSeen(saved, session.seen);
+  // Reloading an unfinished lesson does not count it as complete.
+  session = createSession(random, readSeen(saved));
+  assert.equal(session.visited[0].number, 6);
+  session = reachSentence(session, random);
+  assert.equal(session.visited[0].number, 6);
+  saveSeen(saved, session.seen);
+  const next = nextInSession(session, random);
+  assert.equal(next.visited[next.lessonIndex].number, 7);
+  const back = previousInSession(next);
+  assert.equal(back.visited[back.lessonIndex].number, 6);
+  assert.equal(nextInSession(back, random).visited[1].number, 7);
+  assert.equal(createSession(random, readSeen(saved)).visited[0].number, 7);
 });
 
 test('unseen topics alternate whenever another topic remains available', () => {

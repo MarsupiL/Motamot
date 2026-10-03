@@ -4,6 +4,7 @@ import type { Lesson, SentenceExample } from '../types';
 interface VisitedLesson {
   lesson: Lesson;
   furthest: number;
+  number: number;
 }
 
 export interface Session {
@@ -17,9 +18,10 @@ export interface Session {
 
 export function createSession(random = Math.random, seen: readonly string[] = [], previousId?: string): Session {
   const [first, ...remaining] = createLessonOrder(previousId, random, seen);
+  const history = [...new Set(seen)];
   return {
-    remaining, visited: first ? [{ lesson: createLesson(first, random), furthest: 0 }] : [],
-    lessonIndex: 0, index: 0, seen: [...new Set(seen)], completed: !first,
+    remaining, visited: first ? [{ lesson: createLesson(first, random), furthest: 0, number: history.length + 1 }] : [],
+    lessonIndex: 0, index: 0, seen: history, completed: !first,
   };
 }
 
@@ -48,7 +50,8 @@ export function nextInSession(session: Session, random = Math.random, seenElsewh
   if (!order.length) return { ...session, seen, remaining: [], completed: true };
   return {
     remaining: order.slice(1),
-    visited: [...session.visited, { lesson: createLesson(order[0], random), furthest: 0 }],
+    // A stable course number survives reloads and stays unchanged when going back.
+    visited: [...session.visited, { lesson: createLesson(order[0], random), furthest: 0, number: seen.length + 1 }],
     lessonIndex: session.lessonIndex + 1,
     index: 0,
     seen,

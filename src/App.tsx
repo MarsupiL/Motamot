@@ -46,7 +46,7 @@ function App() {
   };
 
   if (session.completed) return (
-    <main className="classroom">
+    <main className="classroom notranslate" lang="fr" translate="no">
       <div className="blackboard">
         <header className="board-header"><a className="brand" href={import.meta.env.BASE_URL}>motamot<span aria-hidden="true">.</span></a></header>
         <section className="learning-surface" aria-live="polite">
@@ -64,8 +64,7 @@ function App() {
   );
 
   const { index, lessonIndex } = session;
-  const { lesson, furthest } = session.visited[lessonIndex];
-  const round = lessonIndex + 1;
+  const { lesson, furthest, number: round } = session.visited[lessonIndex];
   const isSentence = index === LESSON_SIZE;
   const currentWord = lesson.words[Math.min(index, LESSON_SIZE - 1)];
   const displayText = isSentence ? lesson.example.text : formatWordWithArticle(currentWord);
@@ -73,7 +72,7 @@ function App() {
   const seenWords = lesson.words.slice(0, Math.min(furthest + 1, LESSON_SIZE));
 
   return (
-    <main className="classroom">
+    <main className="classroom notranslate" lang="fr" translate="no">
       <div className="blackboard">
         <header className="board-header">
           <a className="brand" href={import.meta.env.BASE_URL} aria-label="Motamot, accueil">motamot<span aria-hidden="true">.</span></a>
@@ -87,21 +86,21 @@ function App() {
           <p>Dans la zone du mot ou de la phrase, touchez la moitié droite pour avancer, ou la moitié gauche pour revenir. Vous pouvez aussi glisser vers la gauche pour avancer, et vers la droite pour revenir.</p>
           <p>Une voix féminine française vous accompagne. Les enregistrements sont créés par synthèse vocale et se chargent à la demande.</p>
           <p>{canRemember
-            ? 'Les phrases déjà découvertes sont mémorisées dans ce navigateur. La collection ne recommence que si vous choisissez de la revoir.'
-            : 'Ce navigateur ne permet pas de garder votre progression. Après un rechargement, certaines phrases peuvent revenir.'}</p>
+            ? 'Les phrases déjà découvertes et le numéro de la prochaine leçon sont mémorisés dans ce navigateur. La collection ne recommence que si vous choisissez de la revoir.'
+            : 'Ce navigateur ne permet pas de garder votre progression. Après un rechargement, le numéro de leçon repart à 1 et certaines phrases peuvent revenir.'}</p>
         </aside>}
 
         <div className="lesson-heading">
           <span className="eyebrow">LA PETITE LEÇON</span>
-          <span className="lesson-number">n° {String(round).padStart(2, '0')}</span>
+          <span className="lesson-number" key={round} aria-label={`Leçon ${round} sur ${examples.length}`}>{`n° ${String(round).padStart(2, '0')}`}</span>
         </div>
 
         <section className="learning-surface" aria-label={isSentence ? 'Les mots en contexte' : 'Vocabulaire'} {...gestures}>
           <div className="lesson-content" aria-live="polite" aria-atomic="true">
             {isSentence
-              ? <h1 className="sentence">{sentenceParts(lesson.example).map((part, i) => part.highlighted ? <mark key={i}>{part.text}</mark> : part.text)}</h1>
-              : <h1 className="vocabulary-word">{displayText}</h1>}
-            <p className="english-translation" lang="en">{englishText}</p>
+              ? <h1 key={`${lesson.example.id}:${index}`} className="sentence" lang="fr" translate="no">{sentenceParts(lesson.example).map((part, i) => part.highlighted ? <mark key={i}>{part.text}</mark> : part.text)}</h1>
+              : <h1 key={`${lesson.example.id}:${index}`} className="vocabulary-word" lang="fr" translate="no">{displayText}</h1>}
+            <p key={`${lesson.example.id}:${index}:en`} className="english-translation" lang="en">{englishText}</p>
             {!isSentence && <WordIllustration key={wordKey(currentWord)} word={currentWord} />}
           </div>
           <Pronunciation key={`${lessonIndex}:${index}`} text={displayText} />

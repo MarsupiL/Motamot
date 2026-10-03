@@ -23,9 +23,11 @@ test('back stops at the first word and navigates through words, sentences and pr
   const secondLesson = session.visited[1].lesson;
   assert.equal(session.index, 0);
   assert.equal(session.lessonIndex, 1);
+  assert.equal(session.visited[1].number, 2);
   session = previousInSession(session);
   assert.equal(session.index, LESSON_SIZE);
   assert.equal(session.lessonIndex, 0);
+  assert.equal(session.visited[0].number, 1);
   assert.equal(session.visited[0].lesson, firstLesson);
   session = nextInSession(session, random);
   assert.equal(session.visited[1].lesson, secondLesson);
@@ -55,6 +57,7 @@ test('backtracking preserves lesson order, and finishing the collection never st
   assert.equal(new Set(ids.slice(0, examples.length)).size, examples.length);
   assert.equal(session.completed, true);
   assert.equal(session.seen.length, examples.length);
+  assert.deepEqual(visited.map(entry => entry.number), examples.map((_, i) => i + 1));
   assert.equal(nextInSession(session, random), session);
   session = previousInSession(session);
   assert.equal(session.completed, false);
